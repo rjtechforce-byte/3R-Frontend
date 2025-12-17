@@ -223,16 +223,16 @@ function Home() {
           </h2>
 
           <div className="2xl:flex justify-around hidden min-h-36 items-center">
-            <div
-              onClick={() => handleCategoryClick("ALL")}
-              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 min-w-fit px-7 2xl:hover:mb-6 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
-            >
-              <h4 className="text-2xl">ALL ITEMS</h4>
+            <div onClick={() => handleCategoryClick("ALL")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
+              <div
+                className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 min-w-fit px-7 hover:duration-500 border-green-800 overflow-hidden">
+                <h4 className="text-2xl">ALL ITEMS</h4>
+              </div>
             </div>
 
+            <div onClick={() => handleCategoryClick("Clothes")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
             <div
-              onClick={() => handleCategoryClick("Clothes")}
-              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 2xl:hover:mb-6 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
+              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
             >
               <img
                 className="max-w-16 rounded-4xl"
@@ -241,10 +241,11 @@ function Home() {
               />
               <h4 className="text-2xl tracking-tighter">CLOTHES</h4>
             </div>
+            </div>
 
+            <div onClick={() => handleCategoryClick("Footwear")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
             <div
-              onClick={() => handleCategoryClick("Footwear")}
-              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 2xl:hover:mb-6 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
+              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
             >
               <img
                 className="max-w-16 rounded-4xl"
@@ -253,10 +254,12 @@ function Home() {
               />
               <h4 className="text-2xl tracking-tighter">FOOTWEAR</h4>
             </div>
+            </div>
 
+            <div onClick={() => handleCategoryClick("Footwear")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
             <div
               onClick={() => handleCategoryClick("Stationary")}
-              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 2xl:hover:mb-6 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
+              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
             >
               <img
                 className="max-w-16 rounded-4xl"
@@ -265,10 +268,12 @@ function Home() {
               />
               <h4 className="text-2xl tracking-tighter">STATIONARY</h4>
             </div>
+            </div>
 
+            <div onClick={() => handleCategoryClick("Footwear")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
             <div
               onClick={() => handleCategoryClick("Bag")}
-              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 2xl:hover:mb-6 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
+              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
             >
               <img
                 className="max-w-16 h-10 rounded-4xl"
@@ -276,6 +281,7 @@ function Home() {
                 alt=""
               />
               <h4 className="text-2xl tracking-tighter">BAGS</h4>
+            </div>
             </div>
           </div>
 

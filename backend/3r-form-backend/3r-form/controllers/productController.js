@@ -76,7 +76,6 @@ exports.postEditProduct = [
       description,
     } = req.body;
     const availability = Number(req.body.availability);
-    // Handle thumbnail: prefer new upload, else use old path from body
     let thumbnail;
     if (req.files && req.files.thumbnail && req.files.thumbnail[0]) {
       thumbnail = req.files.thumbnail[0].path;
@@ -86,22 +85,17 @@ exports.postEditProduct = [
       return res.status(422).send('No image provided');
     }
 
-    // Handle images: combine new uploads and old paths
     let images = [];
-    // Add new uploaded images
     if (req.files && req.files.images) {
       images = req.files.images.map((file) => file.path);
     }
-    // Add old image paths from body (if any)
     if (req.body.images) {
-      // req.body.images can be a string or array
       if (Array.isArray(req.body.images)) {
         images = images.concat(req.body.images.filter(img => typeof img === "string"));
       } else if (typeof req.body.images === "string") {
         images.push(req.body.images);
       }
     }
-    // Remove duplicates if any
     images = [...new Set(images)];
 
     Product.findByIdAndUpdate(req.params.id, {
@@ -125,18 +119,30 @@ exports.postEditProduct = [
   },
 ];
 
+
 exports.getAllProducts = (req, res, next) => {
   Product.find({
     availability: { $gt: 0 }
   })
     .then((things) => {
-      console.log('Fetched things:', things);
-      res.status(200).json(things);
+      const fixedThings = things.map(p => {
+        if (p.thumbnail && p.thumbnail.includes('badkend')) {
+          p.thumbnail = p.thumbnail.replace('badkend', 'backend');
+        }
+        if (p.images && p.images.length > 0) {
+          p.images = p.images.map(i => i.includes('badkend') ? i.replace('badkend', 'backend') : i);
+        }
+        return p;
+      });
+      console.log('Fetched things:', fixedThings);
+      res.status(200).json(fixedThings);
     })
     .catch((error) => {
       res.status(500).json({ error: 'Failed to fetch things' });
     });
 };
+
+
 
 exports.getProduct = (req, res, next) => {
   const id = req.params.id;
@@ -145,12 +151,20 @@ exports.getProduct = (req, res, next) => {
       if (!product) {
         return res.status(404).json({ error: 'Product not found' });
       }
+      if (product.thumbnail && product.thumbnail.includes('badkend')) {
+        product.thumbnail = product.thumbnail.replace('badkend', 'backend');
+      }
+      if (product.images && product.images.length > 0) {
+        product.images = product.images.map(i => i.includes('badkend') ? i.replace('badkend', 'backend') : i);
+      }
       res.status(200).json(product);
     })
     .catch((error) => {
       res.status(500).json({ error: 'Failed to fetch product' });
     });
 };
+
+
 
 exports.getSchoolProducts = async (req, res, next) => {
   const schoolId = req.params.schoolId;
@@ -161,22 +175,45 @@ exports.getSchoolProducts = async (req, res, next) => {
   const products = await Product.find({ school: schoolId }).sort({
     createdAt: -1,
   });
-  console.log('product from getSchoolProduts', products);
+
+  const fixedProducts = products.map(p => {
+    if (p.thumbnail && p.thumbnail.includes('badkend')) {
+      p.thumbnail = p.thumbnail.replace('badkend', 'backend');
+    }
+    if (p.images && p.images.length > 0) {
+      p.images = p.images.map(i => i.includes('badkend') ? i.replace('badkend', 'backend') : i);
+    }
+    return p;
+  });
+
+  console.log('product from getSchoolProduts', fixedProducts);
   
-  res.status(200).json(products);
+  res.status(200).json(fixedProducts);
 };
+
+
 
 exports.getProductSearch = (req, res, next) => {
   const { q } = req.query;
 
   Product.find({ $text: { $search: q } })
     .then((product) => {
-      res.status(200).json(product);
+      const fixedProducts = product.map(p => {
+        if (p.thumbnail && p.thumbnail.includes('badkend')) {
+          p.thumbnail = p.thumbnail.replace('badkend', 'backend');
+        }
+        if (p.images && p.images.length > 0) {
+          p.images = p.images.map(i => i.includes('badkend') ? i.replace('badkend', 'backend') : i);
+        }
+        return p;
+      });
+      res.status(200).json(fixedProducts);
     })
     .catch((err) => {
       res.status(400).json(err);
     });
 };
+
 
 
 

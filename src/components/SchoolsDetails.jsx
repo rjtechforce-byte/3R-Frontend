@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
-import EachSchoolData from "../components/EachSchoolData";
+import EachSchoolData from "./EachSchoolData";
 import { getAllSchool, getSchoolLeaderBoard } from "./form/api";
 const Topper = "/imges/1st Position.png";
 
 export default function SchoolDetail() {
     
     const [schoolData, setSchoolData] = useState([]);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
       const fetchData = async () => {
         try {
+          setLoading(true);
           const [allSchools, leaderboardData] = await Promise.all([
             getAllSchool(),
             getSchoolLeaderBoard(),
@@ -38,12 +40,22 @@ export default function SchoolDetail() {
           setSchoolData(mergedAndSortedData);
         } catch (error) {
           console.error("Failed to fetch school data:", error);
+        } finally {
+          setLoading(false);
         }
       };
 
       fetchData();
     }, []);
    console.log("final school data", schoolData);
+
+    if (loading) {
+      return (
+        <div className="text-center text-2xl text-green-800 p-10">
+          Loading...
+        </div>
+      );
+    }
 
     return (
         <>
