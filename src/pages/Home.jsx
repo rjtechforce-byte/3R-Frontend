@@ -312,7 +312,7 @@ function Home() {
                   <Item
                     category={category}
                     name={title}
-                    imgUrl={`http://localhost:3000/${thumbnail}`}
+                    imgUrl={`https://rrr-backend-yckw.onrender.com/${thumbnail}`}
                     schoolName={schoolName}
                     key={_id}
                     id={_id}
@@ -328,8 +328,8 @@ function Home() {
       </div>
       <DetailCard
         detailCard={{
-          imgUrl: `http://localhost:3000/${detailCard.thumbnail}`,
-          imgUrl2: `http://localhost:3000/${detailCard.images}`,
+          imgUrl: `https://rrr-backend-yckw.onrender.com/${detailCard.thumbnail}`,
+          imgUrl2: `https://rrr-backend-yckw.onrender.com/${detailCard.images}`,
           category: detailCard.category,
           name: detailCard.title,
           description: detailCard.description,
