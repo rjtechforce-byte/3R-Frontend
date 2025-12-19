@@ -41,13 +41,11 @@ function App() {
   useEffect(() => {
 getCurrentSchool().then((school) => {
       setAuth(school);
-      console.log('schol token', school)
-      localStorage.removeItem('token');
-      localStorage.setItem('token', school.token);
     }).catch((err) => {
       setAuth(null);
     });
   }, []);
+    
   return (
     <BrowserRouter>
     <div className="bg-green-100 scroll-w-0 relative ">
