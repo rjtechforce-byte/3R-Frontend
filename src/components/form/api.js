@@ -4,7 +4,7 @@ axios.defaults.withCredentials = true;
 
 export function postProduct(data) {
   return axios
-    .post('http://localhost:5173/product', data, {
+    .post('http://localhost:3000/product', data, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
     .then((response) => {

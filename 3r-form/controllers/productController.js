@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const mongoose = require('mongoose');
+
 exports.postProduct = [
   (req, res, next) => {
     console.log('cookie', req.body, req);
