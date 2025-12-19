@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 exports.postProduct = [
   async(req, res, next) => {
     console.log('cookie', req.body, req.headers);
-    const authorizationHeader = req.headers['Authorization'];
+    const authorizationHeader = req.headers['Authorization'] || req.headers['authorization'];
     if (!authorizationHeader) {
          return res.status(401).json({ error: 'Token not found' });
        }
@@ -75,7 +75,7 @@ exports.postProduct = [
 
 exports.postEditProduct = [
   (req, res, next) => {
-    const authorizationHeader = req.headers['Authorization'];
+    const authorizationHeader = req.headers['Authorization'] || req.headers['authorization'];
      if (!authorizationHeader) {
           return res.status(401).json({ error: 'Token not found' });
         }
