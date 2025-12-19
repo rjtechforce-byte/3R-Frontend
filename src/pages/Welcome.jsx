@@ -164,21 +164,22 @@ export default function Welcome() {
                 Please select your school
               </h1>
             </div>
+
             <select
               ref={val}
               value={selectedSchool}
               onChange={(e) => {
                 setselectedSchool(e.target.value);
                 localStorage.removeItem("schoolName");
-                localStorage.setItem("schoolName", e.target.value);
+                localStorage.setItem("schoolName", JSON.stringify(e.target.value));
                 window.location.href = "/home";
               }}
               className="mt- p-4 text-green-900 max-w-full rounded-lg bg-white text-2xl xl:text-3xl font-serif hover:bg-green-400 font-bold outline-none"
             >
               <option value="default">Select Your School</option>
-              {schoolData.map((school, index) => (
-                <option key={index} value={school.schoolName}>
-                  {school.schoolName}
+              {schoolData && schoolData.length > 0 && schoolData.map((school, index) => (
+                <option key={school._id || index} value={school.schoolName}>
+                  {String(school.schoolName)}
                 </option>
               ))}
             </select>

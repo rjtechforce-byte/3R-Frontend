@@ -39,6 +39,9 @@ function SelectSchool({ schoolDataList }) {
        })
      }
   }, [selectedSubDistrict])
+
+
+   console.log('schoolList', schoolList);
   return (
     <>
       <div className="bg-green-100 h-screen w-full flex items-center flex-col">
@@ -106,12 +109,13 @@ function SelectSchool({ schoolDataList }) {
             <option value="default" className="bg-green-900">
               Select Your School
             </option>
-          {schoolList.map((school, index) =>  <option
+
+          {schoolList && schoolList.length > 0 && schoolList.map((school, index) =>  <option
                 className="rounded-md  bg-green-900"
-                key={index}
+                key={school._id || index}
                 value={school._id}
               >
-                {school.schoolName}
+                {String(school.schoolName)}
               </option>)}
           </DropDown>
         </div>

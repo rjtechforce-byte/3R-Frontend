@@ -42,7 +42,8 @@ export default function SchoolPage() {
         <img className="rounded-lg" src={selectedSchool?.schoolImage ? `https://rrr-backend-yckw.onrender.com/${selectedSchool.schoolImage}` : '/images/placeholder-school.png'} alt="school image" />
       </div>
       <div className="md:text-4xl flex flex-col max-w-full gap-4 font-serif bg-white px-8 py-3 rounded-xl xl:w-fit shadow-xl md:min-w-2xl hover:shadow-2xl hover:scale-105 transition-all duration-700">
-        <h1 className="text-green-800"><span className="text-black">School Name: </span>{selectedSchool?.schoolName}</h1>
+
+        <h1 className="text-green-800"><span className="text-black">School Name: </span>{selectedSchool?.schoolName ? String(selectedSchool.schoolName) : ''}</h1>
         <h1 className="text-green-800"><span className="text-black">Address: </span>{selectedSchool?.address}</h1>
         <h1 className="text-green-800"><span className="text-black">Sub-District: </span>{selectedSchool?.subDistrict}</h1>
         <h1 className="text-green-800"><span className="text-black">School Email: </span>{selectedSchool?.schoolEmail}</h1>

@@ -71,7 +71,8 @@ export default function SchoolDetail() {
         {schoolData.map((school, index) => {
          return <div key={school._id} className="pb-15">
           <a href={`/schoolPage?id=${school._id}`} className="text-3xl xl:py-5 xl:px-16 xl:w-6xl hover:scale-103 hover:shadow-2xl transform transition-all duration-500 text-green-800 flex-col w-full cursor-pointer items-center justify-center flex md:flex-row font-bold font-serif bg-white rounded-md md:justify-between py-3 px-10">
-            <h1 className="mx-auto md:m-0"><span className="relative top-0 left-0 md:inline-block md:pr-10">{index + 1}. </span>{school.schoolName}</h1>
+
+            <h1 className="mx-auto md:m-0"><span className="relative top-0 left-0 md:inline-block md:pr-10">{index + 1}. </span>{String(school.schoolName)}</h1>
             <h1>{school.subDistrict}</h1>
             <span className="hidden md:block">{school.address}</span>
             <h1>{school.totalProducts}</h1>
