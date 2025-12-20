@@ -240,7 +240,7 @@ function Home() {
               )}
             </div>
           </div>
-          <h2 className="text-center text-6xl font-bold text-green-800 mb-8 font-serif">
+          <h2 className="text-center md:text-6xl text-3xl font-bold text-green-800 mb-8 font-serif">
             Available Products
           </h2>
 
