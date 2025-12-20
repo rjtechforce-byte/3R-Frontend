@@ -84,14 +84,14 @@ function Home() {
 
   gsap.registerPlugin(useGSAP);
 
-  function handleInput(event) {
+  const handleInput = (event) => {
     const newSearch = event.target.value;
 
     setSearch(newSearch);
 
-    let newdata = allProducts.filter(function (item) {
+    const newdata = allProducts.filter((item) => {
       const name = item.title || item.name || "";
-      return name.toLowerCase().indexOf(newSearch.toLowerCase()) != -1;
+      return name.toLowerCase().includes(newSearch.toLowerCase());
     });
 
     setproductData(newdata);
@@ -118,7 +118,7 @@ function Home() {
       return;
     } else {
       let newdata = allProducts.filter(
-        (item) => item.category.toUpperCase() === category.toUpperCase()
+        (item) => item.category && item.category.toUpperCase() === category.toUpperCase()
       );
       setproductData(newdata);
     }
@@ -138,7 +138,7 @@ function Home() {
                 className="bg-white w-full sm:w-80 md:w-96 lg:w-[500px] mx-auto text-3xl p-6 h-15 m-10 shadow-md rounded-xl  "
                 value={search}
                 placeholder="Search..."
-                onInput={handleInput}
+                onChange={handleInput}
               />
             </div>
 
@@ -280,7 +280,6 @@ function Home() {
 
             <div onClick={() => handleCategoryClick("Stationary")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
             <div
-              onClick={() => handleCategoryClick("Stationary")}
               className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
             >
               <img
@@ -294,7 +293,6 @@ function Home() {
 
             <div onClick={() => handleCategoryClick("Bag")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
             <div
-              onClick={() => handleCategoryClick("Bag")}
               className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
             >
               <img
@@ -330,7 +328,7 @@ function Home() {
               })
             ) : (
               <div className="text-3xl font-bold text-gray-500 my-10 text-center">
-                No products found for this school.
+                <h1>Not found any products</h1>
               </div>
             )}
           </div>
