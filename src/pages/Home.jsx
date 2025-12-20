@@ -8,11 +8,12 @@ import { useGSAP } from "@gsap/react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
 import { AllProductsData } from "../context/AllProducts";
-import { getProducts } from "../components/form/api";
+import { getSchoolProducts } from "../components/form/api";
 import { getAllSchool } from "../components/form/api";
 
 function Home() {
   const [productData, setproductData] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const selectedSchool = useRef([]);
 
@@ -21,19 +22,32 @@ function Home() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const schools = await getAllSchool();
-        const selectedSchoolArr = schools.filter(
-          (item) => item.schoolName === schoolName
+        const schoolsRes = await getAllSchool();
+        const schools = Array.isArray(schoolsRes) ? schoolsRes : schoolsRes?.data || [];
+        
+        const rawSchoolName = localStorage.getItem("schoolName");
+        const storedSchoolName = rawSchoolName ? rawSchoolName.replace(/^"|"$/g, '').trim() : "";
+        
+        const currentSchool = schools.find(
+          (item) => item.schoolName && item.schoolName.trim().toLowerCase() === storedSchoolName.toLowerCase()
         );
-        const currentSchool = selectedSchoolArr[0];
         selectedSchool.current = currentSchool;
 
         if (currentSchool) {
-          const allProducts = await getProducts();
-          const schoolProducts = allProducts.filter(
-            (item) => item.school === currentSchool._id
-          );
-          setproductData(schoolProducts);
+          const res = await getSchoolProducts(currentSchool._id);
+          console.log("Products API Response:", res);
+          let products = [];
+          if (Array.isArray(res)) products = res;
+          else if (res?.data && Array.isArray(res.data)) products = res.data;
+          else if (res?.products && Array.isArray(res.products)) products = res.products;
+          
+          const availableProducts = products.filter((item) => item.availability);
+          
+          setAllProducts(availableProducts);
+          setproductData(availableProducts);
+        } else {
+          console.log("School not found. Searched for:", storedSchoolName);
+          console.log("Available schools:", schools.map(s => s.schoolName));
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -43,7 +57,7 @@ function Home() {
     };
 
     fetchData();
-  }, []);
+  }, [schoolName]);
 
   const dummyData = useContext(AllProductsData);
   const [openDrop, setDrop] = useState(false);
@@ -75,7 +89,8 @@ function Home() {
 
     setSearch(newSearch);
 
-    let newdata = productData.filter(function ({ name }) {
+    let newdata = allProducts.filter(function (item) {
+      const name = item.title || item.name || "";
       return name.toLowerCase().indexOf(newSearch.toLowerCase()) != -1;
     });
 
@@ -99,15 +114,13 @@ function Home() {
   const handleCategoryClick = (category) => {
     setSearch("");
     if (category === "ALL") {
-      setData(productData);
+      setproductData(allProducts);
       return;
     } else {
-      let newdata = productData.filter(
+      let newdata = allProducts.filter(
         (item) => item.category.toUpperCase() === category.toUpperCase()
       );
-      setData(newdata);
-      console.log(newdata);
-      setData(newdata);
+      setproductData(newdata);
     }
   };
 
@@ -265,7 +278,7 @@ function Home() {
             </div>
             </div>
 
-            <div onClick={() => handleCategoryClick("Footwear")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
+            <div onClick={() => handleCategoryClick("Stationary")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
             <div
               onClick={() => handleCategoryClick("Stationary")}
               className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
@@ -279,7 +292,7 @@ function Home() {
             </div>
             </div>
 
-            <div onClick={() => handleCategoryClick("Footwear")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
+            <div onClick={() => handleCategoryClick("Bag")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
             <div
               onClick={() => handleCategoryClick("Bag")}
               className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
@@ -299,29 +312,26 @@ function Home() {
               <div className="text-4xl font-bold text-green-800 my-10">
                 Loading Products...
               </div>
-            ) : (
-              productData.map(function ({
-                category,
-                availability,
-                title,
-                thumbnail,
-                schoolName,
-                _id,
-              }) {
+            ) : productData.length > 0 ? (
+              productData.map((item) => {
                 return (
                   <Item
-                    category={category}
-                    name={title}
-                    imgUrl={`https://rrr-backend-0wj5.onrender.com/${thumbnail}`}
-                    schoolName={schoolName}
-                    key={_id}
-                    id={_id}
+                    category={item.category}
+                    name={item.title || item.name}
+                    imgUrl={`https://rrr-backend-0wj5.onrender.com/${item.thumbnail}`}
+                    schoolName={item.schoolName}
+                    key={item._id}
+                    id={item._id}
                     goodsData={dummyData}
                     handleClick={handleClick}
-                    availability={availability ? "Available" : "Unavailable"}
+                    availability={item.availability ? "Available" : "Unavailable"}
                   />
                 );
               })
+            ) : (
+              <div className="text-3xl font-bold text-gray-500 my-10 text-center">
+                No products found for this school.
+              </div>
             )}
           </div>
         </div>
