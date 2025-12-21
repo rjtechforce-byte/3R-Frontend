@@ -3,7 +3,6 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['authorization'] = 'Bearer ' + localStorage.getItem('token');
 
-
 export function postProduct(data) {
   return axios
     .post('https://rrr-backend-0wj5.onrender.com/product', data, {
@@ -132,12 +131,9 @@ export function getSchoolBySubDistrict(subDistrict) {
     });
 }
 
-
 export function getSchoolLeaderBoard() {
-   return axios
-    .get(
-      `https://rrr-backend-0wj5.onrender.com/school/schoolLeaderBoard`
-    )
+  return axios
+    .get(`https://rrr-backend-0wj5.onrender.com/school/schoolLeaderBoard`)
     .then((res) => {
       console.log('leaderboard data', res.data);
       return res.data;
@@ -146,7 +142,6 @@ export function getSchoolLeaderBoard() {
       console.log('error while getting by district school', err);
     });
 }
-
 
 export function postEditProduct(id, data) {
   return axios
@@ -190,7 +185,6 @@ export function postAddHelpedStudent(productId, data) {
       throw error;
     });
 }
-
 
 export function getProductsByCategory(category) {
   return axios

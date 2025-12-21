@@ -81,7 +81,7 @@ function ProductUploadForm({ showAlert }) {
       data.append('title', values.title);
       data.append('category', values.category);
       data.append('condition', values.condition);
-      data.append('images', values.images);
+      values.images.forEach(img => data.append('images', img));
       data.append('donorName', values.donorName);
       data.append('donorClass', values.donorClass);
       data.append('description', values.description);

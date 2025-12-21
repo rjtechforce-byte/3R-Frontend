@@ -38,7 +38,7 @@ exports.postProduct = [
       condition,
       description,
     } = req.body;
-    //console.log('Received POST /products request with body:', req.body, req.file);
+    console.log('Received POST /products request with body:', req.body, req.file);
     if (!req.files || !req.files.thumbnail) {
       return res.status(422).send('No image provided');
     }
@@ -47,7 +47,7 @@ exports.postProduct = [
       ? req.files.images.map((file) => file.path)
       : [];
 
-    console.log({ school: req.session.school });
+    console.log({ school: req.school }, 'images', images, req.files.images);
 
     const product = new Product({
       school: req.school,
