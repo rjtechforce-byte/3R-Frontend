@@ -3,6 +3,7 @@ import Item from "../components/Item";
 import HomeVideo from "../components/HomeVideo";
 import DetailCard from "../components/DetailCard";
 import Slidebar from "../components/Slidebar";
+import { ImSpinner10 } from "react-icons/im";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { RiArrowDropDownLine } from "react-icons/ri";
@@ -131,7 +132,7 @@ function Home() {
         ref={productData}
         className="bg-[#D9E4DD] text-3xl sm:text-4xl md:text-5xl"
       >
-        <div className="flex flex-col w-full bg-[#f0f8ef] p-4 rounded-t-3xl">
+        <div className="flex flex-col w-full bg-[#f0f8ef] min-h-screen p-4 rounded-t-3xl">
           <div className="flex items-center lg:flex-row flex-col justify-around">
             <div className="flex flex-col">
               <input
@@ -307,8 +308,8 @@ function Home() {
 
           <div className="flex flex-wrap gap-5 justify-center px-4">
             {loading ? (
-              <div className="text-4xl font-bold text-green-800 my-10">
-                Loading Products...
+              <div className="mt-[10vh]">
+              <div className="text-6xl text-green-900 font-bold my-7"><ImSpinner10 className="animate-spin" /></div>
               </div>
             ) : productData.length > 0 ? (
               productData.map((item) => {
@@ -316,7 +317,7 @@ function Home() {
                   <Item
                     category={item.category}
                     name={item.title || item.name}
-                    imgUrl={`https://rrr-backend-0wj5.onrender.com/${item.thumbnail}`}
+                    imgUrl={`https://rrr-backend-0wj5.onrender.com/${item.thumbnail?.replace(/\\/g, "/")}`}
                     schoolName={item.schoolName}
                     key={item._id}
                     id={item._id}
@@ -336,8 +337,8 @@ function Home() {
       </div>
       <DetailCard
         detailCard={{
-          imgUrl: `https://rrr-backend-0wj5.onrender.com/${detailCard.thumbnail}`,
-          imgUrl2: `https://rrr-backend-0wj5.onrender.com/${detailCard.images}`,
+          imgUrl: `https://rrr-backend-0wj5.onrender.com/${detailCard.thumbnail?.replace(/\\/g, "/")}`,
+          imgUrl2: `https://rrr-backend-0wj5.onrender.com/${detailCard.images?.toString().replace(/\\/g, "/")}`,
           category: detailCard.category,
           name: detailCard.title,
           description: detailCard.description,
