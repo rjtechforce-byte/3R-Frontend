@@ -19,13 +19,18 @@ import ProductEdit from './components/form/ProductEdit';
 import { getCurrentSchool } from './components/form/api';
 import NoAuthRoutes from './pages/NoAuthRoutes';
 import HelpedStudentForm from './components/form/HelpedStudentForm';
+import SubmittedSuccessfully from './components/form/SubmittedSuccessfully';
+import ApproveSchool from './pages/ApproveSchool';
+import AdminAuth from './pages/AdminAuth';
+import ManageProducts from './pages/ManageProducts';
+import AuthRoutes from './pages/AuthRoutes';
 
 
 function App() {
 
     const [alert, setAlert] = useState(null);
     const [auth, setAuth] = useState(undefined);
-
+  
 
     function showAlert(message, type, from){
         setAlert({
@@ -39,14 +44,15 @@ function App() {
     }
 
   useEffect(() => {
-getCurrentSchool().then((school) => {
-      setAuth(school);
-      console.log('schol token', school)
+getCurrentSchool().then((info) => {
+      setAuth(info);
+      console.log('school token', info)
     }).catch((err) => {
       setAuth(null);
        localStorage.removeItem('token');
     });
   }, []);
+  console.log('auth state', auth);
   return (
     <BrowserRouter>
     <div className="bg-green-100 scroll-w-0 relative ">
@@ -61,12 +67,15 @@ getCurrentSchool().then((school) => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/yourSchool" element={<YourSchool showAlert={showAlert} auth={auth}/>} />
             <Route path="/schoolContribution" element={<SchoolContribution />} />
-            <Route path="/uploadProducts" element={<ProductUploadForm showAlert={showAlert}/>}/>
+            <Route path="/uploadProducts" element={<AuthRoutes><ProductUploadForm showAlert={showAlert}/></AuthRoutes>}/>
             <Route path="/schoolLogin" element={<NoAuthRoutes auth={auth} children={<SchoolLoginForm showAlert={showAlert}/>}/>}/>
-            <Route path="/schoolRegister" element={<SchoolRegisterForm showAlert={showAlert}/>}/>
+            <Route path="/schoolRegister" element={<NoAuthRoutes auth={auth} children={<SchoolRegisterForm showAlert={showAlert}/>}/>}/>
             <Route path="/schoolPage" element={<SchoolPage />}/>
-            <Route path="/productEdit/:_id" element={<ProductEdit showAlert={showAlert}/>}/>
-            <Route path="/product/:_id/helpedStudent" element={<HelpedStudentForm showAlert={showAlert}/>}/>
+            <Route path="/productEdit/:_id" element={<AuthRoutes><ProductEdit showAlert={showAlert}/></AuthRoutes>}/>
+            <Route path="/product/:_id/helpedStudent" element={<AuthRoutes><HelpedStudentForm showAlert={showAlert}/></AuthRoutes>}/>
+            <Route path="/submittedSuccessfully/:any" element={<SubmittedSuccessfully />}/>
+            <Route path="/approveSchool" element={<AdminAuth><ApproveSchool /></AdminAuth>}/>
+            <Route path="/admin/products" element={<AdminAuth><ManageProducts showAlert={showAlert} /></AdminAuth>} />
           </Routes>
         </main>
     </div>

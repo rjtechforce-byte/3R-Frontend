@@ -2,6 +2,8 @@ const School = require('../models/school');
 const bycrypt = require('bcryptjs');
 const Product = require('../models/product');
 const jwt = require('jsonwebtoken');
+const Admin = require('../models/admin');
+
 
 
 exports.postSchoolRegister = (req, res, next) => {
@@ -33,9 +35,7 @@ exports.postSchoolRegister = (req, res, next) => {
 
 exports.getCurrentSchool = [
   async(req, res, next) => {
-      console.log('cookie', req.body, req.headers);
       const authorizationHeader = req.headers['Authorization'] || req.headers['authorization'];
-      console.log('Authorization Header:', authorizationHeader);
       if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
            return res.status(401).json({ error: 'Token not found or malformed' });
       }
@@ -46,34 +46,51 @@ exports.getCurrentSchool = [
         token = token.slice(1, -1);
       }
       
-      console.log('token', token);
       if (!token) {
-        console.log('token not found');
         return res.status(401).json({ error: 'Unauthorized' });
       }
          try{
          const decodedToken = jwt.verify(token, 'tansukh');
-         console.log('decoded token', decodedToken);
-         req.school = decodedToken.schoolId;
+         if (decodedToken.schoolId) {
+            req.school = decodedToken.schoolId;
+         } else if (decodedToken.adminId) {
+            req.admin = decodedToken.adminId;
+         }
           next();
          } catch (err) {
-          console.log('invalid token error', err);
            return res.status(401).json({ error: 'Invalid token' });
          }
     },
   (req, res, next) => {
-    const schoolId = req.school; 
-    School.findById(schoolId)
-      .select('-password -__v') // Exclude sensitive fields
-      .then(school => {
-        if (!school) {
-          return res.status(404).json({ error: 'School not found' });
-        }
-        res.status(200).json(school);
-      })
-      .catch(error => {
-        res.status(500).json({ error: 'Failed to fetch school' });
-      });
+    if (req.school) {
+        const schoolId = req.school; 
+        School.findById(schoolId)
+          .select('-password -__v') // Exclude sensitive fields
+          .then(school => {
+            if (!school) {
+              return res.status(404).json({ error: 'School not found' });
+            }
+            res.status(200).json(school);
+          })
+          .catch(error => {
+            res.status(500).json({ error: 'Failed to fetch school' });
+          });
+    } else if (req.admin) {
+        const adminId = req.admin;
+        Admin.findById(adminId)
+            .select('-password -__v')
+            .then(admin => {
+                if (!admin) {
+                    return res.status(404).json({ error: 'Admin not found' });
+                }
+                res.status(200).json({ ...admin.toObject(), isAdmin: true });
+            })
+            .catch(error => {
+                res.status(500).json({ error: 'Failed to fetch admin' });
+            });
+    } else {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
   }
 ];
 
@@ -81,17 +98,28 @@ exports.getCurrentSchool = [
 exports.postSchoolLogin =  async (req, res, next) => {
     const { schoolEmail, password } = req.body;
     const school = await School.findOne({ schoolEmail });
-    if (!school) {
+    if (school) {
+        const isPasswordValid = await bycrypt.compare(password, school.password);
+        if (!isPasswordValid) {
+          return res.status(401).json({ error: 'Invalid email or password' });
+        }
+        req.school =  school._id;
+        const token = jwt.sign({ schoolId: school._id }, 'tansukh', { expiresIn: '1h' } );
+        res.setHeader('Authorization', 'Bearer ' + token);
+       return res.status(200).json({ message: 'Login successful', token: token});
+    }
+
+    const admin = await Admin.findOne({ email: schoolEmail });
+    if (!admin) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
-    const isPasswordValid = await bycrypt.compare(password, school.password);
+    const isPasswordValid = await bycrypt.compare(password, admin.password);
     if (!isPasswordValid) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
-    req.school =  school._id;
-    const token = jwt.sign({ schoolId: school._id }, 'tansukh', { expiresIn: '1h' } );
+    const token = jwt.sign({ adminId: admin._id }, 'tansukh', { expiresIn: '1h' } );
     res.setHeader('Authorization', 'Bearer ' + token);
-   return res.status(200).json({ message: 'Login successful', token: token});
+    return res.status(200).json({ message: 'Admin login successful', token: token, isAdmin: true });
 };
 
 
@@ -179,3 +207,32 @@ exports.getSchoolBySubDistrict = (req, res, next) => {
     res.status(400).json({ message: 'no school in this sub disrtict'})
   })
 }
+
+exports.approveSchool = (req, res, next) => {
+  const schoolId = req.params.schoolId;
+  School.findById(schoolId)
+    .then(school => {
+      if (!school) {
+        return res.status(404).json({ message: 'School not found' });
+      }
+      school.isApproved = true;
+      return school.save();
+    })
+    .then(result => {
+      res.status(200).json({ message: 'School approved successfully', school: result });
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to approve school' });
+    });
+};
+
+exports.getUnapprovedSchools = (req, res, next) => {
+  School.find({ isApproved: false }).select("_id schoolName schoolEmail schoolImage subDistrict schoolPhone address inchargeName inchargePhone createdAt updatedAt")
+    .then(schools => {
+      console.log('unapproved schools', schools);
+      res.status(200).json(schools);
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to fetch unapproved schools' });
+    });
+};

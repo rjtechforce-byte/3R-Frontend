@@ -164,6 +164,7 @@ function ProductUploadForm({ showAlert }) {
               Title
             </Input>
             <DropDown
+              inputClass="border border-white text-white"
               name="category"
               label="Product Category"
               useFor="form"
@@ -211,6 +212,7 @@ function ProductUploadForm({ showAlert }) {
               </option>
             </DropDown>
             <DropDown
+              inputClass="border border-white text-white "
               name="condition"
               label="Condition"
               useFor="form"
@@ -261,6 +263,7 @@ function ProductUploadForm({ showAlert }) {
               placeholder=" "
             >Donor Name</Input>
             <DropDown
+              inputClass="border border-white text-white "
               name="donorClass"
               label="Donor Class"
               useFor="form"

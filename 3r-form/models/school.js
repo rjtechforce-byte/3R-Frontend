@@ -39,6 +39,10 @@ const schoolSchema = new mongoose.Schema({
   inchargePhone: {
     type: String,
     required: true,
+  },
+  isApproved: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

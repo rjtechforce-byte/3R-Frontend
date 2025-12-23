@@ -11,4 +11,6 @@ productRoute.get('/school/:schoolId/products', productController.getSchoolProduc
 productRoute.get('/product/search', productController.getProductSearch);
 productRoute.put('/product/:id', productController.postEditProduct);
 productRoute.post('/product/:id/helpedStudent', productController.postAddHelpedStudent);
+productRoute.delete('/product/delete/:id', productController.deleteProduct);
+
 module.exports = productRoute;

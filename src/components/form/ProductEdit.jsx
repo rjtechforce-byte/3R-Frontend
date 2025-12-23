@@ -223,6 +223,7 @@ return( <div className="bg-[#D9E4DD]  min-h-screen w-screen flex justify-center 
               Title
            </Input>
                  <DropDown
+                 inputClass="border border-white text-white"
               name="category"
               label="Product Category"
               useFor="form"
@@ -270,6 +271,7 @@ return( <div className="bg-[#D9E4DD]  min-h-screen w-screen flex justify-center 
               </option>
             </DropDown>
                <DropDown
+                      inputClass="border border-white text-white "
                       name="condition"
                       label="Condition"
                       useFor="form"
@@ -321,6 +323,7 @@ return( <div className="bg-[#D9E4DD]  min-h-screen w-screen flex justify-center 
               placeholder=" "
             >Donor Name</Input>
              <DropDown
+             inputClass="border border-white text-white "
               name="donorClass"
               label="Donor Class"
               useFor="form"
@@ -373,6 +376,7 @@ return( <div className="bg-[#D9E4DD]  min-h-screen w-screen flex justify-center 
               </option>
             </DropDown>
             <DropDown label="Availability"
+              inputClass="border border-white text-white "
               name="availability"
               useFor="form"
               touched={formik.touched.availability}

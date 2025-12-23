@@ -61,7 +61,7 @@ function SchoolRegisterForm({ showAlert }) {
             top:0,
             behavior: 'smooth'
           })
-            navigation('/schoolLogin', { replace: true })
+            navigation(`/submitedSuccessfully/${Math.random().toString()}`, {state: {fromRegister: true}}, { replace: true })
           }).catch(error => {
             console.error('Error during submission', error);
              showAlert(error.response.data.error ,"error", "signNot");
@@ -99,7 +99,7 @@ return(
     <Input type="file" multiple={false} touched={formik.touched.schoolImage} errors={formik.errors.schoolImage} id="schoolImage" name="schoolImage" value={formik.values.schoolImage} onChange={handleFileChange}>Upload School Photo</Input>
     <Input type="text" name="schoolName" placeholder=" " value={formik.values.schoolName} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.schoolName} touched={formik.touched.schoolName}>School Name</Input>
     <Input type="email" name="schoolEmail" placeholder=" " value={formik.values.schoolEmail} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.schoolEmail} touched={formik.touched.schoolEmail}>School Email</Input>
-    <DropDown name="subDistrict" label="Sub-District" value={formik.values.subDistrict} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.subDistrict} touched={formik.touched.subDistrict}>
+    <DropDown name="subDistrict" inputClass="border border-white text-white" label="Sub-District" value={formik.values.subDistrict} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.subDistrict} touched={formik.touched.subDistrict}>
           <option  disabled className=" disabled:text-gray-200 bg-green-900" value="defualt">Seelect Your Sub-District</option>
           <option  className="bg-green-900"  value="sardarshahar">Sardarshahar</option>
           <option  className="bg-green-900"  value="rajgarh">Rajgarh</option>

@@ -77,6 +77,9 @@ export function getCurrentSchool() {
   return axios
     .get(`${BASE_URL}/school/current`, {
       withCredentials: true,
+      headers: {
+        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+      }
     })
     .then((response) => {
       return response.data;
@@ -210,5 +213,45 @@ export function getHelpedStudentsCountBySchool(schoolId) {
     .catch((err) => {
       console.error('Error while getting helped students count by school', err);
       throw err;
+    });
+}
+
+
+export function deleteProduct(id) {
+  return axios
+    .delete(`${BASE_URL}/product/delete/${id}`)
+    .then((response) => {
+      console.log('API response', response.data);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error('API error', error);
+      throw error;
+    });
+}
+
+export function getUnapprovedSchools() {
+  return axios
+    .get(`${BASE_URL}/school/unapproved`, {
+      headers: {
+        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+      }
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log('error while getting unapproved schools', err);
+    });
+}
+
+export function approveSchool(id) {
+  return axios
+    .put(`${BASE_URL}/school/approve/${id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log('error while approving school', err);
     });
 }

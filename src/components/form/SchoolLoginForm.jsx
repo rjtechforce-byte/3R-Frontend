@@ -35,7 +35,8 @@ function SchoolLoginForm({ showAlert }) {
             top:0,
             behavior: 'smooth'
           })
-          navigate('/uploadProducts', { replace:true } )
+          navigate('/yourSchool', { replace:true } )
+          window.location.reload();
          })).catch((error) => {
           console.log('Login error:', error);
              showAlert('invalid password or email',"error", "logNot");

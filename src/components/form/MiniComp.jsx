@@ -1,7 +1,7 @@
 import React from "react";
 import { FaCheckSquare } from "react-icons/fa";
 import { MdErrorOutline } from "react-icons/md";
-
+import { Icon } from "@iconify/react";
 
 
 export function AlertPopup({message, type, from}) {
@@ -71,6 +71,16 @@ export function AlertPopup({message, type, from}) {
         <h2 className={type == 'error' ? "font-semibold text-[20px] text-red-500" : "font-semibold text-[20px]"}>{from === "signIn" && "Successfully Signned" || message}</h2>
         <span className="text-[14px]">{from === "signIn" && "Now You Can Login"}</span>
         </div>
+        </div>
+    )
+}
+
+
+
+export function Loading() {
+    return(
+        <div className="flex justify-center items-center w-screen h-screen">
+            <Icon icon="line-md:loading-loop" width="60px" height="60px"  style={{color: 'green'}} />
         </div>
     )
 }
