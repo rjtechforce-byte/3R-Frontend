@@ -56,12 +56,12 @@ function SchoolRegisterForm({ showAlert }) {
 
           postRegisterSchool(formData).then(responseData => {
             console.log('Response data after submission', responseData);
-            showAlert("Successfully signed", "not-error", "signIn");
+            showAlert("Successfully signed", "not-error", "sign");
               window.scrollTo({
             top:0,
             behavior: 'smooth'
           })
-            navigation(`/submitedSuccessfully/${Math.random().toString()}`, {state: {fromRegister: true}}, { replace: true })
+            navigation(`/submittedSuccessfully/${Math.random().toString()}`, {state: {fromRegister: true}}, { replace: true })
           }).catch(error => {
             console.error('Error during submission', error);
              showAlert(error.response.data.error ,"error", "signNot");

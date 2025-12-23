@@ -6,7 +6,7 @@ const SubmittedSuccessfully = () => {
         const location = useLocation();
         const formRegister = location.state;
 
-        if(formRegister.fromRegister !== true){
+        if(formRegister?.fromRegister !== true){
           return <Navigate to="/" />;
         }
 
