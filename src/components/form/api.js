@@ -3,7 +3,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['authorization'] = 'Bearer ' + localStorage.getItem('token');
 
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://rrr-backend-9ait.onrender.com';
 
 export function postProduct(data) {
   return axios
