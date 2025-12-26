@@ -112,7 +112,7 @@ const YourSchool = ({ auth, showAlert }) => {
             ) : (
               <div className="flex items-center flex-col gap-10">
                 <div className="flex justify-around min-w-full">
-                  <a href="/uploadProducts" className="bg-white cursor-pointer text-green-800 px-15 xl:mt-27 py-2 mt-7 border-2 shadow-xl border-white-800 inline-flex gap-2 font-serif font-semibold text-4xl items-center transition-all duration-700 rounded-[9px] group hover:text-white hover:bg-green-800">
+                  <a href="/uploadProducts" className="bg-white cursor-pointer text-green-800 px-15 xl:mt-27 py-2 mt-7 border-2 shadow-xl border-white-800 inline-flex gap-2 font-serif font-semibold text-2xl md:text-4xl items-center transition-all duration-700 rounded-[9px] group hover:text-white hover:bg-green-800">
                     Upload Products
                   </a>
                 </div>
