@@ -18,11 +18,11 @@ function Textarea({touched, errors, onChange, value, name, children, onBlur}) {
 return(<>
 <div className='flex flex-col items-start  w-full relative  min-w-[200px]'>
         
-        <textarea name={name} placeholder=' ' value={value} onChange={onChange} onBlur={onBlur} className={"peer h-full min-h-[100px] w-full resize-none rounded-[7px] border border-white ring-green-500 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-white outline-0 transition-all placeholder-shown:border placeholder-shown:border-white placeholder-shown:border-t-white focus:border focus:border-white disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50" + outlineRing}></textarea>
+        <textarea name={name} placeholder=' ' value={value} onChange={onChange} onBlur={onBlur} className={"peer h-full min-h-[100px] w-full resize-none rounded-[7px] border border-gray-700 ring-green-500 bg-transparent px-3 py-2.5 text-sm font-normal text-gray-800 outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-700 placeholder-shown:border-t-gray-700 focus:border focus:border-white disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50" + outlineRing}></textarea>
         <label className="
         pointer-events-none 
         absolute  
-        bg-[#D9E4DD]
+        bg-white
         left-4 
         top-5
         translate-y-3 
@@ -30,17 +30,17 @@ return(<>
         px-1
         select-none 
         text-[11px]  
-        text-white
+        text-gray-900
         font-semibold
         transition-all 
         peer-placeholder-shown:text-sm 
         peer-placeholder-shown:top-2
         peer-placeholder-shown:translate-y-0
-        peer-placeholder-shown:text-white 
+        peer-placeholder-shown:text-gray-900
         peer-not-placeholder-shown:-top-5
         peer-not-placeholder-shown:translate-y-0
         peer-focus:text-[11px]
-        peer-focus:text-white
+        peer-focus:text-gray-900
         peer-focus:-top-2
         peer-not-focus:translate-y-3
         peer-disabled:text-transparent 

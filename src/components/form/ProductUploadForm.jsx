@@ -9,10 +9,11 @@ import { postProduct } from './api';
 import Textarea from './Textarea';
 import FormButton from './FormButton';
 import Slidebar from '../Slidebar';
+import { BackButton } from './MiniComp';
 
 
 function ProductUploadForm({ showAlert }) {
-  const [focus, setFocus] = useState();
+  
 
   const validationSchema = Yup.object({
     thumbnail: Yup.mixed().required('Image is required'),
@@ -122,22 +123,15 @@ function ProductUploadForm({ showAlert }) {
   return (
     <>
     <Slidebar />
-      <div className="bg-[#D9E4DD]  min-h-screen w-screen flex justify-center py-15 overflow-auto px-10">
-        <Form onSubmit={formik.handleSubmit}>
-          <h1 className="text-3xl font-bold self-start text-green-800 mb-6 border-b border-gray-300 w-full bg-[#D9E4DD] py-4 pl-8">
-            Upload Product Your Product
-          </h1>
-          <div
-            className="bg-[#D9E4DD]
-     inline-flex 
-     w-screen
-     flex-col
-     md:w-[500px]
-     lg:w-[600px]
-     gap-6
-     items-center
-     px-8"
-          >
+      <div className="bg-gray-100 min-h-screen w-full flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="w-full flex items-center justify-center flex-col max-w-2xl">
+      <Form onSubmit={formik.handleSubmit} className="bg-white p-8 rounded-2xl shadow-xl space-y-6">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6 border-b pb-4">
+          Upload Your Product
+        </h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+          <div className="md:col-span-2">
             <Input
               type="file"
               multiple={false}
@@ -147,97 +141,67 @@ function ProductUploadForm({ showAlert }) {
               name="thumbnail"
               value={formik.values.thumbnail}
               onChange={handleFileChange}
+              inputClass="w-full bg-gray-100 border border-gray-200 text-gray-800 text-base rounded-lg focus:ring-green-500 focus:border-green-500 p-4"
             >
               Upload Thumbnail
             </Input>
-            <Input
-              type="text"
-              touched={formik.touched.title}
-              errors={formik.errors.title}
-              id="title"
-              name="title"
-              value={formik.values.title}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder=" "
-            >
-              Title
-            </Input>
-            <DropDown
-              inputClass="border border-white text-white"
-              name="category"
-              label="Product Category"
-              useFor="form"
-              touched={formik.touched.category}
-              errors={formik.errors.category}
-              value={formik.values.category}
-              onChange={formik.handleChange}
-            >
-              <option
-                disabled
-                className=" disabled:text-gray-200 bg-green-900"
-                value="category"
-              >
-                Select Product Category
-              </option>
-              <option className="bg-green-900" value="Electronics">
-                Electronics
-              </option>
-              <option className="bg-green-900" value="Books">
-                Books
-              </option>
-              <option className="bg-green-900" value="Clothing">
-                Clothing
-              </option>
-              <option className="bg-green-900" value="Sports Equipment">
-                Sports Equipment
-              </option>
-              <option className="bg-green-900" value="Art Supplies">
-                Art Supplies
-              </option>
-              <option className="bg-green-900" value="Laboratory Equipment">
-                Laboratory Equipment
-              </option>
-              <option className="bg-green-900" value="Stationery">
-                Stationery
-              </option>
-              <option className="bg-green-900" value="Footwear">
-                Footwear
-              </option>
-              <option className="bg-green-900" value="Bag">
-                Bag
-              </option>
-              <option className="bg-green-900" value="Other">
-                Other
-              </option>
-            </DropDown>
-            <DropDown
-              inputClass="border border-white text-white "
-              name="condition"
-              label="Condition"
-              useFor="form"
-              touched={formik.touched.condition}
-              errors={formik.errors.condition}
-              value={formik.values.condition}
-              onChange={formik.handleChange}
-            >
-              <option
-                disabled
-                className=" disabled:text-gray-200 bg-green-900"
-                value="condition"
-              >
-                Product Condition
-              </option>
-              <option className="bg-green-900" value="good">
-                Good
-              </option>
-              <option className="bg-green-900" value="avarage">
-                Avarage
-              </option>
-              <option className="bg-green-900" value="nice">
-                Nice
-              </option>
-            </DropDown>
+          </div>
+          
+          <Input
+            type="text"
+            touched={formik.touched.title}
+            errors={formik.errors.title}
+            id="title"
+            name="title"
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder=" "
+            inputClass="w-full bg-gray-100 border border-gray-200 text-gray-800 text-base rounded-lg focus:ring-green-500 focus:border-green-500 p-4"
+          >
+            Title
+          </Input>
+          
+          <DropDown
+            inputClass="w-full bg-gray-100 border border-gray-200 text-gray-800 text-base rounded-lg focus:ring-green-500 focus:border-green-500 p-4"
+            name="category"
+            label="Product Category"
+            useFor="form"
+            touched={formik.touched.category}
+            errors={formik.errors.category}
+            value={formik.values.category}
+            onChange={formik.handleChange}
+          >
+            <option disabled value="category">Select Product Category</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Books">Books</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Sports Equipment">Sports Equipment</option>
+            <option value="Art Supplies">Art Supplies</option>
+            <option value="Laboratory Equipment">Laboratory Equipment</option>
+            <option value="Stationery">Stationery</option>
+            <option value="Footwear">Footwear</option>
+            <option value="Bag">Bag</option>
+            <option value="Other">Other</option>
+          </DropDown>
+          
+          <DropDown
+            inputClass="w-full bg-gray-100 border border-gray-200 text-gray-800 text-base rounded-lg focus:ring-green-500 focus:border-green-500 p-4"
+            name="condition"
+            label="Condition"
+            useFor="form"
+            touched={formik.touched.condition}
+            errors={formik.errors.condition}
+            value={formik.values.condition}
+            onChange={formik.handleChange}
+          >
+            <option disabled value="condition">Product Condition</option>
+            <option value="good">Good</option>
+            <option value="avarage">Average</option>
+            <option value="nice">Nice</option>
+          </DropDown>
+          
+          <div className="md:col-span-2">
             <Input
               type="file"
               multiple={true}
@@ -248,80 +212,55 @@ function ProductUploadForm({ showAlert }) {
               name="images"
               value={formik.values.images}
               onChange={handleImagesChange}
+              inputClass="w-full bg-gray-100 border border-gray-200 text-gray-800 text-base rounded-lg focus:ring-green-500 focus:border-green-500 p-4"
             >
               Upload Additional Images
             </Input>
-            <Input
-              type="text"
-              id="donorName"
-              name="donorName"
-              touched={formik.touched.donorName}
-              errors={formik.errors.donorName}
-              value={formik.values.donorName}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder=" "
-            >Donor Name</Input>
-            <DropDown
-              inputClass="border border-white text-white "
-              name="donorClass"
-              label="Donor Class"
-              useFor="form"
-              touched={formik.touched.donorClass}
-              errors={formik.errors.donorClass}
-              value={formik.values.donorClass}
-              onChange={formik.handleChange}
-            >
-              <option
-                disabled
-                className=" disabled:text-gray-200 bg-green-900"
-                value="default"
-              >
-                In Which Class Donor Study?
-              </option>
-              <option className="bg-green-900" value="1">
-                1
-              </option>
-              <option className="bg-green-900" value="2">
-                2
-              </option>
-              <option className="bg-green-900" value="3">
-                3
-              </option>
-              <option className="bg-green-900" value="4">
-                4
-              </option>
-              <option className="bg-green-900" value="5">
-                5
-              </option>
-              <option className="bg-green-900" value="6">
-                6
-              </option>
-              <option className="bg-green-900" value="7">
-                7
-              </option>
-              <option className="bg-green-900" value="8">
-                8
-              </option>
-              <option className="bg-green-900" value="9">
-                9
-              </option>
-              <option className="bg-green-900" value="10">
-                10
-              </option>
-              <option className="bg-green-900" value="11">
-                11
-              </option>
-              <option className="bg-green-900" value="12">
-                12
-              </option>
-              <option className="bg-green-900" value="12th pass">
-                12th pass
-              </option>
-              <option className="bg-green-900" value="Don't Study in School">
-                Don't Study in School
-              </option>
-            </DropDown>
+          </div>
+          
+          <Input
+            type="text"
+            id="donorName"
+            name="donorName"
+            touched={formik.touched.donorName}
+            errors={formik.errors.donorName}
+            value={formik.values.donorName}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder=" "
+            inputClass="w-full bg-gray-100 border border-gray-200 text-gray-800 text-base rounded-lg focus:ring-green-500 focus:border-green-500 p-4"
+          >
+            Donor Name
+          </Input>
+          
+          <DropDown
+            inputClass="w-full bg-gray-100 border border-gray-200 text-gray-800 text-base rounded-lg focus:ring-green-500 focus:border-green-500 p-4"
+            name="donorClass"
+            label="Donor Class"
+            useFor="form"
+            touched={formik.touched.donorClass}
+            errors={formik.errors.donorClass}
+            value={formik.values.donorClass}
+            onChange={formik.handleChange}
+          >
+            <option disabled value="default">In Which Class Donor Study?</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="12th pass">12th pass</option>
+            <option value="Don't Study in School">Don't Study in School</option>
+          </DropDown>
+          
+          <div className="md:col-span-2">
             <Textarea
               touched={formik.touched.description}
               errors={formik.errors.description}
@@ -329,13 +268,24 @@ function ProductUploadForm({ showAlert }) {
               value={formik.values.description}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              inputClass="w-full bg-gray-100 border border-gray-200 text-gray-800 text-base rounded-lg focus:ring-green-500 focus:border-green-500 p-4"
             >
               Description
             </Textarea>
-            <FormButton formik={formik}>Upload Product</FormButton>
           </div>
-        </Form>
+          
+          <div className="md:col-span-2">
+            <FormButton formik={formik} className="w-full text-base font-bold py-3">
+              {formik.isSubmitting ? "Uploading..." : "Upload Product"}
+            </FormButton>.
+          </div>
+        </div>
+      </Form>
+      <div className="text-center mt-6">
+         <BackButton to="/yourSchool"/>
       </div>
+    </div>
+  </div>
     </>
   );
 }

@@ -8,9 +8,11 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
+import { MdDashboard, MdCheckroom, MdSports, MdBook, MdBackpack } from "react-icons/md";
 import { AllProductsData } from "../context/AllProducts";
 import { getSchoolProducts, getAllSchool } from "../components/form/api";
 import { getThumbnailUrl, getImageUrl } from "../utils/fileUtils";
+import { Icon } from "@iconify/react";
 
 function Home() {
   const [productData, setproductData] = useState([]);
@@ -130,110 +132,92 @@ function Home() {
       <Slidebar />
       <div
         ref={productData}
-        className="bg-[#D9E4DD] text-3xl sm:text-4xl md:text-5xl"
+        className="bg-linear-to-br from-emerald-50 via-green-50 to-teal-50 text-3xl sm:text-4xl md:text-5xl relative overflow-hidden"
       >
-        <div className="flex flex-col w-full bg-[#f0f8ef] min-h-screen p-4 rounded-t-3xl">
+       
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-10 -right-10 w-72 h-72 bg-linear-to-br from-emerald-200/30 to-green-300/30 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-10 -left-10 w-96 h-96 bg-linear-to-tr from-teal-200/20 to-emerald-300/20 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="flex flex-col w-full bg-white/80 backdrop-blur-md min-h-screen p-4 rounded-t-3xl relative shadow-2xl">
           <div className="flex items-center lg:flex-row flex-col justify-around">
-            <div className="flex flex-col">
-              <input
-                className="bg-white w-full sm:w-80 md:w-96 lg:w-[500px] mx-auto text-3xl p-6 h-15 m-10 shadow-md rounded-xl  "
-                value={search}
-                placeholder="Search..."
-                onChange={handleInput}
-              />
+            <div className="flex sm:self-stretch flex-col pr-20">
+              <div className="max-md:w-full relative mx-auto group">
+                <input
+                  className="bg-white/95 backdrop-blur-sm w-full max-md:w-full lg:w-[500px] text-3xl p-6 h-16 m-10 shadow-xl rounded-2xl border border-emerald-200/50 focus:outline-none focus:ring-4 focus:ring-emerald-200/50 focus:border-emerald-400 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-emerald-200/30 placeholder:text-emerald-300"
+                  value={search}
+                  placeholder="Search products..."
+                  onChange={handleInput}
+                />
+                <div className="absolute inset-0 bg-linear-to-r from-emerald-400/10 to-green-400/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              </div>
             </div>
 
             <div className="text-green-800 flex 2xl:hidden flex-col justify-center right-1 items-center">
               {!openDrop && (
                 <div
                   onClick={openDropdown}
-                  className="text-3xl font-serif font-semibold mb-10 flex items-center cursor-pointer"
+                  className="text-3xl font-serif font-semibold mb-10 flex items-center cursor-pointer group transition-all duration-300 hover:text-emerald-700"
                 >
-                  
-                  <h1>Sort Products</h1>
-                  <RiArrowDropDownLine size={50} />
+                  <h1 className="bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent group-hover:from-emerald-700 group-hover:to-green-700">Sort Products</h1>
+                  <RiArrowDropDownLine size={50} className="text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300" />
                 </div>
               )}
 
               {openDrop && (
                 <div
                   onClick={openDropdown}
-                  className="text-3xl lg:hidden top-0 font-serif font-semibold flex items-center cursor-pointer"
+                  className="text-3xl lg:hidden top-0 font-serif font-semibold flex items-center cursor-pointer group transition-all duration-300 hover:text-emerald-700"
                 >
-                  <h1>Sort Products</h1>
-                  <RiArrowDropUpLine size={50} />
+                  <h1 className="bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent group-hover:from-emerald-700 group-hover:to-green-700">Sort Products</h1>
+                  <RiArrowDropUpLine size={50} className="text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300" />
                 </div>
               )}
 
               {openDrop ? (
                 <div className="ease-in duration-1000">
-                  <div className="xl:flex justify-around py-8 items-center bg-white shadow-2xl text-green-100 mb-10 overflow-y-hidden max-w-fit lg:w-fit right-auto opacity-99 rounded-xl max-h-fit flex flex-col gap-8 px-8 tracking-tighter">
-                    <div className="w-full flex">
+                  <div className="flex justify-center py-6 items-center bg-white rounded-2xl shadow-sm border border-gray-100 mb-8 mx-4">
+                    <div className="flex flex-wrap gap-3 justify-center max-w-sm">
+                      <div onClick={() => handleCategoryClick("ALL")} className="group px-4 py-3 bg-white hover:bg-emerald-50 rounded-xl text-emerald-700 hover:text-emerald-800 font-semibold text-sm transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-110 border border-emerald-200 hover:border-emerald-300 backdrop-blur-sm">
+                        <span className="relative z-10 flex items-center gap-3">
+                          <MdDashboard className="text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300" size={16} />
+                          ALL ITEMS
+                        </span>
+                      </div>
+                      <div onClick={() => handleCategoryClick("Clothes")} className="group px-4 py-3 bg-white hover:bg-blue-50 rounded-xl text-blue-700 hover:text-blue-800 font-semibold text-sm transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-110 border border-blue-200 hover:border-blue-300 backdrop-blur-sm">
+                        <span className="relative z-10 flex items-center gap-3">
+                          <MdCheckroom className="text-blue-600 group-hover:text-blue-700 transition-colors duration-300" size={16} />
+                          CLOTHES
+                        </span>
+                      </div>
+                      <div onClick={() => handleCategoryClick("Footwear")} className="group px-4 py-3 bg-white hover:bg-purple-50 rounded-xl text-purple-700 hover:text-purple-800 font-semibold text-sm transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-110 border border-purple-200 hover:border-purple-300 backdrop-blur-sm">
+                        <span className="relative z-10 flex items-center gap-3">
+                          <Icon icon="hugeicons:running-shoes" width="20px" height="20px" className="text-purple-600 group-hover:text-purple-700 transition-colors duration-300" size={16} />
+                          FOOTWEAR
+                        </span>
+                      </div>
+                      <div onClick={() => handleCategoryClick("Stationary")} className="group px-4 py-3 bg-white hover:bg-amber-50 rounded-xl text-amber-700 hover:text-amber-800 font-semibold text-sm transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-110 border border-amber-200 hover:border-amber-300 backdrop-blur-sm">
+                        <span className="relative z-10 flex items-center gap-3">
+                          <MdBook className="text-amber-600 group-hover:text-amber-700 transition-colors duration-300" size={16} />
+                          STATIONARY
+                        </span>
+                      </div>
+                      <div onClick={() => handleCategoryClick("Bag")} className="group px-4 py-3 bg-white hover:bg-teal-50 rounded-xl text-teal-700 hover:text-teal-800 font-semibold text-sm transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-110 border border-teal-200 hover:border-teal-300 backdrop-blur-sm">
+                        <span className="relative z-10 flex items-center gap-3">
+                          <MdBackpack className="text-teal-600 group-hover:text-teal-700 transition-colors duration-300" size={16} />
+                          BAGS
+                        </span>
+                      </div>
+                    </div>
+                    {openDrop && (
                       <div
-                        onClick={() => handleCategoryClick("ALL")}
-                        className="flex font-semibold border-4 shadow-lg bg-white rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 gap-2 2xl:gap-8 w-full lg:w-5/6 px-7 2xl:hover:mb-6 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
+                        onClick={openDropdown}
+                        className="absolute top-4 right-4 rounded-full shadow-[2px_4px_10px_4px_#b6b4b4] text-green-800 cursor-pointer z-20"
                       >
-                        <h4 className="text-2xl">ALL ITEMS</h4>
+                        <RiArrowDropUpLine size={30} />
                       </div>
-                      <div className="w-1/6 bg-white rounded-lg lg:flex justify-center max-h-12 items-center hidden right-5">
-                        {openDrop && (
-                          <div
-                            onClick={openDropdown}
-                            className="2xl:hidden rounded-full shadow-[2px_4px_10px_4px_#b6b4b4] text-green-800 cursor-pointer z-20"
-                          >
-                            <RiArrowDropUpLine size={40} />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div
-                      onClick={() => handleCategoryClick("Clothes")}
-                      className="flex font-semibold border-4 shadow-lg rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-full px-7 2xl:hover:mb-6 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
-                    >
-                      <img
-                        className="max-w-16 rounded-4xl"
-                        src="https://static.vecteezy.com/system/resources/previews/050/069/017/non_2x/green-leaf-on-hanger-icon-illustration-free-vector.jpg"
-                        alt=""
-                      />
-                      <h4 className="text-2xl tracking-tighter">CLOTHES</h4>
-                    </div>
-
-                    <div
-                      onClick={() => handleCategoryClick("Footwear")}
-                      className="flex font-semibold border-4 shadow-lg rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-full px-7 2xl:hover:mb-6 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
-                    >
-                      <img
-                        className="max-w-16 rounded-4xl"
-                        src="https://img.freepik.com/premium-vector/kids-shoe-art-silhouettes-with-white-background_1066965-9418.jpg"
-                        alt=""
-                      />
-                      <h4 className="text-2xl tracking-tighter">FOOTWEAR</h4>
-                    </div>
-
-                    <div
-                      onClick={() => handleCategoryClick("Stationary")}
-                      className="flex font-semibold border-4 shadow-lg rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-full px-7 2xl:hover:mb-6 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
-                    >
-                      <img
-                        className="max-w-16 rounded-4xl"
-                        src="https://media.istockphoto.com/id/174985205/photo/set-of-stationery-items.jpg?s=612x612&w=0&k=20&c=qjJO7Nlj4HrfDgemsKhHkJ-eZGCetulgbKu0JEALMu4="
-                        alt=""
-                      />
-                      <h4 className="text-2xl tracking-tighter">STATIONARY</h4>
-                    </div>
-
-                    <div
-                      onClick={() => handleCategoryClick("Bag")}
-                      className="flex font-semibold border-4 shadow-lg rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-full px-7 2xl:hover:mb-6 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
-                    >
-                      <img
-                        className="max-w-16 h-10 rounded-4xl"
-                        src="https://static.vecteezy.com/system/resources/previews/045/871/966/non_2x/school-bag-packed-with-school-accessories-backpack-kids-bag-full-of-stationery-pens-notebooks-books-ruler-sticking-out-from-pockets-flat-illustration-isolated-on-white-background-vector.jpg"
-                        alt=""
-                      />
-                      <h4 className="text-2xl tracking-tighter">BAGS</h4>
-                    </div>
+                    )}
                   </div>
                 </div>
               ) : (
@@ -241,75 +225,75 @@ function Home() {
               )}
             </div>
           </div>
-          <h2 className="text-center md:text-6xl text-3xl font-bold text-green-800 mb-8 font-serif">
-            Available Products
-          </h2>
+          <div className="relative text-center mb-8">
+            <h2 className="text-center md:text-6xl text-3xl font-bold font-serif relative z-10">
+              <span className="bg-linear-to-r from-emerald-400 via-green-400 to-teal-400 bg-clip-text text-transparent">
+                Available Products
+              </span>
+            </h2>
+            <div className="absolute inset-0 bg-linear-to-r from-emerald-400/20 to-teal-400/20 blur-2xl transform scale-110"></div>
+            <div className="h-1 w-32 bg-linear-to-r from-emerald-500 to-teal-500 mx-auto mt-4 rounded-full"></div>
+          </div>
 
-          <div className="2xl:flex justify-around hidden min-h-36 items-center">
-            <div onClick={() => handleCategoryClick("ALL")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
-              <div
-                className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 min-w-fit px-7 hover:duration-500 border-green-800 overflow-hidden">
-                <h4 className="text-2xl">ALL ITEMS</h4>
+          <div className="2xl:flex justify-center hidden gap-12 items-center py-8 mb-5">
+            <div onClick={() => handleCategoryClick("ALL")} className="group cursor-pointer transition-all duration-300 hover:scale-105">
+              <div className="relative px-6 py-3 bg-white hover:bg-emerald-50 rounded-2xl text-emerald-700 hover:text-emerald-800 font-semibold text-sm tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-200 hover:border-emerald-300 backdrop-blur-sm">
+                <span className="relative z-10 flex items-center gap-3">
+                  <MdDashboard className="text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300" size={18} />
+                  ALL ITEMS
+                </span>
               </div>
             </div>
 
-            <div onClick={() => handleCategoryClick("Clothes")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
-            <div
-              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
-            >
-              <img
-                className="max-w-16 rounded-4xl"
-                src="https://static.vecteezy.com/system/resources/previews/050/069/017/non_2x/green-leaf-on-hanger-icon-illustration-free-vector.jpg"
-                alt=""
-              />
-              <h4 className="text-2xl tracking-tighter">CLOTHES</h4>
-            </div>
+            <div onClick={() => handleCategoryClick("Clothes")} className="group cursor-pointer transition-all duration-300 hover:scale-105">
+              <div className="relative px-6 py-3 bg-white hover:bg-blue-50 rounded-2xl text-blue-700 hover:text-blue-800 font-semibold text-sm tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-200 hover:border-blue-300 backdrop-blur-sm">
+                <span className="relative z-10 flex items-center gap-3">
+                  <MdCheckroom className="text-blue-600 group-hover:text-blue-700 transition-colors duration-300" size={18} />
+                  CLOTHES
+                </span>
+              </div>
             </div>
 
-            <div onClick={() => handleCategoryClick("Footwear")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
-            <div
-              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
-            >
-              <img
-                className="max-w-16 rounded-4xl"
-                src="https://img.freepik.com/premium-vector/kids-shoe-art-silhouettes-with-white-background_1066965-9418.jpg"
-                alt=""
-              />
-              <h4 className="text-2xl tracking-tighter">FOOTWEAR</h4>
-            </div>
+            <div onClick={() => handleCategoryClick("Footwear")} className="group cursor-pointer transition-all duration-300 hover:scale-105">
+              <div className="relative px-6 py-3 bg-white hover:bg-purple-50 rounded-2xl text-purple-700 hover:text-purple-800 font-semibold text-sm tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-200 hover:border-purple-300 backdrop-blur-sm">
+                <span className="relative z-10 flex items-center gap-3">
+                  <Icon icon="hugeicons:running-shoes" width="20px" height="20px" className="text-purple-600 group-hover:text-purple-700 transition-colors duration-300" size={18} />
+                  FOOTWEAR
+                </span>
+              </div>
             </div>
 
-            <div onClick={() => handleCategoryClick("Stationary")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
-            <div
-              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
-            >
-              <img
-                className="max-w-16 rounded-4xl"
-                src="https://media.istockphoto.com/id/174985205/photo/set-of-stationery-items.jpg?s=612x612&w=0&k=20&c=qjJO7Nlj4HrfDgemsKhHkJ-eZGCetulgbKu0JEALMu4="
-                alt=""
-              />
-              <h4 className="text-2xl tracking-tighter">STATIONARY</h4>
-            </div>
+            <div onClick={() => handleCategoryClick("Stationary")} className="group cursor-pointer transition-all duration-300 hover:scale-105">
+              <div className="relative px-6 py-3 bg-white hover:bg-amber-50 rounded-2xl text-amber-700 hover:text-amber-800 font-semibold text-sm tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 border border-amber-200 hover:border-amber-300 backdrop-blur-sm">
+                <span className="relative z-10 flex items-center gap-3">
+                  <MdBook className="text-amber-600 group-hover:text-amber-700 transition-colors duration-300" size={18} />
+                  STATIONARY
+                </span>
+              </div>
             </div>
 
-            <div onClick={() => handleCategoryClick("Bag")} className="min-h-16 flex items-center justify-center cursor-pointer 2xl:hover:pb-6 duration-500">
-            <div
-              className="flex font-semibold border-6 rounded-xl 2xl:rounded-full text-green-800 font-serif justify-center items-center max-h-12 bg-white gap-2 2xl:gap-8 w-fit px-7 cursor-pointer hover:duration-500 border-green-800 overflow-hidden"
-            >
-              <img
-                className="max-w-16 h-10 rounded-4xl"
-                src="https://static.vecteezy.com/system/resources/previews/045/871/966/non_2x/school-bag-packed-with-school-accessories-backpack-kids-bag-full-of-stationery-pens-notebooks-books-ruler-sticking-out-from-pockets-flat-illustration-isolated-on-white-background-vector.jpg"
-                alt=""
-              />
-              <h4 className="text-2xl tracking-tighter">BAGS</h4>
-            </div>
+            <div onClick={() => handleCategoryClick("Bag")} className="group cursor-pointer transition-all duration-300 hover:scale-105">
+              <div className="relative px-6 py-3 bg-white hover:bg-teal-50 rounded-2xl text-teal-700 hover:text-teal-800 font-semibold text-sm tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 border border-teal-200 hover:border-teal-300 backdrop-blur-sm">
+                <span className="relative z-10 flex items-center gap-3">
+                  <MdBackpack className="text-teal-600 group-hover:text-teal-700 transition-colors duration-300" size={18} />
+                  BAGS
+                </span>
+              </div>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-5 justify-center px-4">
             {loading ? (
-              <div className="mt-[10vh]">
-              <div className="text-6xl text-green-900 font-bold my-7"><ImSpinner10 className="animate-spin" /></div>
+              <div className="mt-[10vh] flex flex-col items-center">
+                <div className="relative">
+                  <div className="text-6xl text-emerald-600 font-bold my-7">
+                    <ImSpinner10 className="animate-spin" />
+                  </div>
+                  <div className="absolute inset-0 bg-linear-to-r from-emerald-400/20 to-green-400/20 rounded-full blur-xl animate-pulse"></div>
+                </div>
+                <h3 className="text-2xl font-bold bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
+                  Loading Products...
+                </h3>
               </div>
             ) : productData.length > 0 ? (
               productData.map((item) => {
@@ -328,8 +312,17 @@ function Home() {
                 );
               })
             ) : (
-              <div className="text-3xl font-bold text-gray-500 my-10 text-center">
-                <h1>Not found any products</h1>
+              <div className="text-center my-16">
+                <div className="relative inline-block">
+                  <div className="text-6xl mb-6">🔍</div>
+                  <div className="absolute inset-0 bg-linear-to-r from-emerald-400/10 to-green-400/10 rounded-full blur-2xl animate-pulse"></div>
+                </div>
+                <h1 className="text-4xl font-bold bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent mb-4">
+                  No Products Found
+                </h1>
+                <p className="text-xl text-gray-600 max-w-md mx-auto">
+                  We couldn't find any products matching your criteria. Try adjusting your search or filter settings.
+                </p>
               </div>
             )}
           </div>

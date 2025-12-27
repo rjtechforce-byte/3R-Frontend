@@ -4,6 +4,8 @@
      --color-gray-popup: rgba(214, 214, 214, 0.95);
     --color-green-popup: #20D61A;
     --color-red-popup: #D61A20;
+    --breakpoint-3xl: 101rem;
+    --breakpoint-4lg:76rem;
 }
 
 
@@ -37,6 +39,6 @@ opacity: 1;
   }
 
  .autoFill:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0px 1000px #D9E4DD inset !important;
+        -webkit-box-shadow: 0 0 0px 1000px white inset !important;
         background-color: transparent !important;
     }

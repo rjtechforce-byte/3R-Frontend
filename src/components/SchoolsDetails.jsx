@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAllSchool, getSchoolLeaderBoard } from "./form/api";
-import { ImSpinner10 } from "react-icons/im";
+import { Loading } from "./form/MiniComp";
 
 export default function SchoolDetail() {
   const [schoolData, setSchoolData] = useState([]);
@@ -51,11 +51,7 @@ export default function SchoolDetail() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="min-w-full flex items-center justify-center my-10">
-        <ImSpinner10 className="animate-spin text-6xl text-green-700" />
-      </div>
-    );
+    return <Loading message="Loading School Rankings..." />;
   }
 
   const getRankClass = (index) => {

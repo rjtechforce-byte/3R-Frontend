@@ -34,7 +34,7 @@ const randomString = (length) => {
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
-  return result;
+  return result.trim();
 };
 
 const storage = multer.diskStorage({
@@ -42,7 +42,7 @@ const storage = multer.diskStorage({
     cd(null, 'public/uploads');
   },
   filename: (req, file, cd) => {
-    cd(null, randomString(10) + '_' + file.originalname);
+    cd(null, randomString(10) + '_' + file.originalname).trim();
   },
 });
 

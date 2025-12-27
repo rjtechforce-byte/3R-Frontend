@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Form from "./Form";
 import Input from "./Input";
 import Slidebar from "../Slidebar";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import DropDown from './DropDown';
 import { FaBackward } from "react-icons/fa";
 import FormLiquidGlass from "./FormLiquidGlass";
+import { BackButton } from "./MiniComp";
 function SchoolRegisterForm({ showAlert }) {
       const navigation = useNavigate();
 
@@ -81,47 +82,78 @@ function SchoolRegisterForm({ showAlert }) {
     };
 console.log('values', formik.values)
 
-return(
-  <>
-  <Slidebar />
-  <div className="bg-[#D9E4DD]  min-h-screen w-full flex justify-center items-center py-30 flex-col overflow-auto">
-    <h1 className="text-green-900 text-2xl font-serif font-semibold">⚠️Register only if you are incharge or teacher of your school else strict action will be taken⚠️</h1>
-    <Form onSubmit={formik.handleSubmit} className="max-w-full md:min-w-[600px]">
-    <h1 className='text-3xl md:text-5xl text-center font-bold self-start text-green-800 mb-6 font-serif border-b-4 border-green-900 w-full bg-[#D9E4DD] py-4'>School Registration Form</h1>
-    <div className="bg-[#D9E4DD]
-     inline-flex 
-     w-full
-     flex-col
-     gap-6
-     items-center
-     px-8">
-    <Input type="file" multiple={false} touched={formik.touched.schoolImage} errors={formik.errors.schoolImage} id="schoolImage" name="schoolImage" value={formik.values.schoolImage} onChange={handleFileChange}>Upload School Photo</Input>
-    <Input type="text" name="schoolName" placeholder=" " value={formik.values.schoolName} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.schoolName} touched={formik.touched.schoolName}>School Name</Input>
-    <Input type="email" name="schoolEmail" placeholder=" " value={formik.values.schoolEmail} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.schoolEmail} touched={formik.touched.schoolEmail}>School Email</Input>
-    <DropDown name="subDistrict" inputClass="border-3 border-green-900 text-green-500 font-serief" label="Sub-District" value={formik.values.subDistrict} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.subDistrict} touched={formik.touched.subDistrict}>
-          <option  disabled className=" disabled:text-green-900 bg-[#D9E4DD] font-serief" value="defualt">Select Your Sub-District</option>
-          <option  className="bg-[#D9E4DD] font-serief"  value="sardarshahar">Sardarshahar</option>
-          <option  className="bg-[#D9E4DD] font-serief"  value="rajgarh">Rajgarh</option>
-          <option  className="bg-[#D9E4DD] font-serief"  value="churu">Churu</option>
-          <option  className="bg-[#D9E4DD] font-serief"  value="bidasar">Bidasar</option>
-          <option  className="bg-[#D9E4DD] font-serief"  value="taranagar">Taranagar</option>
-          <option  className="bg-[#D9E4DD] font-serief"  value="sujangarh">Sujangarh</option>
-          <option  className="bg-[#D9E4DD] font-serief"  value="ratangarh">Ratangarh</option>
-    </DropDown>
-    <Input type="tel" name="schoolPhone" placeholder=" " value={formik.values.schoolPhone} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.schoolPhone} touched={formik.touched.schoolPhone}>School Phone Number</Input>
-    <Input type="text" name="inchargeName" placeholder=" " value={formik.values.inchargeName} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.inchargeName} touched={formik.touched.inchargeName}>Incharge Name</Input>
-    <Input type="text" name="address" placeholder=" " value={formik.values.address} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.address} touched={formik.touched.address}>School Address</Input>
-    <Input type="tel" name="inchargePhone" placeholder=" " value={formik.values.inchargePhone} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.inchargePhone} touched={formik.touched.inchargePhone}>Incharge Phone Number</Input>
-    <Input type="password" name="password" placeholder=" " value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.password} touched={formik.touched.password}>Password</Input>
-    <Input type="password" name="confirmPassword" placeholder=" " value={formik.values.confirmPassword} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.confirmPassword} touched={formik.touched.confirmPassword}>Confirm Password</Input>
-    <FormButton formik={formik}>Register</FormButton>
-    </div>
-    <p className="text-xl text-green-800">Already registered? <a className="font-semibold hover:underline" href="/schoolLogin">Log in</a></p>
-    </Form>
-    <a href="/" className="bg-green-800 cursor-pointer text-white px-15 xl:mt-27 max-h-20 py-2 mt-7 border-2 shadow-xl border-white-800  inline-flex gap-2 font-semibold text-2xl md:text-4xl font-serif items-center transition-all duration-700 rounded-[9px] group hover:text-green-800 hover:bg-white"><FaBackward /> GO BACK </a>
-  </div>
-  </>
-)
+const token = localStorage.getItem('token');
+
+useEffect(() => {
+  if (token) {
+    navigation('/yourSchool', { replace: true });
+  }
+}, [token, navigation]);
+
+if (token) return null;
+
+return (
+    <>
+      <Slidebar />
+      <div className="bg-gray-100 min-h-screen w-full flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl flex flex-col justify-center items-center">
+          <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md mb-8 shadow-sm">
+            <p className="font-bold">Attention!</p>
+            <p>This registration is strictly for authorized school in-charges or teachers. Misuse will result in appropriate action.</p>
+          </div>
+          <div className="flex items-center justify-center flex-col">
+
+          <Form onSubmit={formik.handleSubmit} className="bg-white p-8 sm:p-10 rounded-2xl shadow-2xl w-full">
+            <h1 className='text-3xl md:text-4xl text-center font-bold text-gray-800 mb-8 font-sans border-b-2 pb-4'>
+              School Registration
+            </h1>
+            
+            <div className="grid sm:w-full grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+              <div className="md:col-span-2">
+                <Input type="file" multiple={false} touched={formik.touched.schoolImage} errors={formik.errors.schoolImage} id="schoolImage" name="schoolImage" value={formik.values.schoolImage} onChange={handleFileChange} inputClass="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 p-2.5">Upload School Photo</Input>
+              </div>
+              
+              <Input type="text" name="schoolName" placeholder=" " value={formik.values.schoolName} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.schoolName} touched={formik.touched.schoolName} inputClass="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 p-2.5">School Name</Input>
+              <Input type="email" name="schoolEmail" placeholder=" " value={formik.values.schoolEmail} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.schoolEmail} touched={formik.touched.schoolEmail} inputClass="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 p-2.5">School Email</Input>
+              
+              <DropDown name="subDistrict" inputClass="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 p-2.5" label="Sub-District" value={formik.values.subDistrict} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.subDistrict} touched={formik.touched.subDistrict}>
+                  <option disabled value="defualt">Select Your Sub-District</option>
+                  <option value="sardarshahar">Sardarshahar</option>
+                  <option value="rajgarh">Rajgarh</option>
+                  <option value="churu">Churu</option>
+                  <option value="bidasar">Bidasar</option>
+                  <option value="taranagar">Taranagar</option>
+                  <option value="sujangarh">Sujangarh</option>
+                  <option value="ratangarh">Ratangarh</option>
+              </DropDown>
+
+              <Input type="tel" name="schoolPhone" placeholder=" " value={formik.values.schoolPhone} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.schoolPhone} touched={formik.touched.schoolPhone} inputClass="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 p-2.5">School Phone</Input>
+              
+              <Input type="text" name="inchargeName" placeholder=" " value={formik.values.inchargeName} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.inchargeName} touched={formik.touched.inchargeName} inputClass="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 p-2.5">Incharge Name</Input>
+              <Input type="tel" name="inchargePhone" placeholder=" " value={formik.values.inchargePhone} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.inchargePhone} touched={formik.touched.inchargePhone} inputClass="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 p-2.5">Incharge Phone</Input>
+              
+              <div className="md:col-span-2">
+                 <Input type="text" name="address" placeholder=" " value={formik.values.address} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.address} touched={formik.touched.address} inputClass="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 p-2.5">Full School Address</Input>
+              </div>
+
+              <Input type="password" name="password" placeholder=" " value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.password} touched={formik.touched.password} inputClass="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 p-2.5">Password</Input>
+              <Input type="password" name="confirmPassword" placeholder=" " value={formik.values.confirmPassword} onChange={formik.handleChange} onBlur={formik.handleBlur} errors={formik.errors.confirmPassword} touched={formik.touched.confirmPassword} inputClass="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 p-2.5">Confirm Password</Input>
+              
+              <div className="md:col-span-2 mt-6">
+                <FormButton formik={formik}>Create Account</FormButton>
+              </div>
+            </div>
+
+            <p className="text-sm text-center text-gray-600 mt-8">
+              Already have an account? <a className="font-medium text-green-600 hover:text-green-500 hover:underline" href="/schoolLogin">Log in here</a>
+            </p>
+          </Form>
+          <BackButton className="mt-6"/>
+</div>
+        </div>
+      </div>
+    </>
+  )
 };
 
 export default SchoolRegisterForm;

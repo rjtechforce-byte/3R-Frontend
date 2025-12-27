@@ -156,15 +156,17 @@ console.log('school data',schoolData);
           </div>
         </div>
 
-        <div className="schoolselecter origin-bottom hidden rotate-z-90 top-0 z-999 min-h-screen w-screen overflow-hidden items-center justify-around flex-col p-24 bg-[#D9E4DD]">
-          <div className="flex items-center justify-center flex-col">
-            <div className="flex items-center flex-col m-2 xl:m-15">
-              <h3 className="text-green-900 text-xl xl:text-4xl font-serif font-semibold">
-                Want to see your school's items!
+        <div className="schoolselecter origin-bottom hidden top-0 z-999 min-h-screen w-screen overflow-y-auto items-center justify-center flex-col lg:flex-col p-6 bg-[#eef5f1] gap-10">
+          
+          
+          <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12 w-full max-w-xl text-center flex flex-col justify-center transform transition-transform duration-500 hover:scale-105">
+            <div className="mb-6">
+              <h3 className="text-gray-900 text-3xl md:text-4xl font-bold font-sans">
+                Find Your School
               </h3>
-              <h1 className="text-green-900 text-xl xl:text-6xl font-serif font-bold">
-                Please select your school
-              </h1>
+              <p className="text-gray-600 text-lg font-sans mt-3">
+                Select your school to see its contributions.
+              </p>
             </div>
 
             <select
@@ -176,7 +178,13 @@ console.log('school data',schoolData);
                 localStorage.setItem("schoolName", JSON.stringify(e.target.value));
                 window.location.href = "/home";
               }}
-              className="mt- p-4 text-green-900 max-w-full rounded-lg bg-white text-2xl xl:text-3xl font-serif hover:bg-green-400 font-bold outline-none"
+              className="mt-4 p-4 text-gray-700 max-w-md w-full rounded-lg bg-gray-100 border-2 border-gray-200 text-xl font-sans font-semibold outline-none focus:ring-4 focus:ring-green-300 focus:border-green-400 transition-all duration-300 appearance-none"
+              style={{
+                backgroundImage: `url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" fill-rule="evenodd"></path></svg>')`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 1rem center',
+                backgroundSize: '1.5em 1.5em'
+              }}
             >
               <option value="default">Select Your School</option>
               {schoolData && schoolData.length > 0 && schoolData.map((school, index) => (
@@ -187,27 +195,29 @@ console.log('school data',schoolData);
             </select>
           </div>
 
-          <div className="border-4 border-green-900 w-full"></div>
+          
+          <div className="lg:hidden border-t-2 border-green-300 w-full max-w-md"></div>
 
-          <div className="flex items-center justify-center flex-col">
-            <div className="flex items-center flex-col m-2 xl:m-15">
-              <h3 className="text-green-900 text-xl xl:text-4xl font-serif font-semibold">
-                Not registered your school yet!
+         
+          <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12 w-full max-w-xl text-center flex flex-col justify-center transform transition-transform duration-500 hover:scale-105">
+            <div className="mb-6">
+              <h3 className="text-gray-900 text-3xl md:text-4xl font-bold font-sans">
+                Join Our Network
               </h3>
-              <h1 className="text-green-900 text-2xl xl:text-6xl font-serif font-bold">
-                Please register your school first
-              </h1>
+              <p className="text-gray-600 text-lg font-sans mt-3">
+                Is your school not listed? Register now!
+              </p>
             </div>
             <a
               href="/schoolRegister"
-              className="max-w-fit rounded-lg transition-all duration-1000 hover:text-green-900 hover:bg-white text-white cursor-pointer mt-4 mb-1 bg-green-800 py-5 px-27"
+              className="inline-block rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-2xl text-white cursor-pointer bg-linear-to-r from-green-500 to-green-700 shadow-lg py-4 px-10"
             >
-              <h1 className="text-2xl xl:text-3xl font-serif font-semibold flex items-center">
-                <span className="mr-1">
-                  <MdAdd />
-                </span>{" "}
-                REGISTER
-              </h1>
+              <div className="text-2xl font-sans font-bold flex items-center justify-center">
+                <span className="mr-3">
+                  <MdAdd size="1.3em" />
+                </span>
+                REGISTER SCHOOL
+              </div>
             </a>
           </div>
         </div>
