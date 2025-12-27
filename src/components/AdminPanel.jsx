@@ -12,11 +12,9 @@ const AdminPanel = ({ auth, handleLogout }) => (
             <a href="/admin/products" className="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105 text-center">
                 Manage All Products
             </a>
-            <div className="relative group">
-                <button disabled className="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg cursor-not-allowed">
-                    Site Statistics
-                </button>
-            </div>
+            <a href="/statistics" className="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105 text-center">
+                Site Statistics
+            </a>
             <div className="relative group">
                 <button disabled className="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg cursor-not-allowed">
                     User Management
