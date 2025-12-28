@@ -25,6 +25,7 @@ import AdminAuth from './pages/AdminAuth';
 import ManageProducts from './pages/ManageProducts';
 import AuthRoutes from './pages/AuthRoutes';
 import SiteStatistics from './pages/SiteStatistics';
+import ViewAllSchool from './pages/AdminViewAllSchool';
 
 
 function App() {
@@ -78,6 +79,7 @@ getCurrentSchool().then((info) => {
             <Route path="/approveSchool" element={<AdminAuth><ApproveSchool /></AdminAuth>}/>
             <Route path="/admin/products" element={<AdminAuth><ManageProducts showAlert={showAlert} /></AdminAuth>} />
             <Route path="/statistics" element={<SiteStatistics />} />
+            <Route path="/viewallschool" element={<ViewAllSchool />} />
           </Routes>
         </main>
     </div>
