@@ -99,7 +99,7 @@ return (
         <div className="max-w-4xl flex flex-col justify-center items-center">
           <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md mb-8 shadow-sm">
             <p className="font-bold">Attention!</p>
-            <p>This registration is strictly for authorized school in-charges or teachers. Misuse will result in appropriate action.</p>
+            <p>Register only if you are incharge or teacher of your school else strict action will be taken⚠️</p>
           </div>
           <div className="flex items-center justify-center flex-col">
 
