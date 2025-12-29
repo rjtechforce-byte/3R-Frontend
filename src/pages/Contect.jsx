@@ -76,11 +76,19 @@ export default function Contact() {
   return (
     <>
     <Slidebar />
-    <div className="flex font-serief flex-col items-center rounded-2xl gap-10 shadow-xl justify-center bg-linear-to-tr lg:m-5 xl:m-15 font-serif p-4">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={itemVariants}
+    >
+      <div className="flex font-serief flex-col items-center rounded-2xl gap-10 shadow-xl justify-center bg-linear-to-tr lg:m-5 xl:m-15 font-serif p-4">
       <h1 className="text-2xl lg:text-4xl text-green-500 font-bold">Location: <a href="https://www.google.com/maps/search/Office+of+Cheaf+Education+officer,+opposite+PWD+office+Churu./@28.2873068,74.9569876,17z/data=!3m1!4b1?authuser=0&entry=ttu&g_ep=EgoyMDI1MTExMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" className="hover:text-green-300 hover:underline">Office of Chief District Education officer, opposite PWD office Churu.</a></h1>
       <h1 className="text-2xl lg:text-4xl text-green-500 font-bold">Nodal Incharge: Dr. Santosh Kumar Maharshi(C.D.E.O.)</h1>
       <h1 className="text-2xl lg:text-4xl text-green-500 font-bold">Sub-Nodal Incharge: Gaurav Sharma (Contact no. 9024303162)</h1>
       </div>
+    </motion.div>
     <div
       id="contact"
       className="w-full min-h-screen px-4 pt-20 pb-12 text-black bg-green-200/10 sm:px-6 lg:px-8"
