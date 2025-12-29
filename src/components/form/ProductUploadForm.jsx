@@ -9,6 +9,7 @@ import { postProduct } from './api';
 import Textarea from './Textarea';
 import FormButton from './FormButton';
 import Slidebar from '../Slidebar';
+import { FaBackward } from "react-icons/fa";
 
 
 function ProductUploadForm({ showAlert }) {
@@ -122,7 +123,7 @@ function ProductUploadForm({ showAlert }) {
   return (
     <>
     <Slidebar />
-      <div className="bg-[#D9E4DD]  min-h-screen w-screen flex justify-center py-15 overflow-auto px-10">
+      <div className="bg-[#D9E4DD]  min-h-screen w-full items-center flex-col flex justify-center py-15 overflow-auto px-10">
         <Form onSubmit={formik.handleSubmit}>
           <h1 className="text-3xl font-bold self-start text-green-800 mb-6 border-b border-gray-300 w-full bg-[#D9E4DD] py-4 pl-8">
             Upload Product Your Product
@@ -335,6 +336,7 @@ function ProductUploadForm({ showAlert }) {
             <FormButton formik={formik}>Upload Product</FormButton>
           </div>
         </Form>
+            <a href="/yourSchool" className="bg-green-800 cursor-pointer text-white px-15 xl:mt-27 max-h-20 py-2 mt-7 border-2 shadow-xl border-white-800 max-w-fit inline-flex gap-2 font-semibold text-2xl md:text-4xl font-serif items-center transition-all duration-700 rounded-[9px] group hover:text-green-800 hover:bg-white"><FaBackward /> GO BACK </a>
       </div>
     </>
   );
