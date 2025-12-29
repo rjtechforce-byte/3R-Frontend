@@ -10,9 +10,11 @@ import Textarea from './Textarea';
 import FormButton from './FormButton';
 import Slidebar from '../Slidebar';
 import { FaBackward } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 
 function ProductUploadForm({ showAlert }) {
+  const navigate = useNavigate();
   const [focus, setFocus] = useState();
 
   const validationSchema = Yup.object({
@@ -86,11 +88,11 @@ function ProductUploadForm({ showAlert }) {
       data.append('donorName', values.donorName);
       data.append('donorClass', values.donorClass);
       data.append('description', values.description);
-      const promise = postProduct(data);
-      promise
+      return postProduct(data)
         .then((responseData) => {
           console.log('Response data after submission', responseData);
           showAlert("Product Uploaded Successfully", "not-error", "uploadProduct");
+          navigate('/yourSchool');
         })
         .catch((error) => {
           console.error('Error during submission', error);
@@ -101,7 +103,6 @@ function ProductUploadForm({ showAlert }) {
           showAlert(error.response.statusText
  , "error")
         });
-      console.log('Form data', data, values.title);
     },
   });
 
@@ -333,7 +334,7 @@ function ProductUploadForm({ showAlert }) {
             >
               Description
             </Textarea>
-            <FormButton formik={formik}>Upload Product</FormButton>
+            <FormButton formik={formik}>{formik.isSubmitting ? "Uploading Product..." : "Upload Product"}</FormButton>
           </div>
         </Form>
             <a href="/yourSchool" className="bg-green-800 cursor-pointer text-white px-15 xl:mt-27 max-h-20 py-2 mt-7 border-2 shadow-xl border-white-800 max-w-fit inline-flex gap-2 font-semibold text-2xl md:text-4xl font-serif items-center transition-all duration-700 rounded-[9px] group hover:text-green-800 hover:bg-white"><FaBackward /> GO BACK </a>
