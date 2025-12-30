@@ -13,6 +13,7 @@ import WelcomeCard from "../components/WelcomeCard";
 import Slides from "../components/Slides";
 import { MdAdd } from "react-icons/md";
 import NavbarWel from "../components/NavbarWel";
+import { FaBackward } from "react-icons/fa";
 
 const Recycle = "/images/recycle.png";
 const WelcomeBg = "/images/bg.jpg";
@@ -158,7 +159,7 @@ console.log('school data',schoolData);
           </div>
         </div>
 
-        <div className="schoolselecter origin-bottom hidden rotate-z-90 top-0 z-999 min-h-screen w-screen overflow-hidden items-center justify-around flex-col p-24 bg-[#D9E4DD]">
+        <div className="schoolselecter origin-bottom hidden rotate-z-90 top-0 z-999 min-h-screen w-screen overflow-hidden items-center justify-around xl:justify-between flex-col bg-[#D9E4DD]">
           <div className="flex items-center justify-center flex-col">
             <div className="flex items-center flex-col m-2 xl:m-15">
               <h3 className="text-green-900 text-xl xl:text-4xl font-serif font-semibold">
@@ -189,10 +190,12 @@ console.log('school data',schoolData);
             </select>
           </div>
 
-          <div className="border-4 border-green-900 w-full"></div>
+          <div className="border-4 border-green-900 w-full flex justify-center max-h-1 items-center">
+            <a href="/" className="relative z-40 bg-green-800 cursor-pointer text-white px-15 max-h-20 py-2 border-2 shadow-xl border-white-800 max-w-fit inline-flex gap-2 font-semibold text-2xl md:text-4xl font-serif items-center transition-all duration-700 rounded-[9px] group hover:text-green-800 hover:bg-white"><FaBackward /> GO BACK </a>
+            </div>
 
-          <div className="flex items-center justify-center flex-col">
-            <div className="flex items-center flex-col m-2 xl:m-15">
+          <div className="flex items-center justify-center mb-5 xl:mb-16 flex-col">
+            <div className="flex items-center flex-col m-2 xl:mx-15">
               <h3 className="text-green-900 text-xl xl:text-4xl font-serif font-semibold">
                 Not registered your school yet!
               </h3>
@@ -202,7 +205,7 @@ console.log('school data',schoolData);
             </div>
             <a
               href="/schoolRegister"
-              className="max-w-fit rounded-lg transition-all duration-1000 hover:text-green-900 hover:bg-white text-white cursor-pointer mt-4 mb-1 bg-green-800 py-5 px-27"
+              className="max-w-fit rounded-lg transition-all duration-1000 hover:text-green-900 hover:bg-white text-white cursor-pointer mt-4 mb-1 bg-green-800 lg:py-5 py-3 px-17 lg:px-27"
             >
               <h1 className="text-2xl xl:text-3xl font-serif font-semibold flex items-center">
                 <span className="mr-1">
