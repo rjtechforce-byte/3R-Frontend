@@ -242,7 +242,7 @@ function Home() {
             </div>
           </div>
           <h2 className="text-center md:text-6xl text-3xl font-bold text-green-800 mb-8 font-serif">
-            Available Products
+            Available Products in {schoolName}
           </h2>
 
           <div className="2xl:flex justify-around hidden min-h-36 items-center">
