@@ -46,6 +46,7 @@ function App() {
     }
 
   useEffect(() => {
+    if(localStorage.getItem('token')) {
 getCurrentSchool().then((info) => {
       setAuth(info);
       console.log('school token', info)
@@ -53,6 +54,9 @@ getCurrentSchool().then((info) => {
       setAuth(null);
        localStorage.removeItem('token');
     });
+  } else {
+    setAuth(null);
+  }
   }, []);
   console.log('auth state', auth);
   return (
@@ -76,7 +80,7 @@ getCurrentSchool().then((info) => {
             <Route path="/productEdit/:_id" element={<AuthRoutes><ProductEdit showAlert={showAlert}/></AuthRoutes>}/>
             <Route path="/product/:_id/helpedStudent" element={<AuthRoutes><HelpedStudentForm showAlert={showAlert}/></AuthRoutes>}/>
             <Route path="/submittedSuccessfully/:any" element={<SubmittedSuccessfully />}/>
-            <Route path="/approveSchool" element={<AdminAuth><ApproveSchool /></AdminAuth>}/>
+            <Route path="/approveSchool" element={<AdminAuth><ApproveSchool showAlert={showAlert}/></AdminAuth>}/>
             <Route path="/admin/products" element={<AdminAuth><ManageProducts showAlert={showAlert} /></AdminAuth>} />
             <Route path="/statistics" element={<SiteStatistics />} />
             <Route path="/viewallschool" element={<ViewAllSchool />} />

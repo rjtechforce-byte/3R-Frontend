@@ -12,4 +12,5 @@ schoolRoute.get('/subDistrict/school', schoolController.getSchoolBySubDistrict);
 schoolRoute.get('/schoolLeaderBoard', schoolController.getSchoolLeaderBoard)
 schoolRoute.put('/approve/:schoolId', schoolController.approveSchool);
 schoolRoute.get('/unapproved', schoolController.getUnapprovedSchools);
+schoolRoute.delete('/delete/:schoolId', schoolController.deleteSchool);
 module.exports = schoolRoute;

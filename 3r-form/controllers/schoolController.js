@@ -244,10 +244,21 @@ exports.approveSchool = (req, res, next) => {
 exports.getUnapprovedSchools = (req, res, next) => {
   School.find({ isApproved: false }).select("_id schoolName schoolEmail schoolImage subDistrict schoolPhone address inchargeName inchargePhone createdAt updatedAt")
     .then(schools => {
-      console.log('unapproved schools', schools);
       res.status(200).json(schools);
     })
     .catch(err => {
       res.status(500).json({ message: 'Failed to fetch unapproved schools' });
+    });
+};
+
+
+exports.deleteSchool = (req, res, next) => {
+  const schoolId = req.params.schoolId;
+  School.findByIdAndDelete(schoolId)
+    .then(() => {
+      res.status(200).json({ message: 'School deleted successfully' });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Failed to delete school' });
     });
 };

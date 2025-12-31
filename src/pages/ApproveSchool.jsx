@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Slidebar from '../components/Slidebar';
-import { approveSchool, getUnapprovedSchools } from '../components/form/api';
+import { approveSchool, getUnapprovedSchools, deleteSchool } from '../components/form/api';
+import { Loading } from '../components/form/MiniComp';
 
-
-const ApproveSchool = () => {
+const ApproveSchool = ({ showAlert }) => {
   const [schools, setSchools] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,17 +12,21 @@ const ApproveSchool = () => {
    getUnapprovedSchools().then((data) => {
     console.log('Unapproved schools data:', data);
       setSchools(data);
+      setLoading(false);
     }).catch((err) => {
       setError('Failed to fetch unapproved schools.');
       console.error(err);
     }).finally(() => {
       setLoading(false);
     });
-  }, []);
+  }, [loading]);
 
   const handleApprove = (schoolId) => {
-   approveSchool(schoolId).then(() => {
-      setSchools(schools.filter(school => school._id !== schoolId));
+    setLoading(true);
+   approveSchool(schoolId).then((res) => {
+    console.log('approve', res)
+      showAlert(res.data?.message || res.message, "not-error", "approve");
+      
     }).catch((err) => {
       setError('Failed to approve school.');
       console.error(err);
@@ -30,15 +34,20 @@ const ApproveSchool = () => {
   };
   
   const handleReject = (schoolId) => {
-    // In a real app, you'd likely want to call a backend endpoint to reject.
-    // For this example, we'll just remove it from the list.
-    setSchools(schools.filter(school => school._id !== schoolId));
+    setLoading(true);
+   deleteSchool(schoolId).then((res) => {
+    console.log('rejct', res)
+      showAlert(res.data?.message || res.message, "not-error", "reject")
+    }).catch((err) => {
+      setError('Failed to reject school.');
+      console.error(err);
+    });
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+       <Loading/>
       </div>
     );
   }

@@ -255,3 +255,16 @@ export function approveSchool(id) {
       console.log('error while approving school', err);
     });
 }
+
+export function deleteSchool(id) {
+  return axios
+    .delete(`${BASE_URL}/school/delete/${id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log('error while deleting school', err);
+    });
+}
+
+
