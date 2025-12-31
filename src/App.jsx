@@ -74,8 +74,8 @@ getCurrentSchool().then((info) => {
             <Route path="/yourSchool" element={<YourSchool showAlert={showAlert} auth={auth}/>} />
             <Route path="/schoolContribution" element={<SchoolContribution />} />
             <Route path="/uploadProducts" element={<AuthRoutes><ProductUploadForm showAlert={showAlert}/></AuthRoutes>}/>
-            <Route path="/schoolLogin" element={<NoAuthRoutes auth={auth} children={<SchoolLoginForm showAlert={showAlert}/>}/>}/>
-            <Route path="/schoolRegister" element={<NoAuthRoutes auth={auth} children={<SchoolRegisterForm showAlert={showAlert}/>}/>}/>
+            <Route path="/schoolLogin" element={<NoAuthRoutes children={<SchoolLoginForm showAlert={showAlert}/>}/>}/>
+            <Route path="/schoolRegister" element={<NoAuthRoutes children={<SchoolRegisterForm showAlert={showAlert}/>}/>}/>
             <Route path="/schoolPage" element={<SchoolPage />}/>
             <Route path="/productEdit/:_id" element={<AuthRoutes><ProductEdit showAlert={showAlert}/></AuthRoutes>}/>
             <Route path="/product/:_id/helpedStudent" element={<AuthRoutes><HelpedStudentForm showAlert={showAlert}/></AuthRoutes>}/>
