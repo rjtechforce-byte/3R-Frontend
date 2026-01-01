@@ -6,7 +6,7 @@ const Cards = (props) => {
 
     return (
         <>
-        <div className="gap-5 sm:m-5 border border-gray-100 w-[350px] bg-white rounded-2xl shadow-md hover:shadow-xl hover:scale-110 m-5 transform  hover:-translate-y-0.5 font-serif transition-all duration-700 h-fit flex justify-center flex-col items-center">
+        <div className="gap-5 sm:m-5 border border-gray-100 w-[350px] bg-white rounded-2xl shadow-md hover:shadow-xl transition-transform duration-500 hover:scale-105 m-5   hover:-translate-y-0.5 font-serif h-fit flex justify-center flex-col items-center">
           
             <img 
               src={props.thumbnail} 
