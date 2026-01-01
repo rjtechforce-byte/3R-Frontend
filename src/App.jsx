@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './pages/Home';
 import Slidebar from "./components/Slidebar";
@@ -27,12 +27,16 @@ import AuthRoutes from './pages/AuthRoutes';
 import SiteStatistics from './pages/SiteStatistics';
 import ViewAllSchool from './pages/AdminViewAllSchool';
 import UserManagement from './pages/UserManagement';
+import { TbMessages } from "react-icons/tb";
+
 
 
 function App() {
 
     const [alert, setAlert] = useState(null);
     const [auth, setAuth] = useState(undefined);
+    const messageIconRef = useRef(null);
+    const footerRef = useRef(null);
   
 
     function showAlert(message, type, from){
@@ -59,6 +63,32 @@ getCurrentSchool().then((info) => {
     setAuth(null);
   }
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (footerRef.current && messageIconRef.current) {
+        const footerRect = footerRef.current.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        if (footerRect.top < windowHeight) {
+          const visibleHeight = windowHeight - footerRect.top;
+          messageIconRef.current.style.bottom = `${12 + visibleHeight}px`;
+        } else {
+          messageIconRef.current.style.bottom = '12px';
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
   console.log('auth state', auth);
   return (
     <BrowserRouter>
@@ -87,10 +117,15 @@ getCurrentSchool().then((info) => {
             <Route path="/viewallschool" element={<ViewAllSchool />} />
             <Route path="/usermanagement" element={<UserManagement />} />
           </Routes>
+        <div ref={messageIconRef} className="text-black z-50 fixed right-3 text-6xl" style={{ bottom: '12px' }}>
+          <a href="/contact"><TbMessages /></a>
+        </div>
         </main>
     </div>
         
-        <Footer />
+        <div ref={footerRef}>
+          <Footer />
+        </div>
     </BrowserRouter>
   );
 };
