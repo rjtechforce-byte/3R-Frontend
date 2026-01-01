@@ -33,7 +33,7 @@ const Hero = () => {
 
   return (
     <><div className='flex justify-around min-h-[95vh] w-full flex-col md:flex-row items-center'>
-       <div className='w-sm  md:w-xl h-full flex items-center justify-center xl:w-3xl max-w-full pb-5 md:p-7'>
+       <div className='w-sm sm:hidden md:w-xl h-full flex items-center justify-center xl:w-3xl max-w-full pb-5 md:p-7'>
     <video className='shadow-xl shadow-green-800 rounded-2xl bg-green-100 w-full transition-transform duration-500 hover:scale-105' src={Video} loop muted autoplay="autoplay"></video>
     </div>
             <div className='w-[400px] md:w-2xl h-full xl:w-5xl max-w-full flex gap-10 flex-col items-center justify-center md:p-5'>
@@ -51,7 +51,7 @@ const Hero = () => {
       Get Started
     </button>
     </div>
-      <div className='w-sm sm:hidden md:w-xl h-full flex items-center justify-center xl:w-3xl max-w-full pb-5 md:p-7'>
+      <div className='w-sm  md:w-xl h-full flex items-center justify-center xl:w-3xl max-w-full pb-5 md:p-7'>
     <video className='shadow-xl shadow-green-800 rounded-2xl bg-green-100 w-full transition-transform duration-500 hover:scale-105' src={Video} loop muted autoplay="autoplay"></video>
     </div>
 
