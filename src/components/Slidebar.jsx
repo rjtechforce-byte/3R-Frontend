@@ -110,15 +110,13 @@ function Slidebar () {
             <a className='text-2xl font-serif font-semibold hover:pb-4 h-full hover:duration-700 flex items-center' href="/yourSchool"><span className="mr-1"><FaSchool /></span>ADMIN PANEL</a>
             <a className='text-2xl font-serif font-semibold hover:pb-4 h-full hover:duration-700 flex items-center' href="/schoolContribution"><span className="mr-1"><FaFileContract /></span> LEADERBOARD</a>
           
-          {!openDrop && (
-            <div onClick={openDropdown} className="text-2xl font-serif font-semibold hover:pb-4 h-full hover:duration-700 flex items-center cursor-pointer">
+          <div className="relative h-full flex items-center justify-center">
+            <div onClick={openDropdown} className={`text-2xl font-serif font-semibold h-full flex items-center cursor-pointer ${openDrop ? 'pb-4' : 'hover:pb-4 hover:duration-700'}`}>
               <h1>CONTEXT</h1>
-              <RiArrowDropDownLine size={40} />
+              {openDrop ? <RiArrowDropUpLine size={40} /> : <RiArrowDropDownLine size={40} />}
             </div>
-          )}
-            {openDrop ? (
-            <div className="bg-green-500">
-              <div className="bg-green-800 text-green-100 overflow-y-hidden fixed z-0 top-16 w-fit lg:w-fit right-auto opacity-99 rounded-xl h-fit flex items-center flex-col gap-7 px-8 tracking-tighter py-5 ease-in duration-1000">
+            {openDrop && (
+              <div className="bg-green-800 text-green-100 absolute top-16 left-1/2 -translate-x-1/2 w-max rounded-xl flex flex-col gap-7 px-8 py-5 shadow-xl z-50">
               
                 <div className="max-w-fit">
                 <a className='relative  text-2xl font-serif font-semibold no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-700 hover:after:w-full flex items-center' href="/inspiration"><span className="mr-1"><GiInspiration /></span> OUR INSPIRATION</a>
@@ -129,19 +127,9 @@ function Slidebar () {
                 <div className="max-w-fit">
                 <a className='relative  text-2xl font-serif font-semibold no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/developer"><span className="mr-1"><MdDeveloperMode /></span>DEVELOPERs</a>
               </div>
-
-            </div>
-            </div>
-          ) : (
-            <div className="bg-green-800 overflow-y-hidden fixed z-10 top-[-1500%] w-fit flex items-center justify-center flex-col gap-10 ease-in duration-1000"></div>
-          )}
-
-          {openDrop && (
-            <div onClick={openDropdown} className="text-2xl font-serif font-semibold pb-4 h-full hover:duration-700 flex items-center cursor-pointer">
-              <h1>CONTEXT</h1>
-              <RiArrowDropUpLine size={40} />
             </div>
           )}
+          </div>
           <div className="flex items-center justify-center">
             <div className="border-3 h-14 max-w-0.5 mr-5 border-green-900"></div>
           <a href="/schoolRegister" className="max-w-fit rounded-lg text-white animate-bounce cursor-pointer mt-4 mb-1 bg-green-800 py-2.5 px-7">
