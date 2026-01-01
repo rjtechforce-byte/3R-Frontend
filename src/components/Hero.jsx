@@ -51,7 +51,7 @@ const Hero = () => {
       Get Started
     </button>
     </div>
-      <div className='w-sm xl:hidden md:w-xl h-full flex items-center justify-center xl:w-3xl max-w-full pb-5 md:p-7'>
+      <div className='w-sm 2xl:hidden sm:block md:w-xl h-full flex items-center justify-center xl:w-3xl max-w-full pb-5 md:p-7'>
     <video className='shadow-xl shadow-green-800 rounded-2xl bg-green-100 w-full transition-transform duration-500 hover:scale-105' src={Video} loop muted autoplay="autoplay"></video>
     </div>
 
