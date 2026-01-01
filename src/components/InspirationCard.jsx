@@ -4,7 +4,7 @@ const InspirationCard = (props) => {
   return (
      <div className={relative bg-white rounded-2xl shadow-xl border border-gray-100 p-8 hover:shadow-2xl transition-shadow duration-300 ${props.className || 'w-150 max-w-sm sm:w-[420px] md:w-[500px] lg:w-[550px]'}}>
     
-      
+    
       
       {props.value && (
        <h1 className='font-bold text-red-800 text-5xl mb-10 mt-8 font-serif'>{props.value}</h1>
