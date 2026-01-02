@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Form from "./Form";
 import Input from "./Input";
 import { useFormik } from 'formik'
@@ -8,10 +8,12 @@ import { postLoginSchool } from "./api";
 import { useNavigate } from "react-router-dom";
 import Slidebar from "../Slidebar";
 import { FaBackward } from "react-icons/fa";
+import { Loading } from "./MiniComp";
 
 
 function SchoolLoginForm({ showAlert }) {
       const navigate = useNavigate()
+      const [loading, setLoading] = useState(false);
      const validationSchema = Yup.object({
         schoolEmail: Yup.string().email('Invalid email format').required('School Email is required'),
         password: Yup.string().required('Password is required'),
@@ -24,6 +26,7 @@ function SchoolLoginForm({ showAlert }) {
         },
         validationSchema: validationSchema,
         onSubmit: values => {
+          setLoading(true);
           console.log('Form data', values);
           const formData = new FormData();
           formData.append('schoolEmail', values.schoolEmail);
@@ -36,11 +39,12 @@ function SchoolLoginForm({ showAlert }) {
             top:0,
             behavior: 'smooth'
           })
-          navigate('/yourSchool', { replace:true } )
-          window.location.reload();
+          setLoading(false);
+          navigate('/yourSchool', { replace:true } );
 
          }).catch((error) => {
           console.log('Login error:', error);
+          setLoading(false);
              showAlert(error?.response?.data.error || error.message,"error", "logNot");
              window.scrollTo({
             top:0,
@@ -50,7 +54,9 @@ function SchoolLoginForm({ showAlert }) {
         }
       });
 
-
+if(loading) {
+  return <Loading/>
+}
 
 return(
   <>

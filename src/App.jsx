@@ -39,16 +39,16 @@ function App() {
     const footerRef = useRef(null);
   
 
-    function showAlert(message, type, from){
-        setAlert({
-             message: message,
-             type: type,
-             from: from
-    })
-        setTimeout(() => {
-            setAlert(null);
-        }, 4000);
-    }
+     function showAlert(message, type, from){
+          console.log('show alert called outside useEffect', message, type, from)
+           setAlert({
+                 message: message,
+                 type: type,
+                 from: from,
+                 id: new Date().getTime()
+        })
+         
+        }
 
   useEffect(() => {
     if(localStorage.getItem('token')) {
@@ -94,7 +94,7 @@ getCurrentSchool().then((info) => {
     <BrowserRouter>
     <div className="bg-green-100 scroll-w-0 relative ">
         <main className="relative">
-       {alert && <AlertPopup className="" message={alert.message} type={alert.type} from={alert.from}/>}
+       {alert && <AlertPopup className="" setAlert={setAlert} message={alert.message} type={alert.type} from={alert.from} key={alert.id}/>}
           <Routes>
             <Route path="/" element={<Welcome />} />
             <Route path="/home" element={<Home />} />

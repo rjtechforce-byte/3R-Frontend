@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaCheckSquare } from "react-icons/fa";
 import { MdErrorOutline } from "react-icons/md";
 import { Icon } from "@iconify/react";
 
 
-export function AlertPopup({message, type, from}) {
+export function AlertPopup({message, type, from, setAlert}) {
+
+        useEffect(() => {
+            if(message || type || from) {
+          const timer = setTimeout(() => {
+                setAlert(null);
+            }, 4000);
+            console.log('show alert called inside useEffect', timer)
+            return () => {clearTimeout(timer)};
+        }
+          },[message, type, from]);
+    
+    if(!message || !type || !from) {
+        return;
+    }
+
     return(
         <div className={type == 'error' && `bg-gray-popup
          border-3
