@@ -34,7 +34,9 @@ const randomString = (length) => {
   let result = '';
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
+    console.log('result in for loop', result);
   }
+  console.log('result outside for loop', result);
   return result;
 };
 
@@ -43,7 +45,7 @@ const storage = multer.diskStorage({
     cd(null, 'public/uploads');
   },
   filename: (req, file, cd) => {
-    cd(null, randomString(10) + '_' + file.originalname);
+    cd(null, ((randomString(10) + '_' + file.originalname).trim()));
   },
 });
 
@@ -93,7 +95,7 @@ app.use('/public/uploads', [(req, res, next) => {
   setHeaders: (res, path) => {
     // Set proper cache headers for images
     if (path.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
-      res.set('Cache-Control', 'public, max-age=31536000'); // 1 year cache
+      res.set('Cache-Control', 'public, max-age=3153'); // 1 year cache
     }
   },
   index: false, // Disable directory indexing
