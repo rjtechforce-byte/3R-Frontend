@@ -22,7 +22,7 @@ const Inspiration = () => {
     </div>
     <div className='flex  justify-center mt-30 mb-10'>
     <h1 className='text-red-800 font-bold text-5xl font-serif'>
-    - - About 3R - -
+    - - The Man Who Inspired Us  - -
     </h1>
     </div>
     <div>
