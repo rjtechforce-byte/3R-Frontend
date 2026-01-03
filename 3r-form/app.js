@@ -45,7 +45,7 @@ const storage = multer.diskStorage({
     cd(null, 'public/uploads');
   },
   filename: (req, file, cd) => {
-    cd(null, ((randomString(10) + '_' + file.originalname).trim()));
+    cd(null, (randomString(10) + '_' + file.originalname.replace(/\s+/g, '')));
   },
 });
 

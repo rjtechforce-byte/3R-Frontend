@@ -7,30 +7,30 @@ const Admin = require('../models/admin');
 
 
 exports.postSchoolRegister = (req, res, next) => {
-    const { schoolName, subDistrict, password, schoolEmail, schoolPhone, address, inchargeName, inchargePhone } = req.body;
-    console.log('request come from user', req.body);
-     if(!req.files.schoolImage) {
-       return res.status(422).send("No image provided");
+  const { schoolName, subDistrict, password, schoolEmail, schoolPhone, address, inchargeName, inchargePhone } = req.body;
+  console.log('request come from user', req.body);
+  if (!req.files.schoolImage) {
+    return res.status(422).send("No image provided");
+  }
+
+  School.findOne({ schoolEmail: schoolEmail }).then(existingSchool => {
+    if (existingSchool) {
+      return res.status(400).json({ error: "This email is already exist" });
     }
-    
-    School.find({schoolEmail}).then((res) => {
-      console.log('res', res)
-     return res.status(400).json({ error: "this email is already exist" })
-    }).catch(() => {
-          bycrypt.hash(password, 12)
+
+    return bycrypt.hash(password, 12)
       .then(hashedPassword => {
-        const schoolImage = req.files.schoolImage[0].path.trim();
+        const schoolImage = req.files.schoolImage[0].path;
         const school = new School({ schoolImage, schoolName, subDistrict, password: hashedPassword, schoolEmail, schoolPhone, address, inchargeName, inchargePhone });
         return school.save();
       })
       .then(() => {
         res.status(201).json({ message: 'School created successfully' });
-      })
-      .catch((error) => {
-        console.error('Error saving school:', error);
-       return res.status(500).json({ error: 'Email is Already Exist' });
       });
-    })
+  }).catch((error) => {
+    console.error('Error saving school:', error);
+    return res.status(500).json({ error: 'An error occurred while creating the school.' });
+  });
 };
 
 exports.getCurrentSchool = [
