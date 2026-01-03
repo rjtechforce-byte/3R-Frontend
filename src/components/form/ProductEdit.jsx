@@ -60,7 +60,7 @@ function ProductEdit({ showAlert }) {
                 [
                   'Electronics',
                   'Books',
-                  'Clothing',
+                  'Clothes',
                   'Sports Equipment',
                   'Art Supplies',
                   'Laboratory Equipment',
@@ -76,7 +76,7 @@ function ProductEdit({ showAlert }) {
 
 
       
-      const validCategories = ['Electronics', 'Books', 'Clothing', 'Sports Equipment', 'Art Supplies', 'Laboratory Equipment', 'Stationery', 'Footwear', 'Bag', 'Other'];
+      const validCategories = ['Electronics', 'Books', 'Clothes', 'Sports Equipment', 'Art Supplies', 'Laboratory Equipment', 'Stationery', 'Footwear', 'Bag', 'Other'];
       
       const mapCategoryToNew = (oldCategory) => {
         if (validCategories.includes(oldCategory)) {
@@ -86,8 +86,8 @@ function ProductEdit({ showAlert }) {
         const categoryMap = {
           'Furniture': 'Other',
           'footwear': 'Footwear',
-          'Clothes': 'Clothing',
-          'clothes': 'Clothing',
+          'Clothes': 'Clothes',
+          'Clothes': 'Clothes',
           'Stationary': 'Stationery',
           'bag': 'Bag',
         };
@@ -245,8 +245,8 @@ return( <div className="bg-[#D9E4DD]  min-h-screen w-screen flex justify-center 
               <option className="bg-green-900" value="Books">
                 Books
               </option>
-              <option className="bg-green-900" value="Clothing">
-                Clothing
+              <option className="bg-green-900" value="Clothes">
+                Clothes
               </option>
               <option className="bg-green-900" value="Sports Equipment">
                 Sports Equipment
