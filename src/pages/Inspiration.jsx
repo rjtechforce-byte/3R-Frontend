@@ -26,7 +26,7 @@ const Inspiration = () => {
     </h1>
     </div>
     <div>
-      <Text image={photo4} >
+      <Text >
 
       </Text>
     </div>
