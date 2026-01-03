@@ -103,7 +103,7 @@ console.log('school data',schoolData);
   <div className="min-w-full flex justify-center pt-15 items-center">
       <img src={Image} alt="" className="w-full md:max-w-fit transition-all hover:shadow-2xl duration-300 shadow-2xs" />
   </div>
-  <div className="flex flex-wrap gap-4 p-20 justify-around min-w-full">
+  <div className="flex flex-wrap gap-4 mb-9 justify-around min-w-full">
     <WelcomeCard image={Reduse}
       name='Reduce'
       post='Minimize your consumption at the source; the best waste is the one never created.'
@@ -186,7 +186,7 @@ console.log('school data',schoolData);
                 localStorage.setItem("schoolName", JSON.stringify(e.target.value));
                 window.location.href = "/home";
               }}
-              className="mt-4 w-screen text-green-900 p-4 rounded-lg bg-white text-2xl xl:text-3xl font-serif hover:bg-green-400 font-bold outline-none"
+              className="mt-4 w-full text-green-900 p-4 rounded-lg bg-white text-2xl xl:text-3xl font-serif hover:bg-green-400 font-bold outline-none"
             >
               <option value="default">Select Your School</option>
               {schoolData && schoolData.length > 0 && schoolData.map((school, index) => (
