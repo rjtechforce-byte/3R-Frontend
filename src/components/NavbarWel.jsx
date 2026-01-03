@@ -1,4 +1,4 @@
-import React, { useState, Link } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { TfiMenuAlt } from "react-icons/tfi";
 import { IoClose } from "react-icons/io5";
 import { IoChevronBackCircle } from "react-icons/io5";
@@ -13,9 +13,9 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
 import { MdAdd } from "react-icons/md";
 
-const Logo = "/images/Logo.png"
+const Logo = "/images/Logo.png";
 
-function NavbarWel () {
+function Slidebar () {
   const [isOpen, setIsOpen] = useState(false);
   const openMenu = () => {
     setIsOpen((!isOpen));
@@ -25,6 +25,20 @@ function NavbarWel () {
   const openDropdown = () => {
     setDrop((!openDrop))
   };
+
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDrop(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return(
     <>
@@ -37,52 +51,49 @@ function NavbarWel () {
         <a href="/" className='font-extrabold hover:bg-green-100 rounded-lg py-2 px-6 text-2xl text-green-900 z-20'>CODE <span className='text-yellow-600 font-extrabold'>चूरू</span></a>
       </div>
       {!isOpen && (
-        <div onClick={openMenu} className="2xl:hidden text-green-900 cursor-pointer">
+        <div onClick={openMenu} className="xl:hidden text-green-900 cursor-pointer">
           <TfiMenuAlt size={30} />
         </div>
       )}
 
       {isOpen ? (
         
-      <div className="bg-green-800 overflow-y-hidden fixed z-10 top-16 left-0 w-[400px] 2xl:hidden lg:w-[500px] opacity-99 rounded-r-3xl h-[calc(100vh-4rem)] flex items-center flex-col gap-10 ease-in duration-700">
+      <div className="bg-green-800 fixed z-10 top-16 left-0 w-[400px] xl:hidden lg:w-[500px] opacity-99 rounded-r-3xl h-[calc(100vh-4rem)] flex items-center flex-col gap-10 overflow-y-scroll ease-in duration-700 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none] justify-between">
         <div className="w-full items-center flex flex-col">
           <h1 className="text-6xl font-serif font-bold mr-6 mt-5 mb-4">Menu</h1>
           <div className="w-full h-0.5 bg-green-100"></div>
-        </div>
         <div className="absolute top-12 right-5">
           {isOpen && (
-            <div onClick={openMenu} className="2xl:hidden text-green-100 cursor-pointer z-20">
+            <div onClick={openMenu} className="xl:hidden text-green-100 cursor-pointer z-20">
               <IoChevronBackCircle size={30} />
             </div>
           )}
         </div>
-        <div className="flex justify-end items-center flex-col mt-10 gap-7 text-green-100">
+        </div>
+        <div className="flex justify-end items-center flex-col gap-7 text-green-100">
 
           <div className="flex flex-col gap-7">
           <div className="max-w-fit">
-            <a href="/" className='relative text-2xl md:text-4xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center'><span className="mr-2"><FaHome /></span> HOME</a>
+            <a href="/" className='relative text-2xl md:text-3xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center'><span className="mr-2"><FaHome /></span> HOME</a>
           </div>
           <div className="max-w-fit">
-            <a className='relative text-2xl md:text-4xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/schoolContribution"><span className="mr-2"><FaFileContract /></span> LEADERBOARD</a>
+            <a className='relative text-2xl md:text-3xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/schoolContribution"><span className="mr-2"><FaFileContract /></span> LEADERBOARD</a>
           </div>
           <div className="max-w-fit">
-            <a className='relative text-2xl md:text-4xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/initiatives"><span className="mr-2"><PiStepsFill /></span> INITIATIVES</a>
+            <a className='relative text-2xl md:text-3xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/initiatives"><span className="mr-2"><PiStepsFill /></span> WHAT'S 3R</a>
           </div>
           <div className="max-w-fit">
-          <a className='relative text-2xl md:text-4xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-700 hover:after:w-full flex items-center' href="/inspiration"><span className="mr-2"><GiInspiration /></span> OUR INSPIRATION</a>
+          <a className='relative text-2xl md:text-3xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-700 hover:after:w-full flex items-center' href="/inspiration"><span className="mr-2"><GiInspiration /></span> OUR INSPIRATION</a>
           </div>
           <div className="max-w-fit">
-          <a className='relative text-2xl md:text-4xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/developer"><span className="mr-2"><MdDeveloperMode /></span>DEVELOPERs</a>
-          </div>
-          <div className="max-w-fit">
-          <a className='relative text-2xl md:text-4xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/contact"><span className="mr-2"><MdContactMail /></span> CONTACT Us</a>
+          <a className='relative text-2xl md:text-3xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/developer"><span className="mr-2"><MdDeveloperMode /></span>DEVELOPERs</a>
           </div>
           </div>
         </div>
 
           <div className="w-full items-center h-80 flex flex-col justify-end">
             <div className="bg-green-100 w-full h-0.5 mb-11"></div>
-          <div className="max-w-fit rounded-lg text-green-100 animate-bounce cursor-pointer mt-3 mb-0 bg-green-500 py-3 px-7">
+          <div className="max-w-fit rounded-lg text-green-100 animate-bounce cursor-poin]ter mt-3 mb-0 bg-green-500 py-3 px-7">
           <a className='text-2xl font-serif font-semibold flex items-center' href="/schoolRegister"><span className="mr-1"><MdAdd /></span> REGISTER</a>
           </div>
           </div>
@@ -100,52 +111,35 @@ function NavbarWel () {
           )}
 
           {isOpen && (
-            <div onClick={openMenu} className="2xl:hidden text-green-900 cursor-pointer z-20">
+            <div onClick={openMenu} className="xl:hidden text-green-900 cursor-pointer z-20">
               <IoClose size={35} />
             </div>
           )}
 
-      <div className="hidden 2xl:flex gap-10 justify-center items-center h-full text-green-900">
+      <div className="hidden xl:flex gap-10 justify-center items-center h-full text-green-900">
               <a href="/" className='md:text-2xl font-serif font-semibold hover:pb-4 h-full hover:duration-700 flex items-center'><span className="mr-2"><FaHome /></span> HOME</a>
             <a className='text-2xl font-serif font-semibold hover:pb-4 h-full hover:duration-700 flex items-center' href="/schoolContribution"><span className="mr-1"><FaFileContract /></span> LEADERBOARD</a>
           
-          {!openDrop && (
-            <div onClick={openDropdown} className="text-2xl font-serif font-semibold hover:pb-4 h-full hover:duration-700 flex items-center cursor-pointer">
+          <div ref={dropdownRef} className="relative h-full flex items-center justify-center">
+            <div onClick={openDropdown} className={`text-2xl font-serif font-semibold h-full flex items-center cursor-pointer ${openDrop ? 'pb-4' : 'hover:pb-4 hover:duration-700'}`}>
               <h1>CONTEXT</h1>
-              <RiArrowDropDownLine size={40} />
+              {openDrop ? <RiArrowDropUpLine size={40} /> : <RiArrowDropDownLine size={40} />}
             </div>
-          )}
-            {openDrop ? (
-            <div className="bg-green-500">
-              <div className="bg-green-800 text-green-100 overflow-y-hidden fixed z-0 top-16 w-fit lg:w-fit right-auto opacity-99 rounded-xl h-fit flex items-center flex-col gap-7 px-8 tracking-tighter py-5 ease-in duration-1000">
+            {openDrop && (
+              <div className="bg-green-800 text-green-100 absolute top-16 left-1/2 -translate-x-1/2 w-max rounded-xl flex flex-col gap-7 px-8 py-5 shadow-xl z-50">
               
                 <div className="max-w-fit">
                 <a className='relative  text-2xl font-serif font-semibold no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-700 hover:after:w-full flex items-center' href="/inspiration"><span className="mr-1"><GiInspiration /></span> OUR INSPIRATION</a>
                 </div>
               <div className="max-w-fit">
-                <a className='relative  text-2xl font-serif font-semibold no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-700 hover:after:w-full flex items-center' href="/initiatives"><span className="mr-1"><PiStepsFill /></span> INITIATIVES</a>
+                <a className='relative  text-2xl font-serif font-semibold no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-700 hover:after:w-full flex items-center' href="/initiatives"><span className="mr-1"><PiStepsFill /></span> WHAT'S 3R</a>
                 </div>
                 <div className="max-w-fit">
                 <a className='relative  text-2xl font-serif font-semibold no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/developer"><span className="mr-1"><MdDeveloperMode /></span>DEVELOPERs</a>
               </div>
-
-            </div>
-            </div>
-          ) : (
-            <div className="bg-green-800 overflow-y-hidden fixed z-10 top-[-1500%] w-fit flex items-center justify-center flex-col gap-10 ease-in duration-1000"></div>
-          )}
-
-          {openDrop && (
-            <div onClick={openDropdown} className="text-2xl font-serif font-semibold pb-4 h-full hover:duration-700 flex items-center cursor-pointer">
-              <h1>CONTEXT</h1>
-              <RiArrowDropUpLine size={40} />
             </div>
           )}
-
-          <div className="max-w-fit">
-          <a className='text-2xl font-serif font-semibold hover:pb-4 h-full hover:duration-700 flex items-center cursor-pointer' href="/contact"><span className="mr-1"><MdContactMail /></span> CONTACT Us</a>
           </div>
-
           <div className="flex items-center justify-center">
             <div className="border-3 h-14 max-w-0.5 mr-5 border-green-900"></div>
           <a href="/schoolRegister" className="max-w-fit rounded-lg text-white animate-bounce cursor-pointer mt-4 mb-1 bg-green-800 py-2.5 px-7">
@@ -161,4 +155,4 @@ function NavbarWel () {
   )
 };
 
-export default NavbarWel;
+export default Slidebar;
