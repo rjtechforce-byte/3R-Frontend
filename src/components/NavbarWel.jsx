@@ -80,7 +80,7 @@ function Slidebar () {
             <a className='relative text-2xl md:text-3xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/schoolContribution"><span className="mr-2"><FaFileContract /></span> LEADERBOARD</a>
           </div>
           <div className="max-w-fit">
-            <a className='relative text-2xl md:text-3xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/initiatives"><span className="mr-2"><PiStepsFill /></span> WHAT'S 3R</a>
+            <a className='relative text-2xl md:text-3xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/initiatives"><span className="mr-2"><PiStepsFill /></span> WHAT IS 3R</a>
           </div>
           <div className="max-w-fit">
           <a className='relative text-2xl md:text-3xl font-serif font-semibold text-green-100 no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-700 hover:after:w-full flex items-center' href="/inspiration"><span className="mr-2"><GiInspiration /></span> OUR INSPIRATION</a>
@@ -132,7 +132,7 @@ function Slidebar () {
                 <a className='relative  text-2xl font-serif font-semibold no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-700 hover:after:w-full flex items-center' href="/inspiration"><span className="mr-1"><GiInspiration /></span> OUR INSPIRATION</a>
                 </div>
               <div className="max-w-fit">
-                <a className='relative  text-2xl font-serif font-semibold no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-700 hover:after:w-full flex items-center' href="/initiatives"><span className="mr-1"><PiStepsFill /></span> WHAT'S 3R</a>
+                <a className='relative  text-2xl font-serif font-semibold no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-700 hover:after:w-full flex items-center' href="/initiatives"><span className="mr-1"><PiStepsFill /></span> WHAT IS 3R</a>
                 </div>
                 <div className="max-w-fit">
                 <a className='relative  text-2xl font-serif font-semibold no-underline after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-1 after:bg-green-100 after:transition-all after:duration-500 hover:after:w-full flex items-center' href="/developer"><span className="mr-1"><MdDeveloperMode /></span>DEVELOPERs</a>
