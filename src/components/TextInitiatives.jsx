@@ -7,22 +7,21 @@ const TextInitiatives = (props) => {
     <div className='flex justify-center'>
         <div className='flex flex-col items-center mt-7 p-10 bg-green-400 mb-6 w-350 border-2 border-black shadow-lg shadow-black rounded-2xl'>
           <h2 className='font-extrabold text-xl md:text-4xl font-serif text-blue-700 transition-transform duration-500 hover:scale-105'>🔰 3-RRR 🔰</h2>
-          <div className='flex p-10 justify-evenly '>
-            <img className='w-xl rounded-md transition-transform duration-500 hover:scale-105 border-black shadow-lg shadow-black ' src={props.image} alt="" />
-           
-          </div>
           <p className='font-bold text-lg md:text-2xl pt-2 flex flex-col gap-2 md:gap-7'>
             <li className='text-red-900'>
-              स्वच्छ भारत मिशन को साकार करता 3-R Center
+              India is steadily moving on the path of development, yet a large section of society continues to struggle for its basic necessities. A wide economic gap exists between the high-income groups and the middle and lower-income sections. In such circumstances, the principles of the **3Rs—Reduce, Reuse, and Recycle—**emerge as a beacon of hope, especially for the economically weaker sections of society.
             </li> 
             <li className='text-blue-900'>
-              भारत देश विकास की ओर अग्रसर है l समाज का बहुत बड़ा हिस्सा अपनी मूल जरूरतों के लिए संघर्ष करता है l उच्च आय वर्ग ओर मध्यम/निम्न आय वर्गों के बीच विशाल अंतर है ऐसी स्थिति में निम्न आय वर्ग हेतु 3R(संसाधनों का संयमित उपयोग,पुनः उपयोग एवं पुनः चक्रण) वरदान प्रतीत होगा l 
+              With the aim of transforming this philosophy into reality, an exemplary initiative in the form of the 3R Center was launched on the soil of Churu district in November 2024 under the visionary leadership of the District Collector, Shri Abhishek Surana. Following his guidance, the Office of the Chief District Education Officer, Churu, carried forward this innovative idea with remarkable dedication, ensuring its reach to every school across the district.
             </li> 
             <li className='text-red-900'>
-              चूरू जिले की धरा पर इसी धारणा को धरातल पर साकार करने की3-R CENTER की  अनुपम पहल चूरू जिला कलक्टर<span className='text-blue-900'> श्री अभिषेक सुराणा </span>द्वारा नवंबर 2024 में ली गयी, <span className='text-blue-900'>श्रीमान जिला कलक्टर चूरू </span>के निर्देश उपरांत जिले के प्रत्येक विद्यालय में मुख्य जिला शिक्षा अधिकारी <span className='text-blue-900'>डॉ.गोविन्द सिंह राठौड़ </span>ने इस अनुपम पहल को जिले के प्रत्येक विद्यालय में पंहुचाने का अनुपम कार्य किया जिसमे शिक्षा विभाग चूरू के विद्यार्थियों के मध्य संसाधनों का संयमित उपयोग,पुनः उपयोग एवं पुनः चक्रण की भावना विकसित करने के उद्देश्य से चूरू जिले में प्रत्येक विद्यालय में  3-R CENTER की स्थापना की गयी l
+              As part of this initiative, 3R Centers were established in every school of Churu district with the objective of nurturing among students a deep sense of responsibility toward the judicious use of resources, their reuse, and recycling. Through these centers, students are educated about conserving resources, using them wisely, and adopting sustainable practices in their daily lives.
             </li> 
             <li className='text-blue-900'>
-              3-R सेण्टर में विद्यार्थियों को संसाधनों के संयमित उपयोग,पुनः उपयोग एवं पुनः चक्रण की जानकारी प्रदान की जाती है एवं संसाधन संरक्षण,संसाधनों के विवेकपूर्ण उपयोग एवं पुनः उपयोग की भावना को प्रोत्साहित किया जाता है l  
+              The 3R Centers serve not merely as learning spaces, but as catalysts for change—instilling in young minds the values of resource conservation, environmental responsibility, and sustainable development, thereby shaping them into conscious and responsible citizens of the future. 
+            </li> 
+            <li className='text-red-900'>
+              At the 3R Center, students brought unused and discarded materials from their homes and deposited them at the center, so that these items could find new purpose in the lives of other underprivileged peers who could make meaningful use of them.
             </li> 
           </p>
         </div>
