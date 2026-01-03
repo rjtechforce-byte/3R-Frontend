@@ -88,7 +88,7 @@ function ProductEdit({ showAlert }) {
           'footwear': 'Footwear',
           'Clothes': 'Clothes',
           'Clothes': 'Clothes',
-          'Stationary': 'Stationery',
+          'Stationery': 'Stationery',
           'bag': 'Bag',
         };
         
@@ -290,8 +290,8 @@ return( <div className="bg-[#D9E4DD]  min-h-screen w-screen flex justify-center 
                       <option className="bg-green-900" value="good">
                         Good
                       </option>
-                      <option className="bg-green-900" value="avarage">
-                        Avarage
+                      <option className="bg-green-900" value="average">
+                        Average
                       </option>
                       <option className="bg-green-900" value="nice">
                         Nice
