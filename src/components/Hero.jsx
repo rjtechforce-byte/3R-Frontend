@@ -32,7 +32,8 @@ const Hero = () => {
   });
 
   return (
-    <><div className='flex justify-around min-h-[95vh] w-full flex-col md:flex-row items-center'>
+    <>  
+    <div className='flex justify-around min-h-[95vh] w-full flex-col md:flex-row items-center'>
        <div className='w-sm md:hidden md:w-xl h-full flex items-center justify-center xl:w-3xl max-w-full pb-5 md:p-7'>
     <video className='shadow-xl shadow-green-800 rounded-2xl bg-green-100 w-full transition-transform duration-500 hover:scale-105' src={Video} loop muted autoplay="autoplay"></video>
     </div>
@@ -47,10 +48,6 @@ const Hero = () => {
       Get Started
     </button>
     </div>
-      <div className='w-sm hidden md:block sm:block md:w-xl h-full items-center justify-center xl:w-3xl max-w-full pb-5 md:p-7'>
-    <video className='shadow-xl shadow-green-800 rounded-2xl bg-green-100 w-full transition-transform duration-500 hover:scale-105' src={Video} loop muted autoplay="autoplay"></video>
-    </div>
-
     </div>
     
     </>
