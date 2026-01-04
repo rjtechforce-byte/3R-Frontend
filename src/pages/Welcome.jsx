@@ -14,6 +14,7 @@ import Slides from "../components/Slides";
 import { MdAdd } from "react-icons/md";
 import NavbarWel from "../components/NavbarWel";
 import { FaBackward } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 
 const Recycle = "/images/recycle.png";
 const WelcomeBg = "/images/bg.jpg";
@@ -60,11 +61,13 @@ const cardData = [
   },
 ];
 
-const Image = "/images/News Cutting.png"
+const Image = "/images/News Cutting.png";
+const PhotoPopUp = "/images/Welcome Pop-Up Image.png"
 
 export default function Welcome() {
   const products = useContext(AllProductsData);
   const [selectedSchool, setselectedSchool] = useState("default");
+  const [showPopup, setShowPopup] = useState(true);
   const val = useRef(true);
   const schoolName = useRef([]);
   console.log(products);
@@ -88,9 +91,36 @@ export default function Welcome() {
     });
   }, []);
 console.log('school data',schoolData);
+
+  useEffect(() => {
+    if (showPopup) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showPopup]);
+
   return (
     <>
       <NavbarWel />
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center md:p-2 p-1 justify-center bg-opacity-50 backdrop-blur-sm" onClick={() => setShowPopup(false)}>
+          <div className="w-full bg-gray-100 flex flex-col justify-between pb-7 max-w-fit gap-4 rounded-md">
+            <div  className="text-green-900 cursor-pointer bg-green-600 lg:text-2xl flex justify-end p-2 rounded-t-md w-full">
+              <ImCross />
+            </div>
+            <div className="w-full flex justify-center text-green-800 items-center flex-col font-serif">
+              <h1 className="font-bold md:text-2xl lg:text-3xl text-xl xl:text-4xl">Visit More Sites in Churu</h1>
+              <a href="https://www.libraryinnovationchuru.com/" className="md:text-xl hover:text-green-500 hover:underline lg:text-2xl xl:text-3xl" target="_blank">Library Innovation in Churu</a>
+              <a href="https://www.atlinnovationchuru.com/" className="md:text-xl hover:text-green-500 hover:underline lg:text-2xl xl:text-3xl" target="_blank">ATL Innovation in Churu</a>
+            </div>
+            <a href="https://doitc.rajasthan.gov.in/" className="md:px-6" target="_blank"><img className="min-h-66 md:h-fit" src={PhotoPopUp} alt="" /></a>
+          </div>
+        </div>
+      )}
       <div className="relative">
         <div className="flex w-full items-center justify-center h-3vh bg-[#f0f8ef]">
           <div
