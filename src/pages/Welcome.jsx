@@ -68,6 +68,8 @@ export default function Welcome() {
   const products = useContext(AllProductsData);
   const [selectedSchool, setselectedSchool] = useState("default");
   const [showPopup, setShowPopup] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showAllSchools, setShowAllSchools] = useState(false);
   const val = useRef(true);
   const schoolName = useRef([]);
   console.log(products);
@@ -103,6 +105,10 @@ console.log('school data',schoolData);
     };
   }, [showPopup]);
 
+  const filteredSchools = schoolData.filter((school) =>
+    String(school.schoolName).toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
       <NavbarWel />
@@ -117,7 +123,7 @@ console.log('school data',schoolData);
               <a href="https://www.libraryinnovationchuru.com/" className="md:text-xl hover:text-green-500 hover:underline lg:text-2xl xl:text-3xl" target="_blank">Library Innovation in Churu</a>
               <a href="https://www.atlinnovationchuru.com/" className="md:text-xl hover:text-green-500 hover:underline lg:text-2xl xl:text-3xl" target="_blank">ATL Innovation in Churu</a>
             </div>
-            <a href="https://doitc.rajasthan.gov.in/" className="md:px-6" target="_blank"><img className="min-h-66 md:h-fit" src={PhotoPopUp} alt="" /></a>
+            <a href="https://doitc.rajasthan.gov.in/" className="md:px-6" target="_blank"><img className="min-h-66 md:h-fit" src={PhotoPopUp} alt="Loading Image" /></a>
           </div>
         </div>
       )}
@@ -131,7 +137,7 @@ console.log('school data',schoolData);
 
 <div className='flex justify-around flex-col min-h-screen items-center gap-8 bg-linear-to-b from-green-400 to-green-700'>
   <div className="min-w-full flex justify-center pt-15 items-center">
-      <img src={Image} alt="" className="w-full md:max-w-fit transition-all hover:shadow-2xl duration-300 shadow-2xs" />
+      <img src={Image} alt="Loading Image" className="w-full md:max-w-fit transition-all hover:shadow-2xl duration-300 shadow-2xs" />
   </div>
   <div className="flex flex-wrap gap-4 mb-9 justify-around min-w-full">
     <WelcomeCard image={Reduse}
@@ -198,33 +204,50 @@ console.log('school data',schoolData);
 
         <div className="schoolselecter origin-bottom hidden rotate-z-90 top-0 z-999 min-h-screen w-screen overflow-hidden items-center justify-around xl:justify-between flex-col bg-[#D9E4DD]">
           <div className="flex items-center justify-center flex-col">
-            <div className="flex items-center flex-col m-2 xl:m-15">
-              <h3 className="text-green-900 text-xl xl:text-4xl font-serif font-semibold">
-                Want to see your school's items!
-              </h3>
-              <h1 className="text-green-900 text-xl xl:text-6xl font-serif font-bold">
-                Please select your school
-              </h1>
-            </div>
+            <input
+              type="text"
+              placeholder="Enter School Name..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="mt-4 max-w-[90vw] w-full md:w-[500px] text-green-900 p-3 rounded-lg bg-white text-xl font-serif border-2 border-green-800 focus:outline-none focus:border-green-600 placeholder-green-700/50"
+            />
 
-            <select
+            <div
               ref={val}
-              value={selectedSchool}
-              onChange={(e) => {
-                setselectedSchool(e.target.value);
-                localStorage.removeItem("schoolName");
-                localStorage.setItem("schoolName", JSON.stringify(e.target.value));
-                window.location.href = "/home";
-              }}
-              className="mt-4 max-w-[90vw] h-auto whitespace-normal text-green-900 p-4 rounded-lg bg-white text-2xl xl:text-3xl font-serif hover:bg-green-400 font-bold outline-none"
+              className="mt-4 max-w-[90vw] w-full md:w-[500px] max-h-[40vh] overflow-y-auto bg-white rounded-lg border-2 border-green-800 shadow-lg"
             >
-              <option value="default">Select Your School</option>
-              {schoolData && schoolData.length > 0 && schoolData.map((school, index) => (
-                <option className="whitespace-normal max-w-[90vw]" key={school._id || index} value={school.schoolName}>
-                  {String(school.schoolName)}
-                </option>
-              ))}
-            </select>
+              {filteredSchools && filteredSchools.length > 0 ? (
+                <>
+                {(searchQuery ? filteredSchools : (showAllSchools ? filteredSchools.slice(0, 5) : filteredSchools.slice(0, 2))).map((school, index) => (
+                  <div
+                    key={school._id || index}
+                    onClick={() => {
+                      setselectedSchool(school.schoolName);
+                      localStorage.removeItem("schoolName");
+                      localStorage.setItem("schoolName", JSON.stringify(school.schoolName));
+                      window.location.href = "/home";
+                    }}
+                    className="p-4 text-green-900 text-xl xl:text-2xl font-serif border-b border-gray-200 hover:bg-green-400 hover:duration-1000 hover:text-white cursor-pointer transition-colors duration-200 whitespace-normal"
+                  >
+                    {String(school.schoolName)}
+                  </div>
+                ))
+                }
+                {!searchQuery && filteredSchools.length > 2 && (
+                  <div
+                    onClick={() => setShowAllSchools(!showAllSchools)}
+                    className="p-2 text-center text-green-800 font-bold cursor-pointer hover:bg-gray-100 border-t border-gray-200"
+                  >
+                    {showAllSchools ? "Show Less" : "Show More..."}
+                  </div>
+                )}
+                </>
+              ) : (
+                <div className="p-4 text-gray-500 text-xl font-serif text-center">
+                  No schools found
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="border-4 border-green-900 w-full flex justify-center max-h-1 items-center">
