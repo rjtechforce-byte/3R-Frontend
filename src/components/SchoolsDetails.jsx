@@ -94,7 +94,7 @@ export default function SchoolDetail() {
                 <div className="w-full md:w-4/12 text-center md:text-left font-semibold text-green-900 text-lg">
                   {String(school.schoolName)}
                 </div>
-                <div className="w-full md:w-3/12 text-center md:text-left text-gray-700 mt-2 md:mt-0">
+                <div className="w-full md:w-3/12 text-center text-gray-700 mt-2 md:mt-0">
                   {school.subDistrict}
                 </div>
                 <div className="w-full md:w-3/12 text-center md:text-left text-gray-500 mt-2 md:mt-0">
