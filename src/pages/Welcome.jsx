@@ -216,11 +216,11 @@ console.log('school data',schoolData);
                 localStorage.setItem("schoolName", JSON.stringify(e.target.value));
                 window.location.href = "/home";
               }}
-              className="mt-4 w-full text-green-900 p-4 rounded-lg bg-white text-2xl xl:text-3xl font-serif hover:bg-green-400 font-bold outline-none"
+              className="mt-4 max-w-[90vw] h-auto whitespace-normal text-green-900 p-4 rounded-lg bg-white text-2xl xl:text-3xl font-serif hover:bg-green-400 font-bold outline-none"
             >
               <option value="default">Select Your School</option>
               {schoolData && schoolData.length > 0 && schoolData.map((school, index) => (
-                <option key={school._id || index} value={school.schoolName}>
+                <option className="whitespace-normal max-w-[90vw]" key={school._id || index} value={school.schoolName}>
                   {String(school.schoolName)}
                 </option>
               ))}
