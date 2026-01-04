@@ -82,31 +82,31 @@ const Footer = () => {
               <ul className="space-y-2 text-white flex flex-col ">
                 <a
                   href="/home"
-                  className="   hover:text-blue-400 cursor-pointer transition"
+                  className="   hover:text-green-400 cursor-pointer transition"
                 >
                   Home
                 </a>
                 <a
-                  href="/home"
-                  className="  hover:text-blue-400 cursor-pointer transition"
+                  href="/yourSchool"
+                  className="  hover:text-green-400 cursor-pointer transition"
                 >
-                  Courses
+                  Admin Pannel
                 </a>
                 <a
-                  href="/home"
-                  className="   hover:text-blue-400 cursor-pointer transition"
+                  href="/schoolContribution"
+                  className="   hover:text-green-400 cursor-pointer transition"
                 >
-                  Projects
+                  Leaderboard
                 </a>
                 <a
                   href="/contact"
-                  className="   hover:text-blue-400 cursor-pointer transition"
+                  className="   hover:text-green-400 cursor-pointer transition"
                 >
                   Contact
                 </a>
                 <a
-                  href="/about"
-                  className="   hover:text-blue-400 cursor-pointer transition"
+                  href="/initiatives"
+                  className="   hover:text-green-400 cursor-pointer transition"
                 >
                   About
                 </a>
