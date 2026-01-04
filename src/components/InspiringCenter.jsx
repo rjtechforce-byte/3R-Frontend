@@ -22,7 +22,7 @@ export default function RRRCenter () {
     </h2>
 
     <p className="text-green-900 mb-4 text-base">
-      मुख्य जिला शिक्षा अधिकारी डॉ. गोविन्द सिंह राठौड़ के निर्देशानुसार विद्यालय के प्रधानाचार्य श्री मुकुल भारती द्वारा <span className="font-medium">RRR सेंटर</span> की स्थापना की गयी।
+      मुख्य जिला शिक्षा अधिकारी डॉ. गोविन्द सिंह राठौड़ के निर्देशानुसार विद्यालय के प्रधानाचार्य श्री मुकुल भाटी द्वारा <span className="font-medium">RRR सेंटर</span> की स्थापना की गयी।
     </p>
     
     <p className="text-green-900 mb-4 text-base">
