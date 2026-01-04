@@ -28,6 +28,7 @@ import SiteStatistics from './pages/SiteStatistics';
 import ViewAllSchool from './pages/AdminViewAllSchool';
 import UserManagement from './pages/UserManagement';
 import { TbMessages } from "react-icons/tb";
+import EditSchoolDetail from './pages/EditSchoolDetail';
 
 
 
@@ -116,6 +117,7 @@ getCurrentSchool().then((info) => {
             <Route path="/statistics" element={<SiteStatistics />} />
             <Route path="/viewallschool" element={<ViewAllSchool />} />
             <Route path="/usermanagement" element={<UserManagement />} />
+            <Route path="/EditSchoolDetail/:id" element={<EditSchoolDetail/>}/>
           </Routes>
         <div ref={messageIconRef} className="text-green-900 fixed right-3 text-6xl" style={{ bottom: '12px' }}>
           <a href="/contact"><TbMessages /></a>
