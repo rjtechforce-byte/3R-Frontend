@@ -3,64 +3,47 @@ const bycrypt = require('bcryptjs');
 const Product = require('../models/product');
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/admin');
+const cloudinary = require('cloudinary').v2;
+const { verifyToken } = require('../middlewares/authMiddleware');
 
 
-
-exports.postSchoolRegister = (req, res, next) => {
+exports.postSchoolRegister = async (req, res, next) => {
   const { schoolName, subDistrict, password, schoolEmail, schoolPhone, address, inchargeName, inchargePhone } = req.body;
   console.log('request come from user', req.body);
   if (!req.files.schoolImage) {
     return res.status(422).send("No image provided");
   }
 
-  School.findOne({ schoolEmail: schoolEmail }).then(existingSchool => {
+  try {
+    const existingSchool = await School.findOne({ schoolEmail: schoolEmail });
     if (existingSchool) {
       return res.status(400).json({ error: "This email is already exist" });
     }
 
-    return bycrypt.hash(password, 12)
-      .then(hashedPassword => {
-        const schoolImage = req.files.schoolImage[0].path;
-        const school = new School({ schoolImage, schoolName, subDistrict, password: hashedPassword, schoolEmail, schoolPhone, address, inchargeName, inchargePhone });
-        return school.save();
-      })
-      .then(() => {
-        res.status(201).json({ message: 'School created successfully' });
-      });
-  }).catch((error) => {
+    const hashedPassword = await bycrypt.hash(password, 12);
+    const result = await cloudinary.uploader.upload(req.files.schoolImage[0].path);
+    const school = new School({
+      schoolImage: result.secure_url,
+      schoolName,
+      subDistrict,
+      password: hashedPassword,
+      schoolEmail,
+      schoolPhone,
+      address,
+      inchargeName,
+      inchargePhone
+    });
+
+    await school.save();
+    res.status(201).json({ message: 'School created successfully' });
+  } catch (error) {
     console.error('Error saving school:', error);
     return res.status(500).json({ error: 'An error occurred while creating the school.' });
-  });
+  }
 };
 
 exports.getCurrentSchool = [
-  async(req, res, next) => {
-      const authorizationHeader = req.headers['Authorization'] || req.headers['authorization'];
-      if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
-           return res.status(401).json({ error: 'Token not found or malformed' });
-      }
-     
-      let token = authorizationHeader.substring(7);
-      
-      if (token && token.startsWith('"') && token.endsWith('"')) {
-        token = token.slice(1, -1);
-      }
-      
-      if (!token) {
-        return res.status(401).json({ error: 'Unauthorized' });
-      }
-         try{
-         const decodedToken = jwt.verify(token, 'tansukh');
-         if (decodedToken.schoolId) {
-            req.school = decodedToken.schoolId;
-         } else if (decodedToken.adminId) {
-            req.admin = decodedToken.adminId;
-         }
-          next();
-         } catch (err) {
-           return res.status(401).json({ error: 'Invalid token' });
-         }
-    },
+ verifyToken,
   (req, res, next) => {
     if (req.school) {
         const schoolId = req.school; 
@@ -223,7 +206,9 @@ exports.getSchoolBySubDistrict = (req, res, next) => {
   })
 }
 
-exports.approveSchool = (req, res, next) => {
+exports.approveSchool = [
+  verifyToken,
+  (req, res, next) => {
   const schoolId = req.params.schoolId;
   School.findById(schoolId)
     .then(school => {
@@ -239,9 +224,11 @@ exports.approveSchool = (req, res, next) => {
     .catch(err => {
       res.status(500).json({ message: 'Failed to approve school' });
     });
-};
+}];
 
-exports.getUnapprovedSchools = (req, res, next) => {
+exports.getUnapprovedSchools = [
+  verifyToken,
+  (req, res, next) => {
   School.find({ isApproved: false }).select("_id schoolName schoolEmail schoolImage subDistrict schoolPhone address inchargeName inchargePhone createdAt updatedAt")
     .then(schools => {
       res.status(200).json(schools);
@@ -249,10 +236,12 @@ exports.getUnapprovedSchools = (req, res, next) => {
     .catch(err => {
       res.status(500).json({ message: 'Failed to fetch unapproved schools' });
     });
-};
+}];
 
 
-exports.deleteSchool = (req, res, next) => {
+exports.deleteSchool = [
+  verifyToken,
+  (req, res, next) => {
   const schoolId = req.params.schoolId;
   School.findByIdAndDelete(schoolId)
     .then(() => {
@@ -261,4 +250,42 @@ exports.deleteSchool = (req, res, next) => {
     .catch((err) => {
       res.status(500).json({ message: 'Failed to delete school' });
     });
-};
+}];
+
+
+exports.updateSchoolDetails = [
+  verifyToken,
+  async (req, res, next) => {
+    const { schoolName, subDistrict, schoolEmail, schoolPhone, address, inchargeName, inchargePhone } = req.body;
+    const schoolId = req.school;
+
+    try {
+      const school = await School.findById(schoolId);
+      if (!school) {
+        return res.status(404).json({ message: 'School not found' });
+      }
+
+      
+      school.schoolName = schoolName || school.schoolName;
+      school.subDistrict = subDistrict || school.subDistrict;
+      school.schoolEmail = schoolEmail || school.schoolEmail;
+      school.schoolPhone = schoolPhone || school.schoolPhone;
+      school.address = address || school.address;
+      school.inchargeName = inchargeName || school.inchargeName;
+      school.inchargePhone = inchargePhone || school.inchargePhone;
+
+      
+      if (req.files && req.files.schoolImage) {
+        const result = await cloudinary.uploader.upload(req.files.schoolImage[0].path);
+        school.schoolImage = result.secure_url;
+      }
+
+      const updatedSchool = await school.save();
+
+      res.status(200).json({ message: 'School details updated successfully', school: updatedSchool });
+    } catch (error) {
+      console.error('Error updating school:', error);
+      res.status(500).json({ message: 'An error occurred while updating the school.' });
+    }
+  }
+]; 

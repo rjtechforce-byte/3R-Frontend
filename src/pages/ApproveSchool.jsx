@@ -126,52 +126,52 @@ const ApproveSchool = ({ showAlert }) => {
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <div className="min-w-full divide-y divide-gray-200">
+                    <div className="bg-gray-50">
+                      <div className="flex w-full">
+                        <div className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">
                           School Name
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        </div>
+                        <div className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">
                           Contact
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        </div>
+                        <div className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">
                           Incharge
-                        </th>
-                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        </div>
+                         <div className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">
                           Address
-                        </th>
-                        <th scope="col" className="relative px-6 py-3">
+                        </div>
+                        <div className="relative px-6 py-3 w-1/5">
                           <span className="sr-only">Actions</span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-white divide-y divide-gray-200">
                       {schools.map((school) => (
-                        <tr key={school._id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap">
+                        <div key={school._id} className="flex w-full items-center hover:bg-gray-50 py-2">
+                          <div className="px-6 py-4 whitespace-nowrap w-1/5">
                             <div className="flex items-center">
                               <div className="shrink-0 h-10 w-10">
-                                <img className="h-10 w-10 rounded-full object-cover" src={getThumbnailUrl(school.schoolImage)} alt="" />
+                                <img className="h-10 w-10 rounded-full object-cover" src={school.schoolImage} alt="" />
                               </div>
                               <div className="ml-4">
                                 <div className="text-sm font-medium text-gray-900">{school.schoolName}</div>
                                 <div className="text-sm text-gray-500">{school.subDistrict}</div>
                               </div>
                             </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          </div>
+                          <div className="px-6 py-4 whitespace-nowrap w-1/5">
                             <div className="text-sm text-gray-900">{school.schoolEmail}</div>
                             <div className="text-sm text-gray-500">{school.schoolPhone}</div>
-                          </td>
-                           <td className="px-6 py-4 whitespace-nowrap">
+                          </div>
+                           <div className="px-6 py-4 whitespace-nowrap w-1/5">
                             <div className="text-sm text-gray-900">{school.inchargeName}</div>
                             <div className="text-sm text-gray-500">{school.inchargePhone}</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          </div>
+                          <div className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-1/5">
                             {school.address}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          </div>
+                          <div className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium w-1/5">
                             <button
                               onClick={() => handleApprove(school._id)}
                               className="mr-2 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
@@ -184,11 +184,11 @@ const ApproveSchool = ({ showAlert }) => {
                             >
                               Reject
                             </button>
-                          </td>
-                        </tr>
+                          </div>
+                        </div>
                       ))}
-                    </tbody>
-                  </table>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

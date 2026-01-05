@@ -29,6 +29,14 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: 'dxsmv4yzu',
+    api_key: '938594316597896',
+    api_secret: 'HqH8xNNAl8fN2hi2TUeuJpA4JhE'
+});
+
 const randomString = (length) => {
   const characters = 'abcdefghijklmnopqrstuvwxyz';
   let result = '';

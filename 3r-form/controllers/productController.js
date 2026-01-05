@@ -1,33 +1,38 @@
 const Product = require('../models/product');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const { verifyToken } = require('../middlewares/authMiddleware');
+const cloudinary = require('cloudinary').v2;
+
+
 
 exports.postProduct = [
-  async(req, res, next) => {
+  (req, res, next) => {
     console.log('cookie', req.body, req.headers);
     const authorizationHeader = req.headers['Authorization'] || req.headers['authorization'];
     if (!authorizationHeader) {
-         return res.status(401).json({ error: 'Token not found' });
-       }
-   
-       let token = authorizationHeader.split(' ')[1];
-       if (token && token.startsWith('"') && token.endsWith('"')) {
-        token = token.slice(1, -1);
-       }
-       console.log('token', token);
-       if (!token) {
-         console.log('token not found');
-         return res.status(401).json({ error: 'Unauthorized' });
-       }
-       try{
-       const decodedToken = jwt.verify(token, 'tansukh');
-       console.log('decoded token', decodedToken);
-       req.school = decodedToken.schoolId;
-        next();
-       } catch (err) {
+      return res.status(401).json({ error: 'Token not found' });
+    }
+
+    let token = authorizationHeader.split(' ')[1];
+    if (token && token.startsWith('"') && token.endsWith('"')) {
+      token = token.slice(1, -1);
+    }
+    console.log('token', token);
+    if (!token) {
+      console.log('token not found');
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    jwt.verify(token, 'tansukh', (err, decodedToken) => {
+      if (err) {
         console.log('invalid token error', err);
-         return res.status(401).json({ error: 'Invalid token' });
-       }
+        return res.status(401).json({ error: 'Invalid token' });
+      }
+      console.log('decoded token', decodedToken);
+      req.school = decodedToken.schoolId;
+      next();
+    });
   },
   (req, res, next) => {
     const {
@@ -38,63 +43,58 @@ exports.postProduct = [
       condition,
       description,
     } = req.body;
-    console.log('Received POST /products request with body:', req.body, req.file);
-    if (!req.files || !req.files.thumbnail) {
+    console.log('Received POST /products request with body:', req.body);
+    if (!req.body.thumbnail) {
       return res.status(422).send('No image provided');
     }
-    const thumbnail = req.files.thumbnail[0].path.trim();
-    const images = req.files.images
-      ? req.files.images.map((file) => file.path.trim())
-      : [];
 
-    console.log({ school: req.school }, 'images', images, req.files.images);
+    cloudinary.uploader.upload(req.body.thumbnail, {
+      upload_preset: 'rrr_product_unsigned',
+      allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
+    })
+    .then(thumbnailUpload => {
+      const thumbnailUrl = thumbnailUpload.secure_url;
 
-    const product = new Product({
-      school: req.school,
-      donorName,
-      donorClass,
-      title,
-      category,
-      thumbnail,
-      images,
-      condition,
-      description,
-    });
-    product
-      .save()
-      .then(() => {
-        res.status(201).json({ message: 'Product created successfully' });
-      })
-      .catch((error) => {
-        console.error('Error saving thing:', error);
-        res.status(500).json({ error: 'Failed to create thing' });
+      let imagesPromises = [];
+      if (req.body.images && req.body.images.length > 0) {
+        imagesPromises = req.body.images.map(image => {
+          return cloudinary.uploader.upload(image, {
+            upload_preset: 'rrr_product_unsigned',
+            allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
+          });
+        });
+      }
+      return Promise.all(imagesPromises).then(imagesUploads => {
+        const imagesUrls = imagesUploads.map(upload => upload.secure_url);
+        console.log({ school: req.school }, 'images', imagesUrls);
+
+        const product = new Product({
+          school: req.school,
+          donorName,
+          donorClass,
+          title,
+          category,
+          thumbnail: thumbnailUrl,
+          images: imagesUrls,
+          condition,
+          description,
+        });
+        return product.save();
       });
+    })
+    .then(() => {
+      res.status(201).json({ message: 'Product created successfully' });
+    })
+    .catch(error => {
+      console.error('Error saving thing:', error);
+      res.status(500).json({ error: 'Failed to create thing' });
+    });
   },
 ];
 
 
 exports.postEditProduct = [
-  (req, res, next) => {
-    const authorizationHeader = req.headers['Authorization'] || req.headers['authorization'];
-     if (!authorizationHeader) {
-          return res.status(401).json({ error: 'Token not found' });
-        }
-    
-        let token = authorizationHeader.split(' ')[1];
-        if (token && token.startsWith('"') && token.endsWith('"')) {
-         token = token.slice(1, -1);
-        }
-        if (!token) {
-          return res.status(401).json({ error: 'Unauthorized' });
-        }
-        try{
-        const decodedToken = jwt.verify(token, 'tansukh');
-        req.school = decodedToken.schoolId;
-         next();
-        } catch (err) {
-          return res.status(401).json({ error: 'Invalid token' });
-        }
-  },
+  verifyToken,
   (req, res, next) => {
     const {
       title,
@@ -105,45 +105,42 @@ exports.postEditProduct = [
       description,
     } = req.body;
     const availability = Number(req.body.availability);
-   
-    let thumbnail;
-    if (req.files && req.files.thumbnail && req.files.thumbnail[0]) {
-      thumbnail = req.files.thumbnail[0].path.trim();
-    } else if (req.body.thumbnail && typeof req.body.thumbnail === "string") {
-      thumbnail = req.body.thumbnail;
-    } else {
-      return res.status(422).send('No image provided');
+
+    let thumbnailUrlPromise = Promise.resolve(req.body.thumbnail);
+    if (req.body.thumbnail && req.body.thumbnail.startsWith('data:image')) {
+      thumbnailUrlPromise = cloudinary.uploader.upload(req.body.thumbnail, {
+        upload_preset: 'rrr_product_unsigned',
+        allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
+      }).then(thumbnailUpload => thumbnailUpload.secure_url);
     }
 
-    
-    let images = [];
-    
-    if (req.files && req.files.images) {
-      images = req.files.images.map((file) => file.path.trim());
+    let imagesUrlsPromise = Promise.resolve([]);
+    if (req.body.images && req.body.images.length > 0) {
+      imagesUrlsPromise = Promise.all(req.body.images.map((image) => {
+        if (image.startsWith('data:image')) {
+          return cloudinary.uploader.upload(image, {
+            upload_preset: 'rrr_product_unsigned',
+            allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
+          }).then(imageUpload => imageUpload.secure_url);
+        }
+        return Promise.resolve(image);
+      }));
     }
-    
-    if (req.body.images) {
-   
-      if (Array.isArray(req.body.images)) {
-        images = images.concat(req.body.images.filter(img => typeof img === "string"));
-      } else if (typeof req.body.images === "string") {
-        images.push(req.body.images);
-      }
-    }
-  
-    images = [...new Set(images)];
 
-    Product.findByIdAndUpdate(req.params.id, {
-      donorName,
-      donorClass,
-      title,
-      category,
-      thumbnail,
-      images,
-      condition,
-      description,
-      availability,
-    })
+    Promise.all([thumbnailUrlPromise, imagesUrlsPromise])
+      .then(([thumbnailUrl, imagesUrls]) => {
+        return Product.findByIdAndUpdate(req.params.id, {
+          donorName,
+          donorClass,
+          title,
+          category,
+          thumbnail: thumbnailUrl,
+          images: imagesUrls,
+          condition,
+          description,
+          availability,
+        });
+      })
       .then(() => {
         res.status(201).json({ message: 'Product updated successfully' });
       })
@@ -209,7 +206,9 @@ exports.getProductSearch = (req, res, next) => {
 
 
 
-exports.postAddHelpedStudent = (req, res, next) => {
+exports.postAddHelpedStudent = [
+  verifyToken,
+  (req, res, next) => {
   const { id } = req.params;
   const { helpedStudentName, helpedStudentClass } = req.body;
   
@@ -240,7 +239,7 @@ exports.postAddHelpedStudent = (req, res, next) => {
       console.error('Error adding helped student:', error);
       res.status(500).json({ error: 'Failed to add helped student' });
     });
-};
+}];
 
 
 exports.getProductsByCategory = (req, res, next) => {
@@ -272,7 +271,9 @@ exports.getProductsByCategory = (req, res, next) => {
     });
 };
 
-exports.deleteProduct = (req, res, next) => {
+exports.deleteProduct = [
+  verifyToken,
+  (req, res, next) => {
   const id = req.params.id;
   Product.findByIdAndDelete(id)
     .then(() => {
@@ -281,4 +282,4 @@ exports.deleteProduct = (req, res, next) => {
     .catch((error) => {
       res.status(500).json({ error: 'Failed to delete product' });
     });
-};
+}];
