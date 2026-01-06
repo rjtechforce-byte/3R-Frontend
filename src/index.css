@@ -27,10 +27,10 @@
 0%{
   visibility: visible;
   opacity: 0;
-  top:4%;
+  top:6%;
 } 
 40%{
-top:6%;
+top:8%;
 opacity: 1;
 }
 100%{

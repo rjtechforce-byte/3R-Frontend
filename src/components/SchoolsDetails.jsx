@@ -51,7 +51,7 @@ export default function SchoolDetail() {
   }, []);
 
   if (loading) {
-    return <Loading message="Loading School Rankings..." />;
+    return <Loading message="Loading School Rankings..." fullScreen={false} />;
   }
 
   const getRankClass = (index) => {

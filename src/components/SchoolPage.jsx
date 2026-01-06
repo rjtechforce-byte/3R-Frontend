@@ -42,17 +42,17 @@ export default function SchoolPage() {
   return(
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
       <div className="w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 hover:shadow-3xl">
-        <div className="flex flex-col md:flex-row h-full">
+        <div className="flex flex-col h-full">
           
           
-          <div className="md:w-2/5 relative min-h-[300px] md:min-h-auto bg-gray-200">
+          <div className="relative min-h-[300px] md:min-h-[500px] bg-gray-200">
              <img 
                className="absolute inset-0 w-full h-full object-cover" 
-               src={selectedSchool?.schoolImage ? getThumbnailUrl(selectedSchool.schoolImage) : '/images/placeholder-school.png'} 
+               src={selectedSchool?.schoolImage ? selectedSchool.schoolImage : '/images/placeholder-school.png'} 
                alt="School" 
              />
-             <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent md:hidden"></div>
-             <div className="absolute bottom-0 left-0 right-0 p-6 md:hidden text-white">
+             <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
+             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                 <h2 className="text-3xl font-bold mb-2 shadow-sm">{selectedSchool?.schoolName}</h2>
                 <div className="flex items-center gap-2 text-gray-200 font-medium">
                   <FaMapMarkerAlt />
@@ -62,7 +62,7 @@ export default function SchoolPage() {
           </div>
 
           
-          <div className="md:w-3/5 p-8 lg:p-12 flex flex-col justify-center">
+          <div className="md:w-3/5 p-8 lg:p-12 flex flex-col justify-center md:self-center">
             
           
             <div className="hidden md:block mb-8 border-b border-gray-100 pb-6">

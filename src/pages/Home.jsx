@@ -301,7 +301,7 @@ function Home() {
                   <Item
                     category={item.category}
                     name={item.title || item.name}
-                    imgUrl={getThumbnailUrl(item.thumbnail)}
+                    imgUrl={item.thumbnail}
                     schoolName={item.schoolName}
                     key={item._id}
                     id={item._id}
@@ -314,7 +314,6 @@ function Home() {
             ) : (
               <div className="text-center my-16">
                 <div className="relative inline-block">
-                  <div className="text-6xl mb-6">🔍</div>
                   <div className="absolute inset-0 bg-linear-to-r from-emerald-400/10 to-green-400/10 rounded-full blur-2xl animate-pulse"></div>
                 </div>
                 <h1 className="text-4xl font-bold bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent mb-4">

@@ -44,24 +44,19 @@ exports.postProduct = [
       description,
     } = req.body;
     console.log('Received POST /products request with body:', req.body);
-    if (!req.body.thumbnail) {
+    if (!req.files.thumbnail || req.files.thumbnail.length === 0) {
       return res.status(422).send('No image provided');
     }
 
-    cloudinary.uploader.upload(req.body.thumbnail, {
-      upload_preset: 'rrr_product_unsigned',
-      allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
-    })
+    cloudinary.uploader.upload(req.files.thumbnail[0].path)
     .then(thumbnailUpload => {
+      console.log('thumbnail upload', thumbnailUpload);
       const thumbnailUrl = thumbnailUpload.secure_url;
 
       let imagesPromises = [];
-      if (req.body.images && req.body.images.length > 0) {
-        imagesPromises = req.body.images.map(image => {
-          return cloudinary.uploader.upload(image, {
-            upload_preset: 'rrr_product_unsigned',
-            allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
-          });
+      if (req.files.images && req.files.images.length > 0) {
+        imagesPromises = req.files.images.map(image => {
+          return cloudinary.uploader.upload(image.path);
         });
       }
       return Promise.all(imagesPromises).then(imagesUploads => {
@@ -107,24 +102,19 @@ exports.postEditProduct = [
     const availability = Number(req.body.availability);
 
     let thumbnailUrlPromise = Promise.resolve(req.body.thumbnail);
-    if (req.body.thumbnail && req.body.thumbnail.startsWith('data:image')) {
-      thumbnailUrlPromise = cloudinary.uploader.upload(req.body.thumbnail, {
-        upload_preset: 'rrr_product_unsigned',
-        allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
-      }).then(thumbnailUpload => thumbnailUpload.secure_url);
+    if (req.files.thumbnail && req.files.thumbnail[0]) {
+      thumbnailUrlPromise = cloudinary.uploader.upload(req.files.thumbnail[0].path).then(thumbnailUpload => thumbnailUpload.secure_url);
     }
 
-    let imagesUrlsPromise = Promise.resolve([]);
-    if (req.body.images && req.body.images.length > 0) {
-      imagesUrlsPromise = Promise.all(req.body.images.map((image) => {
-        if (image.startsWith('data:image')) {
-          return cloudinary.uploader.upload(image, {
-            upload_preset: 'rrr_product_unsigned',
-            allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
-          }).then(imageUpload => imageUpload.secure_url);
-        }
-        return Promise.resolve(image);
-      }));
+    let imagesUrlsPromise = Promise.resolve(req.body.images || []);
+    if (req.files.images && req.files.images.length > 0) {
+      const newImagesPromises = req.files.images.map((image) => {
+        return cloudinary.uploader.upload(image.path).then(imageUpload => imageUpload.secure_url);
+      });
+      imagesUrlsPromise = Promise.all(newImagesPromises).then(newUrls => {
+        const existingUrls = Array.isArray(req.body.images) ? req.body.images : (req.body.images ? [req.body.images] : []);
+        return [...existingUrls, ...newUrls];
+      });
     }
 
     Promise.all([thumbnailUrlPromise, imagesUrlsPromise])

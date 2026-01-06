@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaCheckSquare, FaChevronLeft } from "react-icons/fa";
 import { MdErrorOutline } from "react-icons/md";
@@ -6,13 +6,26 @@ import { ImSpinner10 } from "react-icons/im";
 import { Icon } from "@iconify/react";
 import { FaBackward } from "react-icons/fa";
 
-export function AlertPopup({message, type, from}) {
+export function AlertPopup({message, type, from, setAlert}) {
+      useEffect(() => {
+            if(message || type || from) {
+          const timer = setTimeout(() => {
+                setAlert(null);
+            }, 4000);
+            console.log('show alert called inside useEffect', timer)
+            return () => {clearTimeout(timer)};
+        }
+          },[message, type, from]);
+    
+    if(!message || !type || !from) {
+        return;
+    }
     return(
         <div className={type == 'error' && `bg-gray-popup
          border-3
         border-red-popup 
         absolute 
-        top-[4%] 
+        top-[6%] 
         left-[50%] 
         animate-popup 
         transform-[translateX(-50%)] 
@@ -32,7 +45,7 @@ export function AlertPopup({message, type, from}) {
          border-3
         border-green-popup 
         absolute 
-        top-[4%] 
+        top-[6%] 
         left-[50%] 
         animate-popup 
         transform-[translateX(-50%)] 
@@ -53,7 +66,7 @@ export function AlertPopup({message, type, from}) {
          border-3
         border-green-popup 
         absolute 
-        top-[4%] 
+        top-[6%] 
         left-[50%] 
         animate-popup 
         transform-[translateX(-50%)] 
@@ -148,9 +161,21 @@ export function BackButton({ to, className = "", children = "Back" }) {
                 <span className="tracking-wide drop-shadow-xl">{children}</span>
             </div>
             
-            {/* Beautiful emerald glow effect */}
+            
             <div className="absolute -inset-0.5 bg-linear-to-r from-emerald-400 to-green-500 
                           rounded-xl opacity-0 group-hover:opacity-90 transition-opacity duration-300 blur-sm -z-10"></div>
         </Link>
     );
+}
+
+
+export function ErrorPage({message = "An Error Occurred", error }) {
+    return (
+         <div className="flex items-center justify-center min-h-screen bg-red-100">
+        <div className="p-6 bg-white rounded-lg shadow-md text-center">
+            <h2 className="text-xl font-bold text-red-700">{message}</h2>
+            <p className="mt-2 text-gray-600">{error}</p>
+        </div>
+      </div>
+    )
 }

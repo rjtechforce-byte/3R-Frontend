@@ -13,7 +13,10 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
 import { MdAdd } from "react-icons/md";
 
+const Logo = "/images/Logo.png";
+
 function Slidebar () {
+  const pathName = window.location.pathname;
   const [isOpen, setIsOpen] = useState(false);
   const openMenu = () => {
     setIsOpen((!isOpen));
@@ -27,7 +30,10 @@ function Slidebar () {
   return(
     <>
     <header className="sticky top-0 z-50 background-blur-md opacity-90">
-      <nav className="bg-white flex justify-between items-center text-white h-16 px-4 backdrop-blur-md shadow-md">
+      <nav className={"bg-white flex justify-between items-center text-white h-16 px-4 backdrop-blur-md shadow-md " + (localStorage.getItem('token') && "2xl:pr-40") }>
+       <div className="max-w-[60px]">
+        <a href="https://education.rajasthan.gov.in" className='z-20' target="_blank"><img className="max-w-full max-h-full" src={Logo} alt="" /></a>
+      </div>
       <div className="flex justify-between hover:scale-105 transition-all duration-700 backdrop-blur-md ease-in-out px-2 py-2 shrink-0">
         <a href="/" className='font-extrabold hover:bg-green-100 rounded-lg py-2 px-6 text-2xl text-green-900 z-20'>CODE <span className='text-yellow-600 font-extrabold'>चूरू</span></a>
       </div>
@@ -105,7 +111,7 @@ function Slidebar () {
 
       <div className="hidden 2xl:flex gap-8 justify-center items-center h-full text-green-900">
         <a href="/home" className='group relative text-lg font-semibold text-green-800 after:absolute after:content-[""] after:w-full after:h-1 after:bottom-0 after:left-0 after:bg-linear-to-r after:from-emerald-500 after:to-green-600 after:scale-x-0 after:origin-bottom-left after:transition-transform after:duration-300 hover:after:scale-x-100 py-3 px-4 rounded-lg hover:bg-linear-to-r hover:from-emerald-50 hover:to-green-50 transition-all duration-300 flex items-center shadow-sm hover:shadow-md'><span className="mr-2 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300"><FaHome /></span> HOME</a>
-        <a className='group relative text-lg font-semibold text-green-800 after:absolute after:content-[""] after:w-full after:h-1 after:bottom-0 after:left-0 after:bg-linear-to-r after:from-emerald-500 after:to-green-600 after:scale-x-0 after:origin-bottom-left after:transition-transform after:duration-300 hover:after:scale-x-100 py-3 px-4 rounded-lg hover:bg-linear-to-r hover:from-emerald-50 hover:to-green-50 transition-all duration-300 flex items-center shadow-sm hover:shadow-md' href="/yourSchool"><span className="mr-1 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300"><FaSchool /></span>ADMIN PANEL</a>
+       {pathName !== '/' && <a className='group relative text-lg font-semibold text-green-800 after:absolute after:content-[""] after:w-full after:h-1 after:bottom-0 after:left-0 after:bg-linear-to-r after:from-emerald-500 after:to-green-600 after:scale-x-0 after:origin-bottom-left after:transition-transform after:duration-300 hover:after:scale-x-100 py-3 px-4 rounded-lg hover:bg-linear-to-r hover:from-emerald-50 hover:to-green-50 transition-all duration-300 flex items-center shadow-sm hover:shadow-md' href="/yourSchool"><span className="mr-1 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300"><FaSchool /></span>ADMIN PANEL</a> }
         <a className='group relative text-lg font-semibold text-green-800 after:absolute after:content-[""] after:w-full after:h-1 after:bottom-0 after:left-0 after:bg-linear-to-r after:from-emerald-500 after:to-green-600 after:scale-x-0 after:origin-bottom-left after:transition-transform after:duration-300 hover:after:scale-x-100 py-3 px-4 rounded-lg hover:bg-linear-to-r hover:from-emerald-50 hover:to-green-50 transition-all duration-300 flex items-center shadow-sm hover:shadow-md' href="/schoolContribution"><span className="mr-1 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300"><FaFileContract /></span> LEADERBOARD</a>
         
         <div className="relative group">
@@ -125,15 +131,15 @@ function Slidebar () {
           )}
         </div>
 
-        <a className='group relative text-lg font-semibold text-green-800 after:absolute after:content-[""] after:w-full after:h-1 after:bottom-0 after:left-0 after:bg-linear-to-r after:from-emerald-500 after:to-green-600 after:scale-x-0 after:origin-bottom-left after:transition-transform after:duration-300 hover:after:scale-x-100 py-3 px-4 rounded-lg hover:bg-linear-to-r hover:from-emerald-50 hover:to-green-50 transition-all duration-300 flex items-center shadow-sm hover:shadow-md' href="/contact"><span className="mr-1 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300"><MdContactMail /></span> <span className="group-hover:text-emerald-700 transition-colors duration-300">CONTACT Us</span></a>
+     
 
-        <div className="flex items-center justify-center pl-6">
+        {!localStorage.getItem('token') && <div className="flex items-center justify-center pl-6">
           <div className="border-l-2 h-8 border-emerald-300/60"></div>
-          <a href="/schoolRegister" className="ml-8 max-w-fit rounded-xl text-white cursor-pointer bg-green-400 transition-all duration-300 py-3 px-8 transform hover:scale-105 shadow-lg hover:shadow-2xl hover:shadow-emerald-500/30 border border-emerald-400/30 backdrop-blur-sm font-bold tracking-wide relative overflow-hidden group">
+          <a href="/schoolRegister" className="ml-8 max-w-fit rounded-md text-white cursor-pointer bg-green-700 transition-all duration-300 py-3 px-8 transform hover:scale-105 shadow-lg hover:shadow-2xl hover:shadow-emerald-500/30 border border-emerald-400/30 backdrop-blur-sm font-bold tracking-wide relative overflow-hidden group">
             <div className="absolute inset-0 bg-linear-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
             <h1 className='text-base font-bold flex items-center tracking-wider relative z-10'><span className="mr-2 text-gray-50"><MdAdd /></span> REGISTER</h1>
           </a>
-        </div>
+        </div>}
       </div>
 
     </nav>

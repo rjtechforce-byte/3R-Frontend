@@ -98,7 +98,7 @@ function ProductUploadForm({ showAlert }) {
             top:0,
             behavior: 'smooth'
           })
-          showAlert(error.response.statusText
+          showAlert(error?.response?.data?.message || error?.message || error?.response?.error || error.response?.data  || error?.response?.statusText
  , "error")
         });
       console.log('Form data', data, values.title);

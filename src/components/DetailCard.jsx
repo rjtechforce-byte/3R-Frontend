@@ -20,7 +20,7 @@ const DetailCard = ({ detailCard }) => {
     });
   });
   return (
-    <div className={`hidden fixed top-0 bottom-0 right-0 left-0 lg:top-[5vh] lg:left-[5vw] lg:bottom-[5vh] lg:right-0 xl:left-[14vh] 2xl:left-[25vh] min-h-3/4 opacity-0 max-w-6xl cardOfDetailProduct lg:w-[80vw] lg:min-w-96 border-0 rounded-3xl bg-white shadow-2xl flex-col lg:flex-row overflow-hidden z-50`}>
+    <div className={`hidden fixed top-0 bottom-0 right-0 left-0 lg:top-[5vh] lg:left-[5vw] lg:bottom-[5vh] lg:right-0 xl:left-[14vh] 2xl:left-[25vh] min-h-3/4 opacity-0 max-w-6xl cardOfDetailProduct lg:w-[80vw] lg:min-w-96 border-0 rounded-3xl bg-white shadow-2xl flex-col overflow-hidden z-50`}>
       
       <div className="absolute inset-0 bg-linear-to-br from-emerald-50/30 via-green-50/10 to-teal-50/30 backdrop-blur-sm"></div>
       
@@ -34,7 +34,7 @@ const DetailCard = ({ detailCard }) => {
         </button>
       </div>
 
-      <div className="relative z-10 flex flex-col lg:flex-row h-full">
+      <div className="relative z-10 flex flex-col h-full">
        
         <div className="lg:w-3/5 bg-linear-to-br from-gray-50 to-emerald-50/10 p-8 flex flex-col justify-start items-center gap-6 overflow-y-auto">
          
@@ -61,10 +61,10 @@ const DetailCard = ({ detailCard }) => {
         </div>
 
         
-        <div className="lg:w-2/5 p-8 overflow-y-auto bg-white">
+        <div className="p-8 overflow-y-auto bg-white">
           <div className="space-y-6">
             
-            <div className="sticky top-0 bg-white pb-4 border-b border-gray-100">
+            <div className="sticky -top-8 bg-white pb-4 border-b border-gray-100">
               <h1 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
                 Product Details
               </h1>

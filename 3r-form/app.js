@@ -17,6 +17,7 @@ const schoolRoute = require('./routes/schoolRoute');
 const allowedOrigins = [
   'https://rrr-frontend-iota.vercel.app',
   'http://localhost:5173',
+  'https://www.3rinnovationchuru.com',
 ];
 
 app.use(
@@ -28,13 +29,23 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: 'dxsmv4yzu',
+    api_key: '938594316597896',
+    api_secret: 'HqH8xNNAl8fN2hi2TUeuJpA4JhE'
+});
+
 const randomString = (length) => {
   const characters = 'abcdefghijklmnopqrstuvwxyz';
   let result = '';
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
+    console.log('result in for loop', result);
   }
-  return result.trim();
+  console.log('result outside for loop', result);
+  return result;
 };
 
 const storage = multer.diskStorage({
@@ -42,7 +53,7 @@ const storage = multer.diskStorage({
     cd(null, 'public/uploads');
   },
   filename: (req, file, cd) => {
-    cd(null, randomString(10) + '_' + file.originalname).trim();
+    cd(null, (randomString(10) + '_' + file.originalname.replace(/\s+/g, '')));
   },
 });
 
@@ -92,7 +103,7 @@ app.use('/public/uploads', [(req, res, next) => {
   setHeaders: (res, path) => {
     // Set proper cache headers for images
     if (path.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
-      res.set('Cache-Control', 'public, max-age=31536000'); // 1 year cache
+      res.set('Cache-Control', 'public, max-age=3153'); // 1 year cache
     }
   },
   index: false, // Disable directory indexing

@@ -10,6 +10,7 @@ import { Loading } from "../components/form/MiniComp";
 import AdminPanel from "../components/AdminPanel";
 import SchoolProfile from "../components/SchoolProfile";
 import AdminProfile from "../components/AdminProfile";
+import { Link } from "react-router-dom";
 
 const YourSchool = ({ auth, showAlert }) => {
   const [schoolDataList2, setSchoolDataList2] = useState([]);
@@ -98,10 +99,10 @@ const YourSchool = ({ auth, showAlert }) => {
                     {auth.role === 'admin' ? <AdminProfile auth={auth} /> : <SchoolProfile auth={auth} />}
                   </div>
                 </div>
-                
+                { auth.role != 'admin' && <Link to={`/EditSchoolDetail/${auth._id}`} className="mt-6 bg-linear-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-semibold py-3 px-6 rounded-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg w-full flex items-center justify-center gap-2 shadow-md">Edit Detail</Link> }
                 <button
                   onClick={handleLogout}
-                  className="mt-6 bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg w-full flex items-center justify-center gap-2 shadow-md"
+                  className="mt-6 bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-3 px-6 rounded-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg w-full flex items-center justify-center gap-2 shadow-md"
                 >
                   <FaSignOutAlt />
                   <span>Logout</span>
@@ -175,7 +176,7 @@ const YourSchool = ({ auth, showAlert }) => {
                                 title={schoolData.title} 
                                 _id={schoolData._id} 
                                 availability={schoolData.availability ? "Available" : "Unavailable"} 
-                                thumbnail={getThumbnailUrl(schoolData.thumbnail)} 
+                                thumbnail={schoolData.thumbnail} 
                               />
                             </div>
                           ))
