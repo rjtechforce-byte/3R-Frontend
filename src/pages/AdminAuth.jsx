@@ -20,7 +20,7 @@ const [loading, setLoading] = useState(true);
       }, []);
 
      if(loading) {
-        return <Loading message="Verifying Admin Access..." />;
+        return <Loading message="Verifying Admin Access..." inheritColor={true}/>;
     }
 
     if(auth?.role !== 'admin') {

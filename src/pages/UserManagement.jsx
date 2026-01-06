@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Slidebar from "../components/Slidebar";
 import { getAllSchool, deleteSchool } from "../components/form/api";
 import { ImSpinner10 } from "react-icons/im";
+import { Loading } from "../components/form/MiniComp";
 
 
 export default function UserManagement(){
@@ -94,10 +95,7 @@ export default function UserManagement(){
       </div>
       
       {loading ? (
-        <div className="flex justify-center items-center h-[80vh] flex-col">
-          <div className="text-6xl text-green-900 font-bold"><ImSpinner10 className="animate-spin" /></div>
-          <h1 className="text-3xl md:text-4xl font-bold text-center text-green-800 mt-7 mb-10 font-serif">Loading All Schools...</h1>
-        </div>
+        <Loading message="Loading All Schools..."/>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {filteredSchools.map((school) => (

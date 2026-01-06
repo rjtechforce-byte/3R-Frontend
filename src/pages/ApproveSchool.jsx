@@ -37,7 +37,7 @@ const ApproveSchool = () => {
   };
 
   if (loading) {
-    return <Loading message="Loading School Approvals..." />;
+    return <Loading message="Loading School Approvals..." inheritColor={true}/>;
   }
 
   if (error) {

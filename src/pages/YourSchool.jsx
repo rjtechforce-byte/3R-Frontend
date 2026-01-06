@@ -49,7 +49,7 @@ const YourSchool = ({ auth, showAlert }) => {
   };
 
   if (isLoadingPage) {
-    return <Loading />;
+    return <Loading inheritColor={true} />;
   }
 
   if (!auth) {

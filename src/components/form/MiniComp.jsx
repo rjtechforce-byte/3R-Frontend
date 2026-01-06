@@ -92,9 +92,9 @@ export function AlertPopup({message, type, from, setAlert}) {
 
 
 
-export function Loading({ message = "Loading...", fullScreen = true }) {
+export function Loading({ message = "Loading...", fullScreen = true, inheritColor = false }) {
     return (
-        <div className={`flex justify-center items-center ${fullScreen ? 'w-screen h-screen' : 'w-full h-full'} relative overflow-hidden`}>
+        <div className={`flex justify-center items-center ${fullScreen ? 'w-screen h-screen' : 'w-full h-full'} relative overflow-hidden ${inheritColor && 'bg-white' }`}>
             <div className="mt-[10vh] flex flex-col items-center">
                 <div className="relative">
                     <div className="text-6xl text-emerald-600 font-bold my-7">
