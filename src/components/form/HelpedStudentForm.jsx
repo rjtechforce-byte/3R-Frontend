@@ -7,6 +7,8 @@ import DropDown from './DropDown';
 import FormButton from "./FormButton";
 import { useParams } from "react-router-dom";
 import { postAddHelpedStudent } from "./api";
+import { FaUserGraduate } from "react-icons/fa";
+import { BackButton } from "./MiniComp";
 
 
 function HelpedStudentForm() {
@@ -38,23 +40,28 @@ function HelpedStudentForm() {
             });
         },
     });
-return(<div className="bg-[#D9E4DD]  min-h-screen w-screen flex justify-center py-15 overflow-auto px-10">
-        <Form onSubmit={formik.handleSubmit}>
-          <h1 className="text-3xl font-bold self-start text-green-800 mb-6 border-b border-gray-300 w-full bg-[#D9E4DD] py-4 pl-8">
-            Edit Product
-          </h1>
-          <div
-            className="bg-[#D9E4DD]
-     inline-flex 
-     w-screen
-     flex-col
-     md:w-[500px]
-     lg:w-[600px]
-     gap-6
-     items-center
-     px-8"
-          >
-        <Input
+
+  return (
+    <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 flex flex-col sm:justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full">
+        <div className="flex justify-center">
+          <div className="rounded-full bg-green-100 p-4 shadow-lg shadow-green-100/50 ring-4 ring-white">
+            <FaUserGraduate className="h-8 w-8 text-green-600" />
+          </div>
+        </div>
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 tracking-tight">
+          Add Helped Student
+        </h2>
+        <p className="mt-2 text-center text-sm text-gray-600">
+          Enter the details of the student who received help
+        </p>
+      </div>
+
+      <div className="mt-8 w-full flex items-center justify-center flex-col mx-auto max-sm:px-8">
+        
+          <Form onSubmit={formik.handleSubmit} className="bg-white py-8 px-4 sm:rounded-2xl sm:px-10 border border-gray-100 border-t-4 border-t-green-500 w-full">
+            <div className="w-full flex flex-col gap-8">
+              <Input
                 type="text"
                 touched={formik.touched.helpedStudentName}
                 errors={formik.errors.helpedStudentName}
@@ -64,72 +71,38 @@ return(<div className="bg-[#D9E4DD]  min-h-screen w-screen flex justify-center p
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 placeholder=" "
-            >
-                Helped Student Name
-            </Input>
-                <DropDown
-                    name="helpedStudentClass"
-                    label="Helped Student Class"
-                    useFor="form"
-                    touched={formik.touched.helpedStudentClass}
-                    errors={formik.errors.helpedStudentClass}
-                    value={formik.values.helpedStudentClass}
-                    onChange={formik.handleChange}
-                >
-                       <option
-                disabled
-                className=" disabled:text-gray-200 bg-green-900"
-                value="default"
+                inputClass="w-full bg-gray-100 border border-gray-200 text-gray-800 text-base rounded-lg focus:ring-green-500 focus:border-green-500 p-4"
               >
-                In Which Class Helped Student Study?
-              </option>
-                    <option className="bg-green-900" value="1">
-                    1
-                    </option>
-                    <option className="bg-green-900" value="2">
-                    2
-                    </option>
-                    <option className="bg-green-900" value="3">
-                    3
-                    </option>
-                    <option className="bg-green-900" value="4">
-                    4
-                    </option>
-                    <option className="bg-green-900" value="5">
-                    5
-                    </option>
-                    <option className="bg-green-900" value="6">
-                    6
-                    </option>
-                    <option className="bg-green-900" value="7">
-                    7
-                    </option>
-                    <option className="bg-green-900" value="8">
-                    8
-                    </option>
-                    <option className="bg-green-900" value="9">
-                    9
-                    </option>
-                    <option className="bg-green-900" value="10">
-                    10
-                    </option>
-                    <option className="bg-green-900" value="11">
-                    11
-                    </option>
-                    <option className="bg-green-900" value="12">
-                    12
-                    </option>
-                    <option className="bg-green-900" value="12th pass">
-                    12th pass
-                    </option>
-                    <option className="bg-green-900" value="Don't Study in School">
-                    Don't Study in School
-                    </option>
-                </DropDown>
-                <FormButton formik={formik}>Submit</FormButton>
+                Student Name
+              </Input>
+
+              <DropDown
+                name="helpedStudentClass"
+                label="Student Class"
+                useFor="form"
+                touched={formik.touched.helpedStudentClass}
+                errors={formik.errors.helpedStudentClass}
+                value={formik.values.helpedStudentClass}
+                onChange={formik.handleChange}
+                inputClass="w-full bg-gray-100 border border-gray-200 text-gray-800 text-base rounded-lg focus:ring-green-500 focus:border-green-500 p-4"
+              >
+                <option disabled value="default" className="text-gray-400">Select Class</option>
+                {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '12th pass', "Don't Study in School"].map((cls) => (
+                  <option key={cls} value={cls} className="text-gray-900">{cls}</option>
+                ))}
+              </DropDown>
+
+              <div className="pt-4 self-center">
+                <FormButton formik={formik}>Submit Details</FormButton>
+              </div>
+            </div>
+          </Form>
+         <div className="text-center mt-6">
+             <BackButton to="/yourSchool"/>
+          </div>
+      </div>
     </div>
-        </Form>
-</div>)
+  );
 };
 
 export default HelpedStudentForm;

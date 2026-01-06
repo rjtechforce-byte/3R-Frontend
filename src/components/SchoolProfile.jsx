@@ -12,7 +12,7 @@ const SchoolProfile = ({ auth }) => {
     return (
         <div className="bg-white shadow-2xl rounded-lg p-6 w-full transition-all duration-300 hover:shadow-none">
             <div className="flex flex-col items-center">
-                <img src={getThumbnailUrl(auth.schoolImage)} alt="School Logo" className="w-32 h-32 rounded-full mb-4 border-4 border-green-500 object-cover"/>
+                <img src={auth.schoolImage} alt="School Logo" className="w-32 h-32 rounded-full mb-4 border-4 border-green-500 object-cover"/>
                 <h2 className="text-3xl font-bold text-center text-green-800">{auth.schoolName}</h2>
                 <p className="text-gray-600 text-center mb-6">{auth.schoolEmail}</p>
             </div>

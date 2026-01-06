@@ -1,36 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import Slidebar from '../components/Slidebar';
-import { approveSchool, getUnapprovedSchools, deleteSchool } from '../components/form/api';
+import { approveSchool, getUnapprovedSchools } from '../components/form/api';
 import { Loading } from '../components/form/MiniComp';
-import { getThumbnailUrl } from '../utils/fileUtils';
 
-const ApproveSchool = ({ showAlert }) => {
+
+const ApproveSchool = () => {
   const [schools, setSchools] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedSchoolId, setSelectedSchoolId] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
    getUnapprovedSchools().then((data) => {
     console.log('Unapproved schools data:', data);
       setSchools(data);
-      setLoading(false);
     }).catch((err) => {
       setError('Failed to fetch unapproved schools.');
       console.error(err);
     }).finally(() => {
       setLoading(false);
     });
-  }, [loading]);
+  }, []);
 
   const handleApprove = (schoolId) => {
-    setLoading(true);
-   approveSchool(schoolId).then((res) => {
-    console.log('approve', res)
-      showAlert(res.data?.message || res.message, "not-error", "approve");
-      
+   approveSchool(schoolId).then(() => {
+      setSchools(schools.filter(school => school._id !== schoolId));
     }).catch((err) => {
       setError('Failed to approve school.');
       console.error(err);
@@ -38,32 +31,13 @@ const ApproveSchool = ({ showAlert }) => {
   };
   
   const handleReject = (schoolId) => {
-    setSelectedSchoolId(schoolId);
-    setShowModal(true);
-  };
-
-  const confirmReject = () => {
-    setIsDeleting(true);
-    deleteSchool(selectedSchoolId).then((res) => {
-      console.log('rejct', res);
-      showAlert(res.data?.message || res.message, "not-error", "reject");
-      setSchools(schools.filter((school) => school._id !== selectedSchoolId));
-      setShowModal(false);
-      setSelectedSchoolId(null);
-    }).catch((err) => {
-      setError('Failed to reject school.');
-      console.error(err);
-    }).finally(() => {
-      setIsDeleting(false);
-    });
+    // In a real app, you'd likely want to call a backend endpoint to reject.
+    // For this example, we'll just remove it from the list.
+    setSchools(schools.filter(school => school._id !== schoolId));
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-       <Loading/>
-      </div>
-    );
+    return <Loading message="Loading School Approvals..." />;
   }
 
   if (error) {
@@ -81,36 +55,6 @@ const ApproveSchool = ({ showAlert }) => {
      <>
       <Slidebar />
     <div className="min-h-screen bg-gray-50">
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-50 backdrop-blur-sm">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-            {isDeleting ? (
-              <div className="flex flex-col items-center justify-center py-8">
-                <h3 className="text-xl font-bold text-green-800 animate-pulse">Rejecting school...</h3>
-              </div>
-            ) : (
-              <>
-                <h3 className="text-lg text-center font-bold text-red-600 mb-4">Confirm Rejection</h3>
-                <p className="text-gray-600 mb-6">Do you want to Reject <span className="text-green-700 font-bold">{schools.find((school) => school._id === selectedSchoolId)?.schoolName}</span>?</p>
-                <div className="flex justify-around">
-                  <button
-                    onClick={() => setShowModal(false)}
-                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-800 transition-colors"
-              >
-                    No
-                  </button>
-                  <button
-                    onClick={confirmReject}
-                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
-                  >
-                    Yes
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      )}
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
             <h1 className="text-3xl font-bold leading-tight text-gray-900">School Approval Queue</h1>
@@ -126,52 +70,52 @@ const ApproveSchool = ({ showAlert }) => {
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                  <div className="min-w-full divide-y divide-gray-200">
-                    <div className="bg-gray-50">
-                      <div className="flex w-full">
-                        <div className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           School Name
-                        </div>
-                        <div className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Contact
-                        </div>
-                        <div className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Incharge
-                        </div>
-                         <div className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">
+                        </th>
+                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Address
-                        </div>
-                        <div className="relative px-6 py-3 w-1/5">
+                        </th>
+                        <th scope="col" className="relative px-6 py-3">
                           <span className="sr-only">Actions</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-white divide-y divide-gray-200">
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
                       {schools.map((school) => (
-                        <div key={school._id} className="flex w-full items-center hover:bg-gray-50 py-2">
-                          <div className="px-6 py-4 whitespace-nowrap w-1/5">
+                        <tr key={school._id} className="hover:bg-gray-50">
+                          <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="shrink-0 h-10 w-10">
-                                <img className="h-10 w-10 rounded-full object-cover" src={school.schoolImage} alt="" />
+                                <img className="h-10 w-10 rounded-full object-cover" src={`${school.schoolImage}`} alt="" />
                               </div>
                               <div className="ml-4">
                                 <div className="text-sm font-medium text-gray-900">{school.schoolName}</div>
                                 <div className="text-sm text-gray-500">{school.subDistrict}</div>
                               </div>
                             </div>
-                          </div>
-                          <div className="px-6 py-4 whitespace-nowrap w-1/5">
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">{school.schoolEmail}</div>
                             <div className="text-sm text-gray-500">{school.schoolPhone}</div>
-                          </div>
-                           <div className="px-6 py-4 whitespace-nowrap w-1/5">
+                          </td>
+                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">{school.inchargeName}</div>
                             <div className="text-sm text-gray-500">{school.inchargePhone}</div>
-                          </div>
-                          <div className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-1/5">
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {school.address}
-                          </div>
-                          <div className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium w-1/5">
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button
                               onClick={() => handleApprove(school._id)}
                               className="mr-2 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
@@ -184,11 +128,11 @@ const ApproveSchool = ({ showAlert }) => {
                             >
                               Reject
                             </button>
-                          </div>
-                        </div>
+                          </td>
+                        </tr>
                       ))}
-                    </div>
-                  </div>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

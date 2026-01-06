@@ -1,4 +1,4 @@
-import React, { useState, useEffect }from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { Loading } from "../components/form/MiniComp";
 import { getCurrentSchool } from '../components/form/api';
@@ -20,7 +20,7 @@ function AuthRoutes({ children }) {
           }, []);
     
          if(loading) {
-            return <Loading />;
+            return <Loading message="Authenticating..." />;
         }
     
     if(!auth){

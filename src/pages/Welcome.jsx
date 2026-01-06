@@ -15,6 +15,8 @@ import { MdAdd } from "react-icons/md";
 import NavbarWel from "../components/NavbarWel";
 import { FaBackward } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
+import Slidebar from "../components/Slidebar";
+import { BackButton } from "../components/form/MiniComp";
 
 const Recycle = "/images/recycle.png";
 const WelcomeBg = "/images/bg.jpg";
@@ -111,7 +113,7 @@ console.log('school data',schoolData);
 
   return (
     <>
-      <NavbarWel />
+      <Slidebar />
       {showPopup && (
         <div className="fixed inset-0 z-50 flex items-center md:p-2 p-1 justify-center bg-opacity-50 backdrop-blur-sm" onClick={() => setShowPopup(false)}>
           <div className="w-full bg-gray-100 flex flex-col justify-between pb-7 max-w-fit gap-4 rounded-md">
@@ -202,8 +204,10 @@ console.log('school data',schoolData);
           </div>
         </div>
 
-        <div className="schoolselecter origin-bottom hidden rotate-z-90 top-0 z-999 min-h-screen w-screen overflow-hidden items-center justify-around xl:justify-between flex-col bg-[#D9E4DD]">
-          <div className="flex items-center justify-center flex-col">
+        <div className="schoolselecter origin-bottom hidden top-0 z-999 min-h-screen w-screen overflow-y-auto items-center justify-center flex-col lg:flex-col p-6 bg-[#eef5f1] gap-20 pt-40">
+          
+          
+          <div className="flex items-center justify-center flex-col bg-white rounded-2xl shadow-xl p-8 lg:p-12 w-full max-w-xl text-center transform transition-transform duration-500 hover:scale-105">
             <input
               type="text"
               placeholder="Enter School Name..."
@@ -214,7 +218,7 @@ console.log('school data',schoolData);
 
             <div
               ref={val}
-              className="mt-4 max-w-[90vw] w-full md:w-[500px] max-h-[40vh] overflow-y-auto bg-white rounded-lg border-2 border-green-800 shadow-lg"
+              className="mt-4 max-w-[90vw] w-full md:w-[500px] max-h-[40vh] overflow-y-auto bg-white rounded-lg border-2 border-green-800 shadow-lg overflow-auto"
             >
               {filteredSchools && filteredSchools.length > 0 ? (
                 <>
@@ -250,31 +254,34 @@ console.log('school data',schoolData);
             </div>
           </div>
 
-          <div className="border-4 border-green-900 w-full flex justify-center max-h-1 items-center">
-            <a href="/" className="relative z-40 bg-green-800 cursor-pointer text-white px-15 max-h-20 py-2 border-2 shadow-xl border-white-800 max-w-fit inline-flex gap-2 font-semibold text-2xl md:text-4xl font-serif items-center transition-all duration-700 rounded-[9px] group hover:text-green-800 hover:bg-white"><FaBackward /> GO BACK </a>
-            </div>
+          
+          <div className="lg:hidden border-t-2 border-green-300 w-full max-w-md"></div>
 
-          <div className="flex items-center justify-center mb-5 xl:mb-16 flex-col">
-            <div className="flex items-center flex-col m-2 xl:mx-15">
-              <h3 className="text-green-900 text-xl xl:text-4xl font-serif font-semibold">
-                Not registered your school yet!
+         
+          <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12 w-full max-w-xl text-center flex flex-col justify-center transform transition-transform duration-500 hover:scale-105">
+            <div className="mb-6">
+              <h3 className="text-gray-900 text-3xl md:text-4xl font-bold font-sans">
+                Join Our Network
               </h3>
-              <h1 className="text-green-900 text-2xl xl:text-6xl font-serif font-bold">
-                Please register your school first
-              </h1>
+              <p className="text-gray-600 text-lg font-sans mt-3">
+                Is your school not listed? Register now!
+              </p>
             </div>
             <a
               href="/schoolRegister"
-              className="max-w-fit rounded-lg transition-all duration-1000 hover:text-green-900 hover:bg-white text-white cursor-pointer mt-4 mb-1 bg-green-800 lg:py-5 py-3 px-17 lg:px-27"
+              className="inline-block rounded-lg transition-all duration-1000 hover:text-green-900 hover:bg-white text-white cursor-pointer mt-4 mb-1 bg-green-600 lg:py-5 py-3 px-17 lg:px-27 border-2 border-green-600"
             >
-              <h1 className="text-2xl xl:text-3xl font-serif font-semibold flex items-center">
-                <span className="mr-1">
-                  <MdAdd />
-                </span>{" "}
-                REGISTER
-              </h1>
+              <div className="text-2xl font-sans font-bold flex items-center justify-center">
+                <span className="mr-3">
+                  <MdAdd size="1.3em" />
+                </span>
+                REGISTER SCHOOL
+              </div>
             </a>
           </div>
+          <button onClick={() => {window.location.reload()}} href="/">
+          <BackButton to='/'></BackButton>
+          </button>
         </div>
       </div>
     </>

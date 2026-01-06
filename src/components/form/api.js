@@ -268,3 +268,19 @@ export function deleteSchool(id) {
 }
 
 
+export function putUpdateSchoolDetails(id, data) {
+  return axios
+    .put(`${BASE_URL}/school/update/${id}`, data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).then((response) => {
+      console.log('API response', response.data);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error('API error', error);
+      throw error;
+    })
+}
+
+
+
