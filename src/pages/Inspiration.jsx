@@ -18,7 +18,7 @@ const Inspiration = () => {
     <div className='flex flex-col justify-around'>
     <InspirationCard  name='ABHISHEK SURANA ( I.A.S. )' image={photo1} post='District Collector and District Magistrate (DM),Churu'/>
     <InspirationCard  name='Dr.Santosh Kumar Maharshi' image={photo3} post='Chief District Education Officer(CDEO),Churu'/>
-    <InspirationCard  name='Dr. Govind Singh Rathore' image={photo3} post='Deputy Director MGEP ,Churu'/>
+    <InspirationCard  name='Dr. Govind Singh Rathore' image={photo2} post='Deputy Director MGEP ,Churu'/>
     
     </div>
     <div className='flex  justify-center mt-30 mb-10'>
