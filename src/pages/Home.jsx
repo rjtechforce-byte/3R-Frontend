@@ -154,7 +154,7 @@ function Home() {
               </div>
             </div>
 
-            <div className="text-green-800 flex 2xl:hidden flex-col justify-center right-1 items-center">
+            <div className="text-green-800 flex xl:hidden flex-col justify-center right-1 items-center">
               {!openDrop && (
                 <div
                   onClick={openDropdown}
@@ -235,7 +235,7 @@ function Home() {
             <div className="h-1 w-32 bg-linear-to-r from-emerald-500 to-teal-500 mx-auto mt-4 rounded-full"></div>
           </div>
 
-          <div className="2xl:flex justify-center hidden gap-12 items-center py-8 mb-5">
+          <div className="xl:flex justify-center hidden gap-12 items-center py-8 mb-5">
             <div onClick={() => handleCategoryClick("ALL")} className="group cursor-pointer transition-all duration-300 hover:scale-105">
               <div className="relative px-6 py-3 bg-white hover:bg-emerald-50 rounded-2xl text-emerald-700 hover:text-emerald-800 font-semibold text-sm tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-200 hover:border-emerald-300 backdrop-blur-sm">
                 <span className="relative z-10 flex items-center gap-3">
