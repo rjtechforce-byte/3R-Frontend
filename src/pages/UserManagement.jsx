@@ -102,7 +102,7 @@ export default function UserManagement(){
             <div key={school._id} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col">
               <div className="h-48 w-full bg-gray-200 relative">
                 <img 
-                  src={school.schoolImage ? `https://rrr-backend-9ait.onrender.com/${school.schoolImage}` : "https://via.placeholder.com/300?text=No+Image"} 
+                  src={school.schoolImage ? `https://threer-backend-r8dv.onrender.com/${school.schoolImage}` : "https://via.placeholder.com/300?text=No+Image"} 
                   alt={school.schoolName}
                   className="w-full h-full object-cover"
                   onError={(e) => {e.target.src = "https://via.placeholder.com/300?text=No+Image"}}
