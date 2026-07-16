@@ -15,7 +15,7 @@ const multer = require('multer');
 const schoolRoute = require('./routes/schoolRoute');
 // Middleware to parse JSON bodies
 const allowedOrigins = [
-  'https://rrr-frontend-iota.vercel.app',
+  'https://3-r-frontend.vercel.app/',
   'http://localhost:5173',
   'https://www.3rinnovationchuru.com',
 ];
